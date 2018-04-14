@@ -208,6 +208,10 @@ ul.pure-menu-list.navbar-right {
   -ms-transform: rotate(35deg);
   transform: rotateZ(60deg);
 }
+.header-logo{
+  max-height: 1.4em;
+  margin-top: 0.2em;
+}
 
 /* ---- */
 /* ---- */
@@ -273,4 +277,10 @@ ul.chat-list > li {
 .settings-icon {
   max-height: 1.5em;
   float: right;
+}
+
+.label-upper {
+  text-transform: uppercase;
+  font-size: smaller;
+  color: #103a52;
 }

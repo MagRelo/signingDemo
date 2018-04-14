@@ -1,20 +1,23 @@
-import React, { Component } from 'react';
-// import StayScrolled from 'react-stay-scrolled'
+import React, { Component } from 'react'
 
 import Chat from './chat.js'
 
+import githubLogo from './icon/GitHub-Mark-Light-32px.png'
 
 // Fonts
 import './css/open-sans.css'
 import './css/michroma.css'
 import './css/barlow.css'
 
+// Pure css
 import './css/pure-min.css'
 import './css/grids-responsive-min.css'
-// import 'medium-editor/dist/css/medium-editor.css'
-// import 'medium-editor/dist/css/themes/default.css'
 
+// App css
 import './App.css'
+
+
+// https://github.com/MagRelo/signingDemo
 
 // Initialize web3 and set in Redux.
 import getWeb3 from './web3.js'
@@ -69,7 +72,9 @@ class App extends Component {
 
           <ul className="pure-menu-list navbar-right">
             <li className="pure-menu-item">
-                <a href="/" className="pure-menu-link"> G </a>
+              <a href="https://github.com/MagRelo/signingDemo" target="_blank" rel="noopener noreferrer" className="pure-menu-link">
+                <img alt="github logo" className="header-logo" src={githubLogo}></img>
+              </a>
             </li>
               <li className="pure-menu-item">
                 <a href="/" className="pure-menu-link"> M </a>

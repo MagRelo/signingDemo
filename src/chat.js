@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import settingsIcon from './icon/gear-icon.svg'
+// import settingsIcon from './icon/gear-icon.svg'
 
 // sockets
 import io from 'socket.io-client';
@@ -51,6 +51,7 @@ class FormComponent extends Component {
     chatSocket.disconnect()
   }
 
+  // keep the messages scrolled to bottom on each lifecyle event
   // https://stackoverflow.com/questions/37620694/how-to-scroll-to-bottom-in-react
   scrollToBottom() {
     this.el.scrollIntoView({ behavior: 'smooth' });
@@ -163,23 +164,20 @@ class FormComponent extends Component {
             })}          
           </ul>
 
+          {/* { this will keep the list scrolled to bottom} */}
           <div ref={el => { this.el = el; }} />
           
         </div>
 
         <div className="grey-border top" style={{gridRow: '2', gridColumn:'1 / 2', padding: '0.5em', marginTop: '0.5em'}}>
 
-          <span>Account: </span>
-          <label className="account-label">
-            {this.props.account.substring(0,8)}
-          </label>
+          <label className="label-upper">Account: {this.props.account} </label>        
 
         </div>
 
         <div style={{gridRow: '3', gridColumn:'1 / 2'}}>
 
           <form className="pure-form chat-form">
-
             <textarea 
               rows="4"
               className="pure-input"
@@ -187,13 +185,11 @@ class FormComponent extends Component {
               value={this.state.content}
               name="content"
               onChange={this.handleChange.bind(this)}/>
-
             <button 
               style={{float: 'right', marginTop: '0.5em'}} 
               className="pure-button pure-button-primary pure-button-xlarge"
               disabled={!this.state.content}
               onClick={this.submitMessage.bind(this)}>Send</button>
-
           </form>
 
         </div>

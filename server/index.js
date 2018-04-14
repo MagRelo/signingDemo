@@ -38,9 +38,9 @@ const MessageModel = mongoose.model('Message', MessageSchema);
 // *
 
 // serve the react app for all http requests
-app.use(express.static('build_webpack'))
+app.use(express.static('build'))
 app.get('/*', function(req, res){
-  res.sendFile('index.html', { root: './build_webpack'});
+  res.sendFile('index.html', { root: './build'});
 });
 
 // start server
