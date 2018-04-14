@@ -3,8 +3,6 @@ import React, { Component } from 'react';
 
 import Chat from './chat.js'
 
-import settingsIcon from './icon/gear-icon.svg'
-
 
 // Fonts
 import './css/open-sans.css'
@@ -86,11 +84,8 @@ class App extends Component {
           
           <div style={{gridRow: '1', gridColumn:'1 / 2'}}>
             
-            <a href="/">
-              <img alt="settings menu icon" className="settings-icon" src={settingsIcon}></img>
-            </a>
             <h1>Chat Demo</h1>
-            
+
           </div>
           
           <div style={{gridRow: '2', gridColumn:'1 / 2', overflow: 'hidden'}}>
