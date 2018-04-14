@@ -18,7 +18,7 @@ class FormComponent extends Component {
     super(props)
 
     // connect to game
-    chatSocket = io('http://localhost:8080');
+    chatSocket = io('/');
 
     chatSocket.on('error', this.socketError.bind(this))
     // gameSocket.on('disconnect', this.socketError)
