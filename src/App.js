@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import Chat from './chat.js'
+// import Detail from './detail.js'
 
 import githubLogo from './icon/GitHub-Mark-Light-32px.png'
 
@@ -87,13 +88,11 @@ class App extends Component {
 
         <div className="container">
           
-          <div style={{gridRow: '1', gridColumn:'1 / 2'}}>
-            
+          <div style={{gridRow: '1', gridColumn:'1 / 2'}}>            
             <h1>Chat Demo</h1>
-
           </div>
           
-          <div style={{gridRow: '2', gridColumn:'1 / 2', overflow: 'hidden'}}>
+          <div style={{gridRow: '2', gridColumn:'1 / 2', overflow: 'scroll'}}>
             {this.state.loading ?         
                 
                 <div className="loader">                  
@@ -110,6 +109,7 @@ class App extends Component {
                   web3={this.state.web3} 
                   network={this.state.network} 
                   account={this.state.account}/>
+                  
             }
           </div>
 
