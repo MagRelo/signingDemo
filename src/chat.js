@@ -128,14 +128,14 @@ class FormComponent extends Component {
         display: 'grid', 
         gridTemplateColumns: '1fr', 
         gridTemplateRows: '1fr auto',
-        gridSpacing: '1em'}}>
+        gridSpacing: '1em',
+        gridGap: '1em'}}>
 
         <div className="" style={{gridRow: '1', gridColumn:'1 / 2', overflow: 'scroll'}}>
           
           <MessageList list={this.state.messages}/>
 
-        </div>
-          
+        </div>          
         <div style={{gridRow: '2', gridColumn:'1 / 2'}}>
 
           <div className="grey-border top" style={{padding: '0.5em'}}>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import moment from 'moment'
 
 class MessageListComponent extends Component {
 
@@ -26,12 +27,12 @@ class MessageListComponent extends Component {
           {this.props.list.map( message => {
             return <li key={message._id}>                                    
                 
-                <time>{message.createdAt}</time>
+                <time>{moment(message.createdAt).fromNow()}</time>
 
                 <p>{message.content}</p>
     
                 <div style={{textAlign: 'right'}}>
-                  <Link to={'/message/' + message._id}>
+                  <Link to={'/message/' + message._id} style={{textDecoration: 'none'}}>
                     <label className="label-upper">
                       {'🔒 ' + message.userAddress.substring(0,8) + '...'}
                     </label>
