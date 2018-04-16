@@ -38,6 +38,15 @@ const MessageModel = mongoose.model('Message', MessageSchema);
 // *
 
 // serve the react app for all http requests
+
+app.get('/api/message/:id', function(req, res){
+
+  // get message data
+  MessageModel.findOne({_id: req.params.id})
+    .then(message => {return res.send(message)})
+    .catch(error => {return res.status(500).send(error)})
+});
+
 app.use(express.static('build'))
 app.get('/*', function(req, res){
   res.sendFile('index.html', { root: './build'});

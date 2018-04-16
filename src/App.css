@@ -24,6 +24,10 @@ body,
   height: 100%;
 }
 
+h1, h2 {
+  margin: .33em 0 0.33em;
+}
+
 .container {
   box-sizing: border-box;
   padding: 48px 1em 1em 1em;
@@ -32,12 +36,6 @@ body,
   display: grid; 
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr;
-  grid-gap: 0.5em;
-}
-
-h1 {
-  margin-bottom: 0;
-  margin-top: 0.33em;
 }
 
 /*Buttons*/
@@ -260,7 +258,7 @@ ul.chat-list {
 ul.chat-list > li {
   list-style: none;
   margin-top: 1em;
-  font-family: serif;
+
   line-height: 1.3;
   padding: 1em;
   border: solid 1px #bbb;  
@@ -270,6 +268,7 @@ ul.chat-list > li > time {
   color: #777;
 }
 ul.chat-list > li > p {
+  font-family: serif;
   color: #444;
 }
 
@@ -290,22 +289,29 @@ ul.chat-list > li > p {
   font-size: smaller;
   color: #103a52;
   font-family: 'Barlow', sans-serif;
+  color: #777;
 }
 
 /* Detail pages */
 .message-data {
+  margin-top: 0.25em;
   margin-bottom: 1em;
-  padding: 0.5em;
-  
+  padding: 0 0.5em;
   border: solid 1px #ccc;
 
   color: #444;
   background-color: #ddd;
   word-break: break-all;
+  white-space: pre-wrap;
 
 }
 
 .message-data > p {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
+}
+
+.breadcrumb {
+  font-size: smaller;
+  padding: 0.25em 0.5em
 }
