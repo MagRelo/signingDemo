@@ -35,7 +35,7 @@ class DetailComponent extends Component {
     // pause for dramatic effect...
     setTimeout(()=>{
       
-      const userAddress = sigUtil.recoverTypedSignature({
+      const userAddress = sigUtil.recoverPersonalSignature({
         data: this.state.message.messageParams,
         sig: this.state.message.signature
       })
