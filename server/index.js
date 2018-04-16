@@ -4,6 +4,7 @@ const app = require('express')();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const sigUtil = require('eth-sig-util')
+const ethUtil = require('ethereumjs-util')
 const camelCase = require('camelcase')
 
 // addresses that are not allowed to post messages
@@ -75,7 +76,7 @@ io.on('connection', function (socket) {
   socket.on('message', function (data) {
 
     // authenticate (verify)
-    const userAddress = sigUtil.recoverTypedSignature({
+    const userAddress = sigUtil.recoverPersonalSignature({
       data: data.message,
       sig: data.signature
     })
@@ -134,13 +135,8 @@ function unpackSignedData(messageParams, signature, userAddress) {
   const messageData = {
     'messageParams': messageParams,
     'signature': signature,
-    'userAddress': userAddress
+    'userAddress': userAddress,
+    'content': ethUtil.toBuffer(messageParams).toString('utf8')
   }
-
-  // copy msgParams data to js object for convenience
-  messageParams.forEach(element => {
-    messageData[camelCase(element.name)] = element.value
-  })
-
   return messageData
 }

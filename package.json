@@ -5,6 +5,7 @@
   "proxy": "http://localhost:8080",
   "dependencies": {
     "eth-sig-util": "^1.4.2",
+    "ethereumjs-util": "^5.1.5",
     "express": "^4.16.3",
     "moment": "^2.22.1",
     "mongoose": "^5.0.14",

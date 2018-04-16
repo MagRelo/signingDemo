@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import MessageList from './messageList.js'
 // import settingsIcon from './icon/gear-icon.svg'
 
+import ethUtil  from 'ethereumjs-util'
+
 // sockets
 import io from 'socket.io-client';
 let chatSocket
@@ -82,22 +84,16 @@ class FormComponent extends Component {
     const web3 = this.props.web3
     const userAddress = this.props.account
     const content = this.state.content
-
-    const msgParams = [
-      {
-        name: 'content',
-        type: 'string',
-        value: content
-      }
-    ]
+    const msg = ethUtil.bufferToHex(new Buffer(content, 'utf8'))
+    const params = [msg, userAddress]
 
     console.group('Digital Signature');
     console.log('Message:')
-    console.dir(msgParams)
+    console.dir(params)
 
     web3.currentProvider.sendAsync({
-        method: 'eth_signTypedData',
-        params: [msgParams, userAddress],
+        method: 'personal_sign',
+        params: params,
         from: userAddress,
       }, function (err, result) {
         if (err) return console.error(err)
@@ -109,7 +105,7 @@ class FormComponent extends Component {
 
         // send to server
         chatSocket.emit('message', {
-          message: msgParams,
+          message: msg,
           signature: result.result
         })
       })

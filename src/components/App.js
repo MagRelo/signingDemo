@@ -118,7 +118,7 @@ class App extends Component {
                 }}>
               </Route>
 
-              <Route path="/chat" 
+              <Route
                 render={()=>{
                   return <div style={{gridRow: '2', gridColumn:'1 / 2', overflow: 'scroll'}}>
                     <Chat web3={this.state.web3} account={this.state.account} network={this.state.network}/>
