@@ -21,7 +21,6 @@ body,
 .pure-g [class*=pure-u] {
   font-family: 'Barlow', sans-serif;
   color: #103A52;
-  height: 100%;
 }
 
 h1, h2 {
@@ -297,13 +296,15 @@ ul.chat-list > li > p {
   margin-top: 0.25em;
   margin-bottom: 1em;
   padding: 0 0.5em;
+  
   border: solid 1px #ccc;
+  border-radius: 0.33em;
 
   color: #444;
   background-color: #ddd;
+  
   word-break: break-all;
   white-space: pre-wrap;
-
 }
 
 .message-data > p {

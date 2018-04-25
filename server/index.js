@@ -67,7 +67,7 @@ io.on('connection', function (socket) {
 
 
   // send out fresh data
-  MessageModel.find({}).sort({'updatedAt': 1})
+  MessageModel.find({}).sort({'updatedAt': 1}).limit(10)
     .then(messageArray => {return socket.emit('update', messageArray)})
     .catch(error => {return socket.emit('error', error.message)})
 
@@ -93,7 +93,7 @@ io.on('connection', function (socket) {
     const message = new MessageModel(messageData)
     message.save()
       .then(savedMessage => {        
-        return MessageModel.find({}).sort({'updatedAt': 1})
+        return MessageModel.find({}).sort({'updatedAt': 1}).limit(10)
       })
       .then(messageArray => {return socket.emit('update', messageArray)})
       .catch(error => {return socket.emit('error', error.message)})

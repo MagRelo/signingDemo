@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import sigUtil from 'eth-sig-util'
+import ethUtil  from 'ethereumjs-util'
 
 class DetailComponent extends Component {
   constructor(props) {
@@ -21,6 +22,10 @@ class DetailComponent extends Component {
       })
       .then(response => {
         this.setState({message: response})
+      })
+      .catch(error => {
+        console.log(error)
+        this.setState({error: error})
       })
   }
 
@@ -51,8 +56,8 @@ class DetailComponent extends Component {
 
   }
 
-  displayParams(messageParams){
-    return JSON.stringify(messageParams, null, 2)
+  decodeHex(messageParams){
+    return ethUtil.toBuffer(messageParams).toString('utf8')
   }
 
   etherScanUrl(network, id){
@@ -119,9 +124,14 @@ class DetailComponent extends Component {
 
         <hr></hr>        
 
-        <label className="label-upper">Message Parameters</label>
+        <label className="label-upper">Decoded Hex Data</label>
         <div className="message-data">
-          <p>{this.displayParams(this.state.message.messageParams)}</p>
+          <p>{this.decodeHex(this.state.message.messageParams)}</p>
+        </div>
+
+        <label className="label-upper">Hex Data</label>
+        <div className="message-data">
+          <p>{this.state.message.messageParams}</p>
         </div>
 
         <label className="label-upper">Signature</label>
