@@ -2,27 +2,30 @@ import React, { Component } from 'react'
 import { Switch, Route, Link, withRouter } from 'react-router-dom'
 
 
-import Chat from './chat';
-import Detail from './detail';
+import Chat from './components/chat';
+import Detail from './components/detail';
+import Account from './components/account';
+import Home from './components/home';
+import Admin from './components/adminPanel';
+
 
 
 // Fonts
-import '../css/open-sans.css'
-import '../css/michroma.css'
-import '../css/barlow.css'
+import './css/open-sans.css'
+import './css/michroma.css'
+import './css/barlow.css'
 
 // Pure css
-import '../css/pure-min.css'
-import '../css/grids-responsive-min.css'
+import './css/pure-min.css'
+import './css/grids-responsive-min.css'
 
 // App css
-import '../App.css'
+import './App.css'
 
-import githubLogo from '../icon/GitHub-Mark-Light-32px.png'
+import githubLogo from './icon/GitHub-Mark-Light-32px.png'
 
-
-// Initialize web3 and set in Redux.
-import getWeb3 from '../web3.js'
+// Initialize web3
+import getWeb3 from './web3.js'
 
 class App extends Component {
   constructor(props){
@@ -34,6 +37,7 @@ class App extends Component {
       web3: null,
       network: '',
       account: '',
+      formOpen: false
     }
   }
 
@@ -83,18 +87,6 @@ class App extends Component {
 
         <div className="container">
           
-          <div style={{gridRow: '1', gridColumn:'1 / 2'}}>            
-            <h1>Chat Demo</h1>            
-
-            {this.props.location.pathname !== '/chat' ?               
-              <Link to="/chat" className="pure-button pure-button-primary breadcrumb">
-                ◀ chat
-              </Link>
-            :null}            
-
-            <hr></hr>
-          </div>
-          
           {this.state.loading ?         
                 
             <div className="loader">                  
@@ -108,27 +100,49 @@ class App extends Component {
           : 
 
             <Switch>
+              <Route path="/admin"
+                render={()=>{
+                  return <div style={{gridRow: '2', gridColumn:'1 / 2'}}>
+                    <Admin web3={this.state.web3} account={this.state.account}/>
+                  </div>                    
+                }}>
+              </Route>
 
+              {/* CHAT */}
+              <Route path="/chat"
+                render={()=>{
+                  return <div style={{gridRow: '2', gridColumn:'1 / 2', overflow: 'scroll'}}>
+                    <Chat web3={this.state.web3} account={this.state.account}/>
+                  </div>                    
+                }}>
+              </Route>
               <Route path="/message/:id" 
                 render={props =>{
-
                   return <div style={{gridRow: '2', gridColumn:'1 / 2'}}>
                     <Detail network={this.state.network} id={props.match.params.id}/>
                   </div>                    
                 }}>
               </Route>
+              <Route path="/account" 
+                render={() =>{
+                  return <div style={{gridRow: '2', gridColumn:'1 / 2'}}>
+                    <Account web3={this.state.web3} account={this.state.account}/>
+                  </div>                    
+                }}>
+              </Route>
+              
 
               <Route
                 render={()=>{
                   return <div style={{gridRow: '2', gridColumn:'1 / 2', overflow: 'scroll'}}>
-                    <Chat web3={this.state.web3} account={this.state.account} network={this.state.network}/>
+                    <Home/>
                   </div>                    
                 }}>
               </Route>
 
             </Switch>
 
-          }
+          }          
 
         </div>
       </div>

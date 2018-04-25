@@ -86,7 +86,7 @@ class DetailComponent extends Component {
       
       <div>
 
-        <h2>Verify Message Data</h2>
+        <h2>Verify Sender</h2>
         <p>You can calculate the user address that created this message to ensure that it has not been tampered with.</p>
 
         <label className="label-upper">Reported Sender</label>        
@@ -116,13 +116,15 @@ class DetailComponent extends Component {
             <a style={{ padding: '0.5em 1em', display: 'inline-block' }}
               href={this.etherScanUrl(this.props.network, this.state.message.userAddress)}
               target="_blank">
-              View on Etherscan
+              View Account History
             </a>
           :null}
                     
         </div>
 
-        <hr></hr>        
+        <hr></hr>    
+
+        <h2>Message Data</h2>    
 
         <label className="label-upper">Decoded Hex Data</label>
         <div className="message-data">

@@ -28,14 +28,18 @@ class MessageListComponent extends Component {
                 
                 <time>{moment(message.createdAt).fromNow()}</time>
 
-                <p>{message.content}</p>
-    
                 <div style={{textAlign: 'right'}}>
                   <Link to={'/message/' + message._id} style={{textDecoration: 'none'}}>
                     <label className="label-upper">
-                      {'–' + message.userAddress.substring(0,8) + '... ▶'}
+                      Verify                      
                     </label>
                   </Link>                    
+                </div>
+
+                <p>{message.content}</p>
+    
+                <div style={{textAlign: 'right'}}>                  
+                  {'– ' + message.userAddress.substring(0,8) + '...'}                  
                 </div>
                 
               </li>
