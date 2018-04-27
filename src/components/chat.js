@@ -35,7 +35,7 @@ class FormComponent extends Component {
   
   }
   componentWillUnmount() {
-    // chatSocket.disconnect()
+    chatSocket.disconnect()
   }
 
   // socket handlers
