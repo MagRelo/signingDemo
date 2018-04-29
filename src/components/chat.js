@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
 
-import MessageList from './messageList.js'
-import ChatForm from './chatForm';
+import MessageList from './messageList'
+import MessageForm from './messageForm';
+
+
+import composeIcon from '../icon/compose-outline.svg'
 
 // sockets
 import io from 'socket.io-client';
@@ -71,12 +74,26 @@ class FormComponent extends Component {
         <MessageList list={this.state.messages}/>
 
         {this.state.formOpen ? 
+
           <div>
-            <button className="pure-button" onClick={()=>{this.setState({formOpen: !this.state.formOpen})}}>close</button>
-            <ChatForm web3={this.props.web3} account={this.props.account}/>
+            <button 
+              className="pure-button" 
+              onClick={()=>{this.setState({formOpen: !this.state.formOpen})}}>close
+            </button>
+            <MessageForm/>
           </div>
+
         :
-          <button className="pure-button pure-button-primary compose-button" onClick={()=>{this.setState({formOpen: !this.state.formOpen})}}>compose</button>
+          
+          <button 
+            className="pure-button pure-button-primary compose-button" 
+            onClick={()=>{this.setState({formOpen: !this.state.formOpen})}}>
+              <img 
+                style={{height: '1.5em'}} 
+                src={composeIcon} 
+                alt="compose message icon"></img>
+          </button>
+          
         }
         
       </div>

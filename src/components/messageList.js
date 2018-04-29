@@ -4,16 +4,15 @@ import moment from 'moment'
 
 class MessageListComponent extends Component {
 
-  // lifecycle
+
+  // keep the messages scrolled to bottom on each lifecyle event
+  // https://stackoverflow.com/questions/37620694/how-to-scroll-to-bottom-in-react
   componentDidMount(){
     this.scrollToBottom();    
   }
   componentDidUpdate() {
     this.scrollToBottom();
   }
-
-  // keep the messages scrolled to bottom on each lifecyle event
-  // https://stackoverflow.com/questions/37620694/how-to-scroll-to-bottom-in-react
   scrollToBottom() {
     this.el.scrollIntoView({ behavior: 'smooth' });
   }

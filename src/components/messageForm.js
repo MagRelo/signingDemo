@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import {Link} from 'react-router-dom'
 
 import settingsIcon from '../icon/gear-icon.svg'
@@ -17,12 +18,6 @@ class FormComponent extends Component {
     this.state = {
       content: '' 
     }
-  }
-
-  // lifecycle
-  componentWillMount(){ 
-  }
-  componentWillUnmount() {
   }
 
   // Form functions
@@ -79,12 +74,10 @@ class FormComponent extends Component {
     return(
       <div>
 
-        <div className="grey-border top" style={{padding: '0.5em'}}>
-          
+        <div className="grey-border top" style={{padding: '0.5em'}}>          
           <Link to="account">
             <img style={{maxHeight: '1em', float: 'right', paddingTop: '0.1em'}} src={settingsIcon} alt="account settings icon"></img>
-          </Link>
-          
+          </Link>          
           <label className="label-upper">Account: {this.props.account.substring(0,8)}... </label>               
         </div>
 
@@ -109,5 +102,14 @@ class FormComponent extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    web3: state.web3.instance,
+    account: state.web3.accounts[0] || ''
+  }
+}
 
-export default FormComponent
+const wiredFormComponent = connect(mapStateToProps)(FormComponent)
+// const wiredFormComponent = connect()(FormComponent)
+
+export default wiredFormComponent

@@ -1,5 +1,14 @@
-
+import store from './store'
 import Web3 from 'web3'
+
+
+export const WEB3_INITIALIZED = 'WEB3_INITIALIZED'
+function web3Initialized(results) {
+  return {
+    type: WEB3_INITIALIZED,
+    payload: results
+  }
+}
 
 let getWeb3 = new Promise(function(resolve, reject) {
 
@@ -40,11 +49,11 @@ let getWeb3 = new Promise(function(resolve, reject) {
 
         return web3.eth.getAccounts()
           .then(array => {
-            return resolve({
-              web3Instance: web3,
+            store.dispatch(web3Initialized({
+              instance: web3,
               network: network,
               accounts: array              
-            })
+            }))
           })
 
       })
@@ -59,11 +68,11 @@ let getWeb3 = new Promise(function(resolve, reject) {
 
       return web3.eth.getAccounts()
         .then(array => {
-          return resolve({
-            web3Instance: web3,
+          store.dispatch(web3Initialized({
+            instance: web3,
             network: 'local',
             accounts: array              
-          })
+          }))
         })
 
     }
