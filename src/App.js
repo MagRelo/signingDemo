@@ -1,4 +1,8 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+
+import Loader from './components/loading.js'
 
 // Fonts
 import './css/open-sans.css'
@@ -40,15 +44,9 @@ class App extends Component {
 
         <div className="container">
           
-          {this.props.web3 ?         
-                
-            <div className="loader">                  
-              <div className="spinner"></div>
-              <label>loading web3...</label>
-              <p>Web3: {this.props.web3.instance ? '✓' : '✘'} </p>
-              <p>Network: {this.props.web3 ? '✓ (' + this.props.web3.network + ')' : '✘'}</p>
-              <p>Account: {this.props.web3.account ? this.props.web3.account.substring(0,8) + '...' : '✘'} </p>
-            </div>
+          {!this.props.web3 || !this.props.account ?         
+              
+            <Loader web3={this.props.web3} account={this.props.account} />            
               
           : 
 
@@ -62,5 +60,15 @@ class App extends Component {
   }
 }
 
-export default App;
+
+const mapStateToProps = state => {
+  return {
+    web3: state.web3.instance,
+    account: state.web3.accounts[0] || ''
+  }
+}
+
+export default withRouter(connect(mapStateToProps)(App))
+
+
 

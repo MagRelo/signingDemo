@@ -1,5 +1,5 @@
 const initialState = {
-  loading: 'pasta',
+  loading: true,
   instance: null,
   accounts: [],
   network: ''
@@ -7,11 +7,7 @@ const initialState = {
 
 const web3Reducer = (state = initialState, action) => {
   if (action.type === 'WEB3_INITIALIZED')
-  {
-
-    console.log('web3 init in redux');
-    console.log(action.payload);    
-    
+  { 
     return Object.assign({}, state, {
       loading: false,
       instance: action.payload.instance,

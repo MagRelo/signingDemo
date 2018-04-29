@@ -23,6 +23,8 @@ class HomeComponent extends Component {
 
         <hr/>
 
+        <h2>Payments & Assets</h2>
+
         <Link to="/payment"> Payment demo </Link>        
         <p>Defer to the blockchain</p>
       

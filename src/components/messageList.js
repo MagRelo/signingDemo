@@ -27,7 +27,7 @@ class MessageListComponent extends Component {
                 
                 <time>{moment(message.createdAt).fromNow()}</time>
 
-                <div style={{textAlign: 'right'}}>
+                <div style={{float: 'right'}}>
                   <Link to={'/message/' + message._id} style={{textDecoration: 'none'}}>
                     <label className="label-upper">
                       Verify                      
@@ -35,10 +35,12 @@ class MessageListComponent extends Component {
                   </Link>                    
                 </div>
 
-                <p>{message.content}</p>
-    
-                <div style={{textAlign: 'right'}}>                  
-                  {'– ' + message.userAddress.substring(0,8) + '...'}                  
+                <div>
+                  <p>{message.content}</p>
+
+                  <div style={{textAlign: 'right'}}>                  
+                    {'– ' + message.userAddress.substring(0,8) + '...'}                  
+                  </div>
                 </div>
                 
               </li>

@@ -64,22 +64,30 @@ class FormComponent extends Component {
     return(
 
 
-      <div>
+      <div style={{
+        display: 'grid',
+        gridColumn: '1fr',
+        gridRow: 'auto 1fr auto'
+      }}>
 
-        <h1>
-          <Link to="/">Home</Link> &nbsp;> Chat
-        </h1>
-        <hr/>
-
+        <div>
+          <h1>
+            <Link to="/">Home</Link> &nbsp;> Chat
+          </h1>
+          <hr/>
+        </div>
+        
         <MessageList list={this.state.messages}/>
 
         {this.state.formOpen ? 
 
           <div>
+            
             <button 
               className="pure-button" 
-              onClick={()=>{this.setState({formOpen: !this.state.formOpen})}}>close
+              onClick={()=>{this.setState({formOpen: false})}}> X
             </button>
+
             <MessageForm/>
           </div>
 
@@ -87,7 +95,7 @@ class FormComponent extends Component {
           
           <button 
             className="pure-button pure-button-primary compose-button" 
-            onClick={()=>{this.setState({formOpen: !this.state.formOpen})}}>
+            onClick={()=>{this.setState({formOpen: true})}}>
               <img 
                 style={{height: '1.5em'}} 
                 src={composeIcon} 
