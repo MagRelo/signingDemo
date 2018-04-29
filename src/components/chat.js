@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
+import { connect } from 'react-redux'
+import ethUtil  from 'ethereumjs-util'
 
 import MessageList from './messageList'
 import MessageForm from './messageForm';
@@ -12,7 +14,7 @@ import io from 'socket.io-client';
 let chatSocket
 let intervalId = 0
 
-class FormComponent extends Component {
+class ChatContainer extends Component {
   constructor(props) {
     super(props)
 
@@ -27,7 +29,7 @@ class FormComponent extends Component {
 
     // connect message sockets
     chatSocket = io('/');
-    chatSocket.on('connect', data =>{ console.log('Game connected')})
+    chatSocket.on('connect', data =>{ console.log('chat connected')})
     chatSocket.on('update', this.updateData.bind(this))
 
     chatSocket.on('reconnecting', this.reconnectError.bind(this))
@@ -60,6 +62,40 @@ class FormComponent extends Component {
     }
   }
 
+
+
+  submitMessage(content){
+
+    const web3 = this.props.web3
+    const userAddress = this.props.account
+
+    const msg = ethUtil.bufferToHex(new Buffer(content, 'utf8'))
+    const params = [msg, userAddress]
+
+    console.group('Digital Signature');
+    console.log('Message:')
+    console.dir(params)
+
+    web3.currentProvider.sendAsync({
+        method: 'personal_sign',
+        params: params,
+        from: userAddress,
+      }, function (err, result) {
+        if (err) return console.error(err)
+        if (result.error) return console.error(result.error.message)
+
+        console.log('Signature: ')
+        console.log(result.result)
+        console.groupEnd();
+
+        // send to server
+        console.log('fetch!');        
+        
+      })
+
+    this.setState({formOpen: false})
+  }
+
   render() {
     return(
 
@@ -88,7 +124,8 @@ class FormComponent extends Component {
               onClick={()=>{this.setState({formOpen: false})}}> X
             </button>
 
-            <MessageForm/>
+            <MessageForm web3={this.props.web3} account={this.props.account} submit={this.submitMessage.bind(this)}/>
+            
           </div>
 
         :
@@ -110,4 +147,10 @@ class FormComponent extends Component {
 }
 
 
-export default FormComponent
+const mapStateToProps = state => {
+  return {
+    web3: state.web3.instance,
+    account: state.web3.accounts[0] || ''
+  }
+}
+export default connect(mapStateToProps)(ChatContainer)

@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import {Link} from 'react-router-dom'
 
 import settingsIcon from '../icon/gear-icon.svg'
 
-import ethUtil  from 'ethereumjs-util'
 
 const loremIpsum = `Lorem ipsum dolor sit amet, deserunt gloriatur consetetur nam ut, harum numquam ex vim. Pri tale iisque oportere ad, ius fabulas scaevola ei. Ad est omnium nonumes. Mea postulant reprimique in, in euismod accusata moderatius vim, mel atqui quaerendum no.
 Ad ridens numquam vis, putant tritani minimum eum no. Cum at aeterno consectetuer. Eu vim adhuc audiam prompta. Mea alia graeci eu, verear commodo ad vis.`
@@ -23,51 +21,19 @@ class FormComponent extends Component {
   // Form functions
   handleChange(event) {
     event.preventDefault()
+    let message = event.target.value
 
-    if(event.target.value === 'li:'){
-      event.target.value = loremIpsum
+    if(event.target.value === 'li:' || event.target.value === 'Li:'){
+      message = loremIpsum
     }
-    if(event.target.value === 'hi:'){
-      event.target.value = hindiIpsum
+    if(event.target.value === 'hi:' || event.target.value === 'Hi:'){
+      message = hindiIpsum
     }   
-    if(event.target.value === 'ci:'){
-      event.target.value = chineseIpsum
+    if(event.target.value === 'ci:' || event.target.value === 'Ci:'){
+      message = chineseIpsum
     }   
 
-    this.setState({[event.target.name]: event.target.value})
-  }
-  submitMessage(event){
-    event.preventDefault()
-
-    const web3 = this.props.web3
-    const userAddress = this.props.account
-    const content = this.state.content
-
-    const msg = ethUtil.bufferToHex(new Buffer(content, 'utf8'))
-    const params = [msg, userAddress]
-
-    console.group('Digital Signature');
-    console.log('Message:')
-    console.dir(params)
-
-    web3.currentProvider.sendAsync({
-        method: 'personal_sign',
-        params: params,
-        from: userAddress,
-      }, function (err, result) {
-        if (err) return console.error(err)
-        if (result.error) return console.error(result.error.message)
-
-        console.log('Signature: ')
-        console.log(result.result)
-        console.groupEnd();
-
-        // send to server
-        console.log('fetch!');        
-        
-      })
-
-    this.setState({content: ''})
+    this.setState({[event.target.name]: message})
   }
 
   render() {
@@ -94,7 +60,7 @@ class FormComponent extends Component {
             style={{float: 'right', marginTop: '0.5em'}} 
             className="pure-button pure-button-primary pure-button-xlarge"
             disabled={!this.state.content}
-            onClick={this.submitMessage.bind(this)}>Send</button>
+            onClick={(e)=>{e.preventDefault(),this.props.submit(this.state.content)}}>Send</button>
         </form>
 
       </div>
@@ -102,14 +68,4 @@ class FormComponent extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    web3: state.web3.instance,
-    account: state.web3.accounts[0] || ''
-  }
-}
-
-const wiredFormComponent = connect(mapStateToProps)(FormComponent)
-// const wiredFormComponent = connect()(FormComponent)
-
-export default wiredFormComponent
+export default FormComponent
