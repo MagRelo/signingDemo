@@ -6,9 +6,6 @@ import ethUtil  from 'ethereumjs-util'
 import MessageList from './messageList'
 import MessageForm from './messageForm';
 
-
-import composeIcon from '../icon/compose-outline.svg'
-
 // sockets
 import io from 'socket.io-client';
 let chatSocket
@@ -100,10 +97,7 @@ class ChatContainer extends Component {
     return(
 
 
-      <div style={{
-        display: 'grid',
-        gridColumn: '1fr',
-        gridRow: 'auto 1fr auto'}}>
+      <div>
 
         <h1>
           <Link to="/">Home</Link>&nbsp;> Chat          

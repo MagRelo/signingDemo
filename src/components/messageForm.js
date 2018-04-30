@@ -70,7 +70,7 @@ class FormComponent extends Component {
                 style={{float: 'right', marginTop: '0.5em'}} 
                 className="pure-button pure-button-primary pure-button-xlarge"
                 disabled={!this.state.content}
-                onClick={(e)=>{e.preventDefault(),this.props.submit(this.state.content)}}>Send</button>
+                onClick={()=>{this.props.submit(this.state.content)}}>Send</button>
             </form>
 
           </div>
