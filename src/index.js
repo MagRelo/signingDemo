@@ -1,21 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import { syncHistoryWithStore } from 'react-router-redux'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
-
 
 import registerServiceWorker from './registerServiceWorker';
 
 // Initialize web3
+// eslint-disable-next-line
 import getWeb3 from './web3.js'
 
 // Routing Components
 import App from './App';
-import Chat from './components/chat';
+import Chat from './components/messageContainer';
 import Detail from './components/messageDetail';
 import Account from './components/account';
+import Login from './components/login';
 import Home from './components/home';
 import Admin from './components/adminPanel';
 
@@ -32,6 +31,7 @@ ReactDOM.render(
           <Route path="/chat" component={Chat}></Route>
           <Route path="/message/:id" component={Detail}></Route>
           <Route path="/account" component={Account}></Route>
+          <Route path="/login" component={Login}></Route>
           <Route component={Home}></Route>
         </Switch>
       </App>
