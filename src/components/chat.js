@@ -103,43 +103,18 @@ class ChatContainer extends Component {
       <div style={{
         display: 'grid',
         gridColumn: '1fr',
-        gridRow: 'auto 1fr auto'
-      }}>
+        gridRow: 'auto 1fr auto'}}>
 
-        <div>
-          <h1>
-            <Link to="/">Home</Link> &nbsp;> Chat
-          </h1>
-          <hr/>
-        </div>
-        
+        <h1>
+          <Link to="/">Home</Link>&nbsp;> Chat          
+        </h1>
+                        
         <MessageList list={this.state.messages}/>
-
-        {this.state.formOpen ? 
-
-          <div>
-            
-            <button 
-              className="pure-button" 
-              onClick={()=>{this.setState({formOpen: false})}}> X
-            </button>
-
-            <MessageForm web3={this.props.web3} account={this.props.account} submit={this.submitMessage.bind(this)}/>
-            
-          </div>
-
-        :
           
-          <button 
-            className="pure-button pure-button-primary compose-button" 
-            onClick={()=>{this.setState({formOpen: true})}}>
-              <img 
-                style={{height: '1.5em'}} 
-                src={composeIcon} 
-                alt="compose message icon"></img>
-          </button>
-          
-        }
+        <MessageForm 
+          web3={this.props.web3} 
+          account={this.props.account} 
+          submit={this.submitMessage.bind(this)}/>
         
       </div>
     )

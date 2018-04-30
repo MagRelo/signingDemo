@@ -46,8 +46,8 @@ class MessageListComponent extends Component {
               </li>
           })}          
         </ul>
-
-        <div style={{minHeight: '5em'}} ref={el => { this.el = el; }} />
+        
+        <div ref={el => { this.el = el; }} />        
       </div>
     )
   }

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
 
 import settingsIcon from '../icon/gear-icon.svg'
+import composeIcon from '../icon/compose-outline.svg'
 
 
 const loremIpsum = `Lorem ipsum dolor sit amet, deserunt gloriatur consetetur nam ut, harum numquam ex vim. Pri tale iisque oportere ad, ius fabulas scaevola ei. Ad est omnium nonumes. Mea postulant reprimique in, in euismod accusata moderatius vim, mel atqui quaerendum no.
@@ -38,30 +39,54 @@ class FormComponent extends Component {
 
   render() {
     return(
-      <div>
+      <div style={{minHeight: '5em'}}>
 
-        <div className="grey-border top" style={{padding: '0.5em'}}>          
-          <Link to="account">
-            <img style={{maxHeight: '1em', float: 'right', paddingTop: '0.1em'}} src={settingsIcon} alt="account settings icon"></img>
-          </Link>          
-          <label className="label-upper">Account: {this.props.account.substring(0,8)}... </label>               
-        </div>
+        {this.state.formOpen ? 
 
-        <form className="pure-form chat-form">
-          <label style={{display: 'none'}} htmlFor="content">Content Input</label>
-          <textarea 
-            rows="3"
-            className="pure-input"
-            placeholder="(type li:, hi:, or ci: for lorum ipsum)"
-            value={this.state.content}
-            name="content"
-            onChange={this.handleChange.bind(this)}/>
+          <div>
+            
+            <button 
+              className="pure-button" 
+              onClick={()=>{this.setState({formOpen: false})}}> X
+            </button>
+
+            <div className="grey-border top" style={{padding: '0.5em'}}>          
+              <Link to="account">
+                <img style={{maxHeight: '1em', float: 'right', paddingTop: '0.1em'}} src={settingsIcon} alt="account settings icon"></img>
+              </Link>          
+              <label className="label-upper">Account: {this.props.account.substring(0,8)}... </label>               
+            </div>
+
+            <form className="pure-form chat-form">
+              <label style={{display: 'none'}} htmlFor="content">Content Input</label>
+              <textarea 
+                rows="3"
+                className="pure-input"
+                placeholder="(type li:, hi:, or ci: for lorum ipsum)"
+                value={this.state.content}
+                name="content"
+                onChange={this.handleChange.bind(this)}/>
+              <button 
+                style={{float: 'right', marginTop: '0.5em'}} 
+                className="pure-button pure-button-primary pure-button-xlarge"
+                disabled={!this.state.content}
+                onClick={(e)=>{e.preventDefault(),this.props.submit(this.state.content)}}>Send</button>
+            </form>
+
+          </div>
+
+        :
+          
           <button 
-            style={{float: 'right', marginTop: '0.5em'}} 
-            className="pure-button pure-button-primary pure-button-xlarge"
-            disabled={!this.state.content}
-            onClick={(e)=>{e.preventDefault(),this.props.submit(this.state.content)}}>Send</button>
-        </form>
+            className="pure-button pure-button-primary compose-button" 
+            onClick={()=>{this.setState({formOpen: true})}}>
+              <img 
+                style={{height: '1.5em'}} 
+                src={composeIcon} 
+                alt="compose message icon"></img>
+          </button>
+          
+        }
 
       </div>
     )
