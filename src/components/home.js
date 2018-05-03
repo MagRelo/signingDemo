@@ -11,14 +11,14 @@ class HomeComponent extends Component {
         
         <hr/>
         
-        <h2>Account Management</h2>
-        <Link to="/admin"> Admin panel demo </Link>
+        <h2>Account Management Demos</h2>
+        <Link to="/admin"> Admin panel </Link>
         <p>No login necessary</p>        
 
-        <Link to="/chat"> User Chat demo </Link>      
+        <Link to="/chat"> User Chat</Link>      
         <p>Normal account features like avatars and preferences.</p>
         
-        <Link to="/login"> Login demo </Link>        
+        <Link to="/login"> Login</Link>        
         <p>Create a session token (JWT) to let users "login" without needing an email or password</p>
 
         <hr/>

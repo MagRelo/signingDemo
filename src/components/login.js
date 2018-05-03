@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {Link} from 'react-router-dom'
-import ethUtil  from 'ethereumjs-util'
-
+import moment from 'moment'
+import {loadSession, saveSession, clearSession } from '../reducers/user'
 
 
 class LoginComponent extends Component {
@@ -15,44 +15,25 @@ class LoginComponent extends Component {
     }
   }
 
-  // Sign message and send to server
-  submitAction(event){
-    event.preventDefault()
+  componentDidMount(){
+    this.props.loadSession()
+  }
 
-    const web3 = this.props.web3
-    const userAddress = this.props.account    
+  logout(){
+    this.props.clearSession()
+  }
 
-    // prepare the message for signing
-    const content = `{"action": "${event.target.name}"}`
-    const contentAsHex = ethUtil.bufferToHex(new Buffer(content, 'utf8'))    
-    
-    // sign message
-    web3.currentProvider.sendAsync({
-        method: 'personal_sign',
-        params: [contentAsHex, userAddress],
-        from: userAddress,
-      }, (err, result) => {
-        if (err) return console.error(err)
-        if (result.error) {   
-          return this.setState({alert: true, error: "User denied signature."})
-        }
-
-        // send to server
-        console.log('fetch!');                
-      })
-
+  createSession(duration){
+    this.props.saveSession(duration)
   }
 
   render() {
     return(
       <div>
 
-        <h1>
-          <Link to="/">Home</Link>&nbsp;> Login         
-        </h1>
-
+        <h1><Link to="/">Home</Link>&nbsp;> Login</h1>
         <hr/>
-
+        
         {this.state.alert ? 
 
           <div style={{border: 'solid pink 1px', padding: '0.5em'}}>            
@@ -65,35 +46,44 @@ class LoginComponent extends Component {
 
         :null}
 
-        <h2>Create Session Token</h2>
-
-        <form className="pure-form">
-        <fieldset>
-            <button
-              name="10"
-              type="button"
-              className="pure-button pure-button-primary"
-              onClick={this.submitAction.bind(this)}>10 minutes
-            </button>
-          </fieldset>
-          <fieldset>
-            <button
-              name="30"
-              type="button"
-              className="pure-button pure-button-primary"
-              onClick={this.submitAction.bind(this)}>30 minutes
-            </button>
-          </fieldset>
-          <fieldset>
+        {this.props.expires ? 
+        
+          <div>
+            <h2>Active Session</h2>
+            <p>Expires: {moment(this.props.expires).fromNow()}</p>
             <button
               name="90"
               type="button"
               className="pure-button pure-button-primary"
-              onClick={this.submitAction.bind(this)}>90 minutes
-            </button>
-          </fieldset>
+              onClick={this.logout.bind(this)}> logout
+            </button> 
 
-        </form>
+          </div>         
+          
+        :                
+          <div>
+            <h2>Create a session token</h2>
+            <button
+              name="1"
+              type="button"
+              className="pure-button pure-button-primary"
+              onClick={this.createSession.bind(this, 1)}>1 minute
+            </button>
+            <button
+              name="30"
+              type="button"
+              className="pure-button pure-button-primary"
+              onClick={this.createSession.bind(this, 30)}>30 minutes
+            </button>
+            <button
+              name="90"
+              type="button"
+              className="pure-button pure-button-primary"
+              onClick={this.createSession.bind(this, 90)}>90 minutes
+            </button>
+
+          </div>
+        }
 
       </div>
     )
@@ -102,9 +92,20 @@ class LoginComponent extends Component {
 
 const mapStateToProps = state => {
   return {
-    web3: state.web3.instance,
-    account: state.web3.accounts[0] || '',
-    userSession: state.user.sessionData
+    expires: state.user.expires
   }
 }
-export default connect(mapStateToProps)(LoginComponent)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadSession: () => {
+      dispatch(loadSession())
+    },
+    saveSession: (duration) => {
+      dispatch(saveSession(duration))
+    },
+    clearSession: () => {
+      dispatch(clearSession())
+    }
+  }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(LoginComponent)

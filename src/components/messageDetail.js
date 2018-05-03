@@ -16,7 +16,7 @@ class DetailComponent extends Component {
   componentDidMount(){
 
     // get message
-    fetch('/api/message/' + this.props.id)
+    fetch('/api/message/' + this.props.match.params.id)
       .then(response => {
         return response.json()
       })
