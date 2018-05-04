@@ -111,11 +111,13 @@ class LoginComponent extends Component {
           className="pure-button pure-button-primary"
           onClick={this.getMessages.bind(this)}>Get User Messages</button>     
 
-        {this.state.messages.map(message => {
-          return <ul>
-            <li key={message._id}>{message.content}</li>
-          </ul>
-        })}
+        
+        <ul>
+          {this.state.messages.map(message => {
+            return <li key={message._id}>{message.content}</li>
+          })}
+        </ul>
+        
 
         {this.state.alert ? 
 

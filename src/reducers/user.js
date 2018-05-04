@@ -1,7 +1,7 @@
 import {
   get as getCache, 
   set as setCache, 
-  clear as clearCache} from 'money-clip'
+  del as clearCache} from '../util/money-clip'
 import ethUtil  from 'ethereumjs-util'
 import moment from 'moment'
 
