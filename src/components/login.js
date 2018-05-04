@@ -42,6 +42,7 @@ class LoginComponent extends Component {
     })
     .then(response => {
       if(response.status === 401){
+        this.props.clearSession()
         this.setState({alert: true, error: '401 - Unauthorized'})
         return []
       }
