@@ -1,13 +1,15 @@
 {
-  "main.css": "static/css/main.f5b30afa.css",
-  "main.css.map": "static/css/main.f5b30afa.css.map",
-  "main.js": "static/js/main.55b9c2b3.js",
-  "main.js.map": "static/js/main.55b9c2b3.js.map",
+  "main.css": "static/css/main.a2ee37a8.css",
+  "main.css.map": "static/css/main.a2ee37a8.css.map",
+  "main.js": "static/js/main.19731f56.js",
+  "main.js.map": "static/js/main.19731f56.js.map",
   "static/media/BarlowSemiCondensed-Regular.ttf": "static/media/BarlowSemiCondensed-Regular.ebd90d8e.ttf",
   "static/media/Michroma.ttf": "static/media/Michroma.e1f66926.ttf",
   "static/media/Open-Sans-regular.eot": "static/media/Open-Sans-regular.c35ad7c7.eot",
   "static/media/Open-Sans-regular.svg": "static/media/Open-Sans-regular.7e735d7a.svg",
   "static/media/Open-Sans-regular.ttf": "static/media/Open-Sans-regular.953de7ba.ttf",
   "static/media/Open-Sans-regular.woff": "static/media/Open-Sans-regular.d0bad741.woff",
-  "static/media/Open-Sans-regular.woff2": "static/media/Open-Sans-regular.4124088f.woff2"
+  "static/media/Open-Sans-regular.woff2": "static/media/Open-Sans-regular.4124088f.woff2",
+  "static/media/compose-outline.svg": "static/media/compose-outline.41decaac.svg",
+  "static/media/gear-icon.svg": "static/media/gear-icon.8c598163.svg"
 }
