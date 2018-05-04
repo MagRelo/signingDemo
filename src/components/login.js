@@ -26,6 +26,7 @@ class LoginComponent extends Component {
   }
 
   createSession(duration){
+    this.setState({alert: false})
     this.props.saveSession(duration)
   }
 
@@ -43,7 +44,7 @@ class LoginComponent extends Component {
     .then(response => {
       if(response.status === 401){
         this.props.clearSession()
-        this.setState({alert: true, error: '401 - Unauthorized'})
+        this.setState({alert: true, error: ''})
         return []
       }
             
@@ -83,24 +84,6 @@ class LoginComponent extends Component {
         :                
 
           <div>
-            <button
-              name="1"
-              type="button"
-              className="pure-button pure-button-primary"
-              onClick={this.createSession.bind(this, 1)}>1 minute
-            </button>
-            <button
-              name="30"
-              type="button"
-              className="pure-button pure-button-primary"
-              onClick={this.createSession.bind(this, 30)}>30 minutes
-            </button>
-            <button
-              name="90"
-              type="button"
-              className="pure-button pure-button-primary"
-              onClick={this.createSession.bind(this, 90)}>90 minutes
-            </button>
           </div>
 
         }
@@ -123,11 +106,27 @@ class LoginComponent extends Component {
         {this.state.alert ? 
 
           <div style={{border: 'solid pink 1px', padding: '0.5em', marginTop: '1em'}}>            
-            <p>{this.state.error}</p>
-            <button 
-              className="pure-button"
-              onClick={()=>{this.setState({alert: false})}}>Ok
+            <h3>401 - Unauthorized</h3>
+            <p>Create a session to view this content:</p>                      
+            <button
+              name="1"
+              type="button"
+              className="pure-button pure-button-primary"
+              onClick={this.createSession.bind(this, 1)}>1 minute
             </button>
+            <button
+              name="30"
+              type="button"
+              className="pure-button pure-button-primary"
+              onClick={this.createSession.bind(this, 30)}>30 minutes
+            </button>
+            <button
+              name="90"
+              type="button"
+              className="pure-button pure-button-primary"
+              onClick={this.createSession.bind(this, 90)}>90 minutes
+            </button>
+
           </div>        
 
         :null}
