@@ -224,6 +224,7 @@ ul.pure-menu-list.navbar-right {
   border-radius: 0.33em;
   padding: 1em;
   text-align: center;
+  margin-top: 1em;
 }
 .loader > label {
   text-transform: uppercase;

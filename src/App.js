@@ -46,7 +46,7 @@ class App extends Component {
           
           {!this.props.web3 || !this.props.account ?         
               
-            <Loader web3={this.props.web3} account={this.props.account} />            
+            <Loader web3={this.props.web3} account={this.props.account} network={this.props.network} />            
               
           : 
 
@@ -64,7 +64,8 @@ class App extends Component {
 const mapStateToProps = state => {
   return {
     web3: state.web3.instance,
-    account: state.web3.accounts[0] || ''
+    account: state.web3.accounts[0] || '',
+    network: state.web3.network
   }
 }
 

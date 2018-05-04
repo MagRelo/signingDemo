@@ -12,16 +12,17 @@ class HomeComponent extends Component {
         <hr/>
         
         <h2>Web3 Account Management Demos</h2>
-        <Link to="/admin"> Admin panel </Link>
-        <p>No login necessary</p>        
 
-        <Link to="/admin"> User preferences </Link>
-        <p>Automatically remember users</p>        
+        <h3>User preferences (coming soon)</h3>
+        <p>Automatically remember your user's preferences</p>        
 
-        <Link to="/chat"> User Chat</Link>      
+        <h3> <Link to="/chat"> User Chat</Link> </h3>        
         <p>Live chat with verifiable messages</p>
+
+        <h3>Admin panel (coming soon)</h3>
+        <p>No login necessary</p>        
         
-        <Link to="/sessions"> Sessions</Link>        
+        <h3><Link to="/sessions"> Sessions</Link></h3>        
         <p>Create a session token to let users "login" without needing an email or password</p>
 
       </div>
