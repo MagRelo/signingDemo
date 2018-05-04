@@ -86,7 +86,11 @@ class ChatContainer extends Component {
         console.groupEnd();
 
         // send to server
-        console.log('fetch!');        
+        chatSocket.emit('message', {
+          message: msg,
+          signature: result.result,
+          content: content
+        })
         
       })
 

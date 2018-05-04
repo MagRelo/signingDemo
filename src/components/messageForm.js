@@ -66,7 +66,8 @@ class FormComponent extends Component {
                 value={this.state.content}
                 name="content"
                 onChange={this.handleChange.bind(this)}/>
-              <button 
+              <button
+                type="button" 
                 style={{float: 'right', marginTop: '0.5em'}} 
                 className="pure-button pure-button-primary pure-button-xlarge"
                 disabled={!this.state.content}
