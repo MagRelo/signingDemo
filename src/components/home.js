@@ -11,23 +11,19 @@ class HomeComponent extends Component {
         
         <hr/>
         
-        <h2>Account Management Demos</h2>
+        <h2>Web3 Account Management Demos</h2>
         <Link to="/admin"> Admin panel </Link>
         <p>No login necessary</p>        
 
+        <Link to="/admin"> User preferences </Link>
+        <p>Automatically remember users</p>        
+
         <Link to="/chat"> User Chat</Link>      
-        <p>Normal account features like avatars and preferences.</p>
+        <p>Live chat with verifiable messages</p>
         
         <Link to="/sessions"> Sessions</Link>        
         <p>Create a session token to let users "login" without needing an email or password</p>
 
-        <hr/>
-
-        <h2>Payments & Assets</h2>
-
-        <Link to="/payment"> Payment demo </Link>        
-        <p>Defer to the blockchain</p>
-      
       </div>
     )
   }

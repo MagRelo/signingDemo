@@ -39,7 +39,6 @@ const MessageModel = mongoose.model('Message', MessageSchema);
 
 app.get('/api/message/:id', function(req, res){
 
-  // get message data
   MessageModel.findOne({_id: req.params.id})
     .then(message => {return res.send(message)})
     .catch(error => {return res.status(500).send(error)})
@@ -49,15 +48,13 @@ app.get('/api/userdata', servesaAuth, function(req, res){
 
   MessageModel.find({'userAddress': req.userAddress})
     .then(messages => {return res.send(messages)})
-    .catch(error => {return res.status(500).send(error)})    
-  
+    .catch(error => {return res.status(500).send(error)})      
 })
 
 app.use(express.static('build'))
 app.get('/*', function(req, res){
   res.sendFile('index.html', { root: './build'});
 });
-
 // start server
 server.listen(8080, () => {
   console.log('server listening on 8080');  
@@ -70,14 +67,12 @@ server.listen(8080, () => {
 
 io.on('connection', function (socket) {
 
-
-  // send out fresh data
+  // send out fresh data on connect
   MessageModel.find({}).sort({'updatedAt': 1}).limit(10)
     .then(messageArray => {return socket.emit('update', messageArray)})
     .catch(error => {return socket.emit('error', error.message)})
 
 
-  // anyone can submit messages
   socket.on('message', function (data) {
 
     // authenticate (verify)
@@ -86,41 +81,24 @@ io.on('connection', function (socket) {
       sig: data.signature
     })
     
-    // format for convenience
-    const messageData = unpackSignedData(data.message, data.signature, userAddress)
-
     // save message
-    const message = new MessageModel(messageData)
+    const message = new MessageModel({
+      'userAddress': userAddress,
+      'messageParams': data.message,
+      'signature': data.signature,      
+      'content': ethUtil.toBuffer(data.message).toString('utf8')
+    })
+
     message.save()
       .then(savedMessage => {        
         return MessageModel.find({}).sort({'updatedAt': 1}).limit(10)
       })
-      .then(messageArray => {return socket.emit('update', messageArray)})
+      .then(messageArray => {
+        return socket.emit('update', messageArray)
+      })
       .catch(error => {return socket.emit('error', error.message)})
 
   })
-
-
-  // admin's can delete
-  socket.on('deleteAll', function (data) {
-    
-    // authenticate (verify)
-    const userAddress = sigUtil.recoverTypedSignature({
-      data: data.message,
-      sig: data.signature
-    })
-
-    // authorize
-    if(userAddress !== '0x106F681949E222D57A175cD85685E3bD9975b973'){
-      return socket.emit('error', 'bad auth')
-    }  
-
-    // add user
-    MessageModel.remove({})
-      .then(result => {return socket.emit('success', result)})
-      .catch(error => {return socket.emit('error', error.message)})
-
-  });
 
 });
 
@@ -129,18 +107,6 @@ io.on('connection', function (socket) {
 // *
 // helpers
 // *
-
-function unpackSignedData(messageParams, signature, userAddress) {
-  
-  const messageData = {
-    'messageParams': messageParams,
-    'signature': signature,
-    'userAddress': userAddress,
-    'content': ethUtil.toBuffer(messageParams).toString('utf8')
-  }
-  return messageData
-}
-
 
 function servesaAuth(req, res, next){
 
@@ -162,8 +128,7 @@ function servesaAuth(req, res, next){
   })
 
   // parse message, check timestamp for expiration
-  const messageData = unpackSignedData(authObject.message, authObject.signature, userAddress)
-  const message = JSON.parse(messageData.content)
+  const message = JSON.parse(ethUtil.toBuffer(authObject.message).toString('utf8'))
   const expirationDate = new Date(message.expires)
   if(expirationDate < Date.now()){    
     return res.status(401).send([])

@@ -29,21 +29,21 @@ class LoginComponent extends Component {
     this.props.saveSession(duration)
   }
 
-  authRequest(){
+  getMessages(){
 
-    const authObject = {
+    const servesaHeader = JSON.stringify({
       message: this.props.message,
       signature: this.props.signature
-    }
+    })
       
     return fetch('/api/userdata', {
       method: 'GET',
-      headers: {
-        'x-servesa': JSON.stringify(authObject)
-      }
-    }).then(response => {
+      headers: {'x-servesa': servesaHeader}
+    })
+    .then(response => {
       if(response.status === 401){
         this.setState({alert: true, error: '401 - Unauthorized'})
+        return []
       }
             
       return response.json()
@@ -62,7 +62,7 @@ class LoginComponent extends Component {
         <h1><Link to="/">Home</Link>&nbsp;> Sessions</h1>
         <hr/>
         
-        <h2>Session</h2>
+        <h2>User Session</h2>
         <p>Status: {this.props.expires ? 'Active' : 'Not active'}</p>
         {this.props.expires ?
           <p>Expires: {moment(this.props.expires).format('llll')}</p>
@@ -104,14 +104,12 @@ class LoginComponent extends Component {
 
         }
 
-        <div>
-          <hr/>
-          <button
-            name="90"
-            type="button"
-            className="pure-button pure-button-primary"
-            onClick={this.authRequest.bind(this)}>Get User Messages</button>            
-        </div>
+        <hr/>
+        <button
+          name="90"
+          type="button"
+          className="pure-button pure-button-primary"
+          onClick={this.getMessages.bind(this)}>Get User Messages</button>     
 
         {this.state.messages.map(message => {
           return <ul>
