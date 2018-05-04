@@ -11,7 +11,8 @@ class LoginComponent extends Component {
 
     this.state = {
       alert: false,
-      error: ''
+      error: '',
+      messages: []
     }
   }
 
@@ -20,6 +21,7 @@ class LoginComponent extends Component {
   }
 
   logout(){
+    this.setState({messages: []})
     this.props.clearSession()
   }
 
@@ -27,42 +29,59 @@ class LoginComponent extends Component {
     this.props.saveSession(duration)
   }
 
+  authRequest(){
+
+    const authObject = {
+      message: this.props.message,
+      signature: this.props.signature
+    }
+      
+    return fetch('/api/userdata', {
+      method: 'GET',
+      headers: {
+        'x-servesa': JSON.stringify(authObject)
+      }
+    }).then(response => {
+      if(response.status === 401){
+        this.setState({alert: true, error: '401 - Unauthorized'})
+      }
+            
+      return response.json()
+    })
+    .then(responseBody => {
+      this.setState({messages: responseBody})
+    })
+
+
+  }
+
   render() {
     return(
       <div>
 
-        <h1><Link to="/">Home</Link>&nbsp;> Login</h1>
+        <h1><Link to="/">Home</Link>&nbsp;> Sessions</h1>
         <hr/>
         
-        {this.state.alert ? 
-
-          <div style={{border: 'solid pink 1px', padding: '0.5em'}}>            
-            <p>{this.state.error}</p>
-            <button 
-              className="pure-button"
-              onClick={()=>{this.setState({alert: false})}}>Ok
-            </button>
-          </div>        
-
+        <h2>Session</h2>
+        <p>Status: {this.props.expires ? 'Active' : 'Not active'}</p>
+        {this.props.expires ?
+          <p>Expires: {moment(this.props.expires).format('llll')}</p>
         :null}
 
         {this.props.expires ? 
         
           <div>
-            <h2>Active Session</h2>
-            <p>Expires: {moment(this.props.expires).fromNow()}</p>
             <button
               name="90"
               type="button"
-              className="pure-button pure-button-primary"
+              className="pure-button"
               onClick={this.logout.bind(this)}> logout
             </button> 
-
           </div>         
           
         :                
+
           <div>
-            <h2>Create a session token</h2>
             <button
               name="1"
               type="button"
@@ -81,9 +100,36 @@ class LoginComponent extends Component {
               className="pure-button pure-button-primary"
               onClick={this.createSession.bind(this, 90)}>90 minutes
             </button>
-
           </div>
+
         }
+
+        <div>
+          <hr/>
+          <button
+            name="90"
+            type="button"
+            className="pure-button pure-button-primary"
+            onClick={this.authRequest.bind(this)}>Get User Messages</button>            
+        </div>
+
+        {this.state.messages.map(message => {
+          return <ul>
+            <li key={message._id}>{message.content}</li>
+          </ul>
+        })}
+
+        {this.state.alert ? 
+
+          <div style={{border: 'solid pink 1px', padding: '0.5em', marginTop: '1em'}}>            
+            <p>{this.state.error}</p>
+            <button 
+              className="pure-button"
+              onClick={()=>{this.setState({alert: false})}}>Ok
+            </button>
+          </div>        
+
+        :null}
 
       </div>
     )
@@ -92,20 +138,16 @@ class LoginComponent extends Component {
 
 const mapStateToProps = state => {
   return {
-    expires: state.user.expires
+    expires: state.user.expires,
+    message: state.user.message, 
+    signature: state.user.signature
   }
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadSession: () => {
-      dispatch(loadSession())
-    },
-    saveSession: (duration) => {
-      dispatch(saveSession(duration))
-    },
-    clearSession: () => {
-      dispatch(clearSession())
-    }
+    saveSession: (duration) => { dispatch(saveSession(duration)) },
+    loadSession: () => { dispatch(loadSession()) },
+    clearSession: () => { dispatch(clearSession()) }
   }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(LoginComponent)

@@ -7,9 +7,6 @@ const sigUtil = require('eth-sig-util')
 const ethUtil = require('ethereumjs-util')
 const camelCase = require('camelcase')
 
-// addresses that are not allowed to post messages
-const banList = []
-
 // *
 // db
 // *
@@ -46,7 +43,15 @@ app.get('/api/message/:id', function(req, res){
   MessageModel.findOne({_id: req.params.id})
     .then(message => {return res.send(message)})
     .catch(error => {return res.status(500).send(error)})
-});
+})
+
+app.get('/api/userdata', servesaAuth, function(req, res){
+
+  MessageModel.find({'userAddress': req.userAddress})
+    .then(messages => {return res.send(messages)})
+    .catch(error => {return res.status(500).send(error)})    
+  
+})
 
 app.use(express.static('build'))
 app.get('/*', function(req, res){
@@ -81,11 +86,6 @@ io.on('connection', function (socket) {
       sig: data.signature
     })
     
-    // authorize
-    if(banList.indexOf(userAddress) > -1){
-      return socket.emit('error', 'bad auth')
-    }
-    
     // format for convenience
     const messageData = unpackSignedData(data.message, data.signature, userAddress)
 
@@ -102,7 +102,7 @@ io.on('connection', function (socket) {
 
 
   // admin's can delete
-  socket.on('login', function (data) {
+  socket.on('deleteAll', function (data) {
     
     // authenticate (verify)
     const userAddress = sigUtil.recoverTypedSignature({
@@ -139,4 +139,37 @@ function unpackSignedData(messageParams, signature, userAddress) {
     'content': ethUtil.toBuffer(messageParams).toString('utf8')
   }
   return messageData
+}
+
+
+function servesaAuth(req, res, next){
+
+  // check for header
+  if(!req.headers['x-servesa']){    
+    return res.status(401).send([])
+  }
+
+  // parse header object
+  const authObject = JSON.parse(req.headers['x-servesa'])
+  if(!authObject.message || !authObject.signature){    
+    return res.status(401).send([])
+  }
+
+  // recover public key
+  const userAddress = sigUtil.recoverPersonalSignature({
+    data: authObject.message,
+    sig: authObject.signature
+  })
+
+  // parse message, check timestamp for expiration
+  const messageData = unpackSignedData(authObject.message, authObject.signature, userAddress)
+  const message = JSON.parse(messageData.content)
+  const expirationDate = new Date(message.expires)
+  if(expirationDate < Date.now()){    
+    return res.status(401).send([])
+  }
+
+  // pass along userAddress
+  req.userAddress = userAddress
+  next()
 }

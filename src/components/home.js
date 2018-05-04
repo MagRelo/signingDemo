@@ -18,8 +18,8 @@ class HomeComponent extends Component {
         <Link to="/chat"> User Chat</Link>      
         <p>Normal account features like avatars and preferences.</p>
         
-        <Link to="/login"> Login</Link>        
-        <p>Create a session token (JWT) to let users "login" without needing an email or password</p>
+        <Link to="/sessions"> Sessions</Link>        
+        <p>Create a session token to let users "login" without needing an email or password</p>
 
         <hr/>
 

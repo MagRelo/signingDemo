@@ -31,7 +31,7 @@ ReactDOM.render(
           <Route path="/chat" component={Chat}></Route>
           <Route path="/message/:id" component={Detail}></Route>
           <Route path="/account" component={Account}></Route>
-          <Route path="/login" component={Login}></Route>
+          <Route path="/sessions" component={Login}></Route>
           <Route component={Home}></Route>
         </Switch>
       </App>

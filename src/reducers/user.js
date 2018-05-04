@@ -14,8 +14,15 @@ export function loadSession(){
   return function(dispatch){
 
     const userAddress = store.getState().user.userAccount
+
     getCache(userAddress)
       .then(val => {
+
+        // clear the session
+        if(!val){                  
+          return dispatch({ type: 'SESSION_CLEAR' })
+        }
+
         return dispatch({
           type: 'SESSION_LOAD',
           payload: JSON.parse(val)
@@ -26,7 +33,6 @@ export function loadSession(){
 
 export function saveSession(duration){
   return function(dispatch){
-
     
     const web3 = store.getState().web3.instance
     const userAddress = store.getState().user.userAccount
@@ -59,7 +65,7 @@ export function saveSession(duration){
         setCache(userAddress, JSON.stringify(sessionData), {'staleAfter': staleAfter})
           .then(val => {
             return dispatch({
-              type: 'SESSION_SAVE',
+              type: 'SESSION_LOAD',
               payload: sessionData
             })
           })
@@ -102,11 +108,11 @@ const userReducer = (state = initialState, action) => {
   if (action.type === 'SESSION_LOAD'){    
     return Object.assign({}, state, action.payload)
   }
-  if (action.type === 'SESSION_SAVE'){    
-    return Object.assign({}, state, action.payload)
-  }
   if (action.type === 'SESSION_CLEAR'){    
     return Object.assign({}, state, {
+      message: '', 
+      signature: '', 
+      duration: 0,
       expires: null
     })    
   }
