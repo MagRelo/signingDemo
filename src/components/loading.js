@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import Checkmark from './checkmark'
+
 let timer = null
 
 class AdminComponent extends Component {
@@ -16,11 +18,11 @@ class AdminComponent extends Component {
       this.setState({showTip: true})
     }, 4000)
   }
-
   componentWillUnmount(){
     clearTimeout(timer)
   }
 
+  
   render() {
     return(                      
       <div className="loader">                  
@@ -32,26 +34,15 @@ class AdminComponent extends Component {
           </div>
         :null}         
 
-        {!this.props.web3 ? 
-          <div>
-            <p>Web3: ✘ </p>
-            {this.state.showTip ? 
-              <p>web3 is not available. This site requires a browser that supports web3.</p>
-            :null}            
-          </div> 
+        <p>Web3: <Checkmark boolean={this.props.web3}/> </p>
+        <p>Network: <Checkmark boolean={this.props.network}/></p>
+        <p>Account: <Checkmark boolean={this.props.account}/></p>
+        
+        {!this.props.web3 && this.state.showTip ? 
+          <p>web3 is not available. This application requires a browser that supports web3.</p>
         :null}
-
-        {this.props.web3 && !this.props.account ? 
-          <div>
-            <p>Web3: {this.props.web3 ? '✓' : '✘'} </p>
-            <p>Network: {this.props.web3 ? '✓ (' + this.props.network + ')' : '✘'}</p>
-            <p>Account: {this.props.account ? this.props.account.substring(0,8) + '...' : '✘'} </p>
-
-            {this.state.showTip ? 
-              <p>Your account is not available. You may need to unlock your account.</p>
-            :null}
-            
-          </div> 
+        {this.props.web3 && !this.props.account && this.state.showTip ? 
+          <p>Your account is not available. You may need to unlock your account.</p>
         :null}
 
       </div>
