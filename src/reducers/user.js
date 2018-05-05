@@ -14,11 +14,11 @@ export function loadSession(){
   return function(dispatch){
 
     const userAddress = store.getState().user.userAccount
-
     getCache(userAddress)
       .then(val => {
 
-        // clear the session
+        // if no 'val' then we don't have a session or it has 
+        //  expired => clear out the rest of the session data
         if(!val){                  
           return dispatch({ type: 'SESSION_CLEAR' })
         }
@@ -28,6 +28,19 @@ export function loadSession(){
           payload: JSON.parse(val)
         })
       })
+  }
+}
+
+export function clearSession(){
+  return function(dispatch){
+    
+    const userAddress = store.getState().user.userAccount
+    clearCache(userAddress)
+      .then(() => {        
+        return dispatch({
+          type: 'SESSION_CLEAR'
+        })
+      })    
   }
 }
 
@@ -73,20 +86,6 @@ export function saveSession(duration){
       })
   }
 }
-
-export function clearSession(){
-  return function(dispatch){
-    
-    const userAddress = store.getState().user.userAccount
-    clearCache(userAddress)
-      .then(() => {        
-        return dispatch({
-          type: 'SESSION_CLEAR'
-        })
-      })    
-  }
-}
-
 
 
 // Reducers

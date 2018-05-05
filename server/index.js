@@ -135,7 +135,10 @@ function servesaAuth(req, res, next){
     return res.status(401).send([])
   }
 
-  // pass along userAddress
+  // pass along userAddress and message
   req.userAddress = userAddress
+  req.message = userMessage
+
+  // pass on to next middleware function
   next()
 }

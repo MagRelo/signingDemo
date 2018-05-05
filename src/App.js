@@ -46,12 +46,11 @@ class App extends Component {
           
           {!this.props.web3 || !this.props.account ?         
               
-            <Loader web3={this.props.web3} account={this.props.account} network={this.props.network} />            
-              
-          : 
+            <Loader web3={this.props.web3} account={this.props.account} network={this.props.network} />                          
+          :           
 
-            <div>{this.props.children}</div>
-
+            {...this.props.children}
+            
           }          
 
         </div>
