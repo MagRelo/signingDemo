@@ -128,7 +128,7 @@ function servesaAuth(req, res, next){
     sig: authObject.signature
   })
 
-  // parse message, check timestamp for expiration
+  // parse message & check timestamp for expiration
   const message = JSON.parse(ethUtil.toBuffer(authObject.message).toString('utf8'))
   const expirationDate = new Date(message.expires)
   if(expirationDate < Date.now()){    
@@ -137,7 +137,7 @@ function servesaAuth(req, res, next){
 
   // pass along userAddress and message
   req.userAddress = userAddress
-  req.message = userMessage
+  req.userMessage = message
 
   // pass on to next middleware function
   next()
