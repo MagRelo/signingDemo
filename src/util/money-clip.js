@@ -25,14 +25,13 @@ export const get = (key, opts) => {
 }
 
 export const set = (key, data, spec) => {
-  const { staleAfter, lib, version } = getOpts(spec)
+  const {lib, version } = getOpts(spec)
   return lib
     .set(
       key,
       JSON.stringify({
         version,
         time: Date.now(),
-        staleAfter: staleAfter,
         data
       })
     )
