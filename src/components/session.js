@@ -107,7 +107,8 @@ class LoginComponent extends Component {
 
           <div style={{border: 'solid pink 1px', padding: '0.5em', marginTop: '1em'}}>            
             <h3>401 - Unauthorized</h3>
-            <p>Create a session to view this content:</p>                      
+            <p>You must create a session to view this content:</p>                      
+            <label className="label-upper">Session Length</label>
             <button
               name="1"
               type="button"

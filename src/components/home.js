@@ -11,8 +11,9 @@ class HomeComponent extends Component {
         
         <hr/>
         <p>
-          <a href="https://github.com/ethereum/web3.js/" target="_blank" rel="noopener noreferrer">Web3</a> is the JavaScript API for Ethereum products. 
-          The demos below showcase some of web3's features.
+          <a href="https://github.com/ethereum/web3.js/" target="_blank" rel="noopener noreferrer">Web3</a>&nbsp;
+          is the JavaScript API for Ethereum products. The demos below showcase some of 
+          web3's features. All of these demos are based on the user's public key so no personal data is collected or stored.
         </p>        
 
         <h3><Link to="/preferences">User preferences</Link></h3>

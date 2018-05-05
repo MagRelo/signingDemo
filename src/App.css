@@ -300,11 +300,14 @@ ul.chat-list > li > p {
 }
 
 .label-upper {
+  display: block;
+  margin-bottom: 0.5em;
+
   text-transform: uppercase;
   font-size: smaller;
   color: #103a52;
   font-family: 'Barlow', sans-serif;
-  color: #4e4e4e;
+  color: #4e4e4e;  
 }
 
 /* Detail pages */
@@ -334,10 +337,11 @@ ul.chat-list > li > p {
   color: #103A52;
 }
 
+
+.home h3 {
+  margin-bottom: 0.25em;
+}
 .demo-description{
   margin-top: 0.25em;
   margin-left: 0.5em;
-}
-.home h3 {
-  margin-bottom: 0.25em;
 }
