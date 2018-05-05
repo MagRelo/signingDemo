@@ -19,7 +19,7 @@ class MessageListComponent extends Component {
 
   render() {
     return(
-      <div style={{height: '100%', overflow: 'scroll'}}>  
+      <div style={{overflow: 'scroll'}}>  
 
         <ul id="message-list" className="chat-list">          
           {this.props.list.map( message => {

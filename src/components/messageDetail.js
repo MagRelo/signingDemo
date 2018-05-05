@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {Link} from 'react-router-dom'
 import sigUtil from 'eth-sig-util'
 import ethUtil  from 'ethereumjs-util'
 
@@ -86,6 +87,11 @@ class DetailComponent extends Component {
       
       <div>
 
+        <div>
+          <h1> <Link to="/">Demos</Link>&nbsp;> Message </h1>
+          <hr/>
+        </div>
+
         <h2>Verify Sender</h2>
         <p>You can calculate the user address that created this message to ensure that it has not been tampered with.</p>
 
@@ -113,7 +119,7 @@ class DetailComponent extends Component {
           </span>
 
           {this.state.verified ? 
-            <a style={{ padding: '0.5em 1em', display: 'inline-block' }}
+            <a style={{ marginLeft: '0.5em'}}
               href={this.etherScanUrl(this.props.network, this.state.message.userAddress)}
               target="_blank">
               View Account History

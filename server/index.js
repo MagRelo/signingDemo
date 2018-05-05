@@ -37,20 +37,21 @@ const MessageModel = mongoose.model('Message', MessageSchema);
 
 // serve the react app for all http requests
 
+
+// get user data
+app.get('/api/userdata', servesaAuth, function(req, res){
+  MessageModel.find({'userAddress': req.userAddress})
+    .then(messages => {return res.send(messages)})
+    .catch(error => {return res.status(500).send(error)})      
+})
+
+// message detail
 app.get('/api/message/:id', function(req, res){
 
   MessageModel.findOne({_id: req.params.id})
     .then(message => {return res.send(message)})
     .catch(error => {return res.status(500).send(error)})
 })
-
-app.get('/api/userdata', servesaAuth, function(req, res){
-
-  MessageModel.find({'userAddress': req.userAddress})
-    .then(messages => {return res.send(messages)})
-    .catch(error => {return res.status(500).send(error)})      
-})
-
 app.use(express.static('build'))
 app.get('/*', function(req, res){
   res.sendFile('index.html', { root: './build'});
@@ -68,7 +69,7 @@ server.listen(8080, () => {
 io.on('connection', function (socket) {
 
   // send out fresh data on connect
-  MessageModel.find({}).sort({'updatedAt': 1}).limit(10)
+  MessageModel.find().sort({'updatedAt': 1})
     .then(messageArray => {return socket.emit('update', messageArray)})
     .catch(error => {return socket.emit('error', error.message)})
 
@@ -91,7 +92,7 @@ io.on('connection', function (socket) {
 
     message.save()
       .then(savedMessage => {        
-        return MessageModel.find({}).sort({'updatedAt': 1}).limit(10)
+        return MessageModel.find().sort({'updatedAt': 1})
       })
       .then(messageArray => {
         return socket.emit('update', messageArray)
