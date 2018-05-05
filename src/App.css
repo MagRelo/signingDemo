@@ -40,6 +40,7 @@ h1, h2 {
   text-decoration: none;
   color: #103a52;
   padding-bottom: 2px;
+  line-height: 1.4em;
 }
 
 
@@ -226,7 +227,7 @@ ul.pure-menu-list.navbar-right {
   text-align: center;
   margin-top: 1em;
 }
-.loader > label {
+.loader label {
   text-transform: uppercase;
 }
 
@@ -331,4 +332,12 @@ ul.chat-list > li > p {
   text-decoration: none;
   border-bottom: solid 3px #FF5934;
   color: #103A52;
+}
+
+.demo-description{
+  margin-top: 0.25em;
+  margin-left: 0.5em;
+}
+.home h3 {
+  margin-bottom: 0.25em;
 }

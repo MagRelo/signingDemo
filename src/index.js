@@ -27,10 +27,13 @@ ReactDOM.render(
     <BrowserRouter>    
       <App>
         <Switch>
-          <Route path="/admin" component={Admin}></Route>
+          <Route path="/preferences" component={Account}></Route>
+          
           <Route path="/chat" component={Chat}></Route>
           <Route path="/message/:id" component={Detail}></Route>
-          <Route path="/account" component={Account}></Route>
+
+          <Route path="/admin" component={Admin}></Route>
+
           <Route path="/sessions" component={Login}></Route>
           <Route component={Home}></Route>
         </Switch>

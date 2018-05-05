@@ -61,7 +61,7 @@ class LoginComponent extends Component {
     return(
       <div>
 
-        <h1><Link to="/">Home</Link>&nbsp;> Sessions</h1>
+        <h1><Link to="/">Demos</Link>&nbsp;> Sessions</h1>
         <hr/>
         
         <h2>User Session</h2>

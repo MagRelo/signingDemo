@@ -47,7 +47,7 @@ class AdminComponent extends Component {
       <div>
 
         <h1>
-          <Link to="/">Home</Link> &nbsp;> Admin Panel          
+          <Link to="/">Demos</Link> &nbsp;> Admin Panel          
         </h1>
 
         <hr/>
