@@ -48,9 +48,10 @@ class DetailComponent extends Component {
       const verified = (userAddress === this.state.message.userAddress)
 
       this.setState({ 
-        verifyStatus: verified ? '✓  Verified' : 'Sender Not Verified',
+        verifyStatus: verified ? ' ✓' : 'Sender Not Verified',
         verified: verified,
-        calcing: false
+        calcing: false,
+        calcUserAddress: userAddress
       })
 
     }, 1300)
@@ -92,44 +93,6 @@ class DetailComponent extends Component {
           <hr/>
         </div>
 
-        <h2>Verify Sender</h2>
-        <p>You can calculate the user address that created this message to ensure that it has not been tampered with.</p>
-
-        <label className="label-upper">Reported Sender</label>        
-        <div className="message-data">
-          <p>{this.state.message.userAddress}</p>
-        </div>
-
-        <label className="label-upper">Status</label>
-        <div>          
-          <button 
-              style={{float: 'right'}}
-              className="pure-button pure-button-primary"
-              disabled={this.state.verified}
-              onClick={this.verifySignature.bind(this)}> Verify
-          </button>          
-          
-          <span style={{ padding: '0.5em 1em', display: 'inline-block' }}>
-            
-            {this.state.calcing ? 
-              <div style={{float: 'left', marginRight: '0.25em'}} className="small-spinner"></div>
-            :null}
-
-            {this.state.verifyStatus}
-          </span>
-
-          {this.state.verified ? 
-            <a style={{ marginLeft: '0.5em'}}
-              href={this.etherScanUrl(this.props.network, this.state.message.userAddress)}
-              target="_blank">
-              View Account History
-            </a>
-          :null}
-                    
-        </div>
-
-        <hr></hr>    
-
         <h2>Message Data</h2>    
 
         <label className="label-upper">Decoded Hex Data</label>
@@ -146,6 +109,27 @@ class DetailComponent extends Component {
         <div className="message-data">
           <p>{this.state.message.signature}</p>
         </div>
+
+        <h2>Verify Sender</h2>
+        <p>You can calculate the user address that created this message to ensure that it has not been tampered with.</p>
+
+        <label className="label-upper">Reported Sender</label>        
+        <div className="message-data">
+          <p>{this.state.message.userAddress}</p>
+        </div>
+
+        <label className="label-upper">Status</label>
+        <div className="message-data">
+          <p>{this.state.calcUserAddress}{this.state.verifyStatus}
+          </p>
+        </div>
+            
+        <button 
+          style={{float: 'right'}}
+          className="pure-button pure-button-primary"
+          disabled={this.state.verified}
+          onClick={this.verifySignature.bind(this)}> Verify
+        </button>
 
       </div>
     )
