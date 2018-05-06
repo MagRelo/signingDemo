@@ -88,7 +88,7 @@ class DetailComponent extends Component {
       <div>
 
         <div>
-          <h1> <Link to="/">Demos</Link>&nbsp;> Message </h1>
+          <h1> <Link to="/">Demos</Link>&nbsp;><Link to="/chat"> Chat</Link>&nbsp;> Message </h1>
           <hr/>
         </div>
 

@@ -7,15 +7,19 @@ class HomeComponent extends Component {
       
       <div className="home">
 
-        <h1>Web3 Demos</h1>
+        <h1>Digital Signature Demos</h1>
         
         <hr/>
         <p>
-          <a href="https://github.com/ethereum/web3.js/" target="_blank" rel="noopener noreferrer">Web3</a>&nbsp;
-          is the JavaScript API for Ethereum products. The demos below showcase some of 
-          web3's features. All of these demos are based on the user's public key so no personal data is collected or stored.
+          We can use digital signatures in place of email and password 
+          to reduce the amount of personal data is collected and stored.
         </p>        
 
+        <h3> <Link to="/chat"> User Chat</Link> </h3>        
+        <p className="demo-description">
+          Live chat with verifiable messages
+        </p>
+        
         <h3><Link to="/preferences">User preferences</Link></h3>
         <p className="demo-description">
           Use the user's public key to remember their preferences without requiring the user to login.
@@ -31,11 +35,6 @@ class HomeComponent extends Component {
           Create a session token to let users "login" without needing an email or password.
         </p>
 
-        <h3> <Link to="/chat"> User Chat</Link> </h3>        
-        <p className="demo-description">
-          Live chat with verifiable messages
-        </p>
-        
         <h3> <Link to="/chat"> Dead-man switch</Link> </h3>        
         <p className="demo-description">
           Periodically post a message to declare that you are not under duress. If the message 
