@@ -10,11 +10,60 @@ import store from '../store'
 
 // Actions
 // ---
+export function loadPreferences(){
+  return function(dispatch){
+
+    const userAddress = store.getState().user.userAccount
+    getCache('prefs-' + userAddress)
+      .then(val => {
+
+        // if no 'val' then we don't have a session or it has 
+        //  expired => clear out the rest of the session data
+        if(!val){                  
+          return dispatch({ type: 'LOCAL_PREFS_CLEAR' })
+        }
+
+        return dispatch({
+          type: 'LOCAL_PREFS_LOAD',
+          payload: JSON.parse(val)
+        })
+      })
+  }
+}
+
+export function savePreferences(preferences){
+  return function(dispatch){
+
+    const userAddress = store.getState().user.userAccount
+    setCache('prefs-' + userAddress, JSON.stringify(preferences))
+      .then(val => {
+        return dispatch({
+          type: 'LOCAL_PREFS_LOAD',
+          payload: preferences
+        })
+      })
+  }
+}
+
+export function clearPreferences(){
+  return function(dispatch){
+
+    const userAddress = store.getState().user.userAccount
+    clearCache('prefs-' + userAddress)
+      .then(val => {
+        return dispatch({ type: 'LOCAL_PREFS_CLEAR' })
+      })
+  }
+}
+
+
+
+
 export function loadSession(){
   return function(dispatch){
 
     const userAddress = store.getState().user.userAccount
-    getCache(userAddress)
+    getCache('session-' + userAddress)
       .then(val => {
 
         // if no 'val' then we don't have a session or it has 
@@ -35,11 +84,9 @@ export function clearSession(){
   return function(dispatch){
     
     const userAddress = store.getState().user.userAccount
-    clearCache(userAddress)
+    clearCache('session-' + userAddress)
       .then(() => {        
-        return dispatch({
-          type: 'SESSION_CLEAR'
-        })
+        return dispatch({ type: 'SESSION_CLEAR' })
       })    
   }
 }
@@ -75,7 +122,7 @@ export function saveSession(duration){
 
         // save session to IndexedDB
         const staleAfter = Date.now() + (duration * 60 * 1000)
-        setCache(userAddress, JSON.stringify(sessionData), {'staleAfter': staleAfter})
+        setCache('session-' + userAddress, JSON.stringify(sessionData), {'staleAfter': staleAfter})
           .then(val => {
             return dispatch({
               type: 'SESSION_LOAD',
@@ -91,19 +138,31 @@ export function saveSession(duration){
 // Reducers
 // ---
 const initialState = {
-  userAccount: '1234',
-  avatar: '',
-  textColor: 'default',
-  bgColor: 'default'  ,
+  userAccount: '',
+  text: 'medium',
+  theme: 'light', 
+  clientSaved: false, 
   message: '', 
   signature: '', 
   duration: 0,
-  expires: null
+  expires: null  
 }
 const userReducer = (state = initialState, action) => {  
   if (action.type === 'WEB3_INITIALIZED'){    
     return Object.assign({}, state, {'userAccount': action.payload.accounts[0]})
   }
+  
+  if (action.type === 'LOCAL_PREFS_LOAD'){    
+    return Object.assign({}, state, action.payload, {clientSaved: true})
+  }
+  if (action.type === 'LOCAL_PREFS_CLEAR'){    
+    return Object.assign({}, state, action.payload, {
+      clientSaved: false,
+      theme: 'light',
+      text: 'medium'
+    })
+  }
+
   if (action.type === 'SESSION_LOAD'){    
     return Object.assign({}, state, action.payload)
   }
