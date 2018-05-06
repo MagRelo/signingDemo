@@ -67,7 +67,7 @@ a.pure-link-primary:visited{
   background-color: #FF5934;
 }
 .pure-button-active{
-  background-color: #ff593457;
+  background-color: #34ff6957;
 }
 .pure-button-xlarge{
    font-size: 115%;
@@ -135,6 +135,7 @@ form > p {
   animation: sk-scaleout 1.0s infinite ease-in-out;
 }
 .small-spinner {
+  display: inline-block;  
   width: 1em;
   height: 1em;
   margin-left: auto;
@@ -300,7 +301,6 @@ ul.chat-list > li > p {
 }
 
 .label-upper {
-  display: block;
   margin-bottom: 0.5em;
 
   text-transform: uppercase;
