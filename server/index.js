@@ -35,11 +35,28 @@ const MessageModel = mongoose.model('Message', MessageSchema);
 // Server & http routing
 // *
 
-// serve the react app for all http requests
+// delete all messages
+app.post('/api/messages/delete', servesaAuth, function(req, res){
 
+  // auth
+  if(req.userAddress != '0x863afa452f38966b54cb1149d934e34670d0683a'){
+    return res.status(401).send({})
+  }
+  
+  // delete all messages
+  MessageModel.remove()
+    .then(result => {return res.send(result)})
+    .catch(error => {return res.status(500).send(error)}) 
+})
 
 // get user data
 app.get('/api/userdata', servesaAuth, function(req, res){
+  
+  const expirationDate = new Date(req.message.expires)
+  if(expirationDate < Date.now()){    
+    return res.status(401).send([])
+  }
+
   MessageModel.find({'userAddress': req.userAddress})
     .then(messages => {return res.send(messages)})
     .catch(error => {return res.status(500).send(error)})      
@@ -130,10 +147,6 @@ function servesaAuth(req, res, next){
 
   // parse message & check timestamp for expiration
   const message = JSON.parse(ethUtil.toBuffer(authObject.message).toString('utf8'))
-  const expirationDate = new Date(message.expires)
-  if(expirationDate < Date.now()){    
-    return res.status(401).send([])
-  }
 
   // pass along userAddress and message
   req.userAddress = userAddress

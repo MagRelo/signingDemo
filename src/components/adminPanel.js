@@ -36,9 +36,24 @@ class AdminComponent extends Component {
         if (result.error) {   
           return this.setState({alert: true, error: "User denied signature."})
         }
+        
+        const servesaHeader = JSON.stringify({
+          message: contentAsHex,
+          signature: result.result
+        })
+          
+        return fetch('/api/messages/delete', {
+          method: 'POST',
+          headers: {'x-servesa': servesaHeader}
+        })
+        .then(response => {
+          if(response.status === 401){
+            return this.setState({alert: true, caption: '401 - Unauthorized'})
+          }
 
-        // send to server
-        console.log('fetch!');                
+          return this.setState({alert: true, caption: 'sucess!'})
+        })
+        
       })    
   }
 
@@ -52,10 +67,19 @@ class AdminComponent extends Component {
 
         <hr/>
 
+        <div>
+          <button
+              name="delete"
+              type="button"
+              className="pure-button pure-button-primary"
+              onClick={this.submitAction.bind(this)}>Delete all messages
+            </button>
+        </div>
+
         {this.state.alert ? 
 
-          <div style={{border: 'solid pink 1px', padding: '0.5em'}}>            
-            <p>{this.state.error}</p>
+          <div style={{border: 'solid lightgray 1px', marginTop: '1em', padding: '0.5em'}}>            
+            <h3>{this.state.caption}</h3>
             <button 
               className="pure-button"
               onClick={()=>{this.setState({alert: false})}}>Ok
@@ -63,40 +87,6 @@ class AdminComponent extends Component {
           </div>        
 
         :null}
-
-        <form className="pure-form">
-
-          <fieldset>
-            <label htmlFor="restart">Restart Server</label>
-            <button
-              name="restart"
-              type="button"
-              className="pure-button pure-button-primary"
-              onClick={this.submitAction.bind(this)}>Restart
-            </button>
-          </fieldset>
-
-          <fieldset>
-            <label htmlFor="redeploy">Redeploy Code</label>
-            <button
-              name="redeploy"
-              type="button"
-              className="pure-button pure-button-primary"
-              onClick={this.submitAction.bind(this)}>Redeploy
-            </button>
-          </fieldset>
-
-          <fieldset>
-            <label htmlFor="stop">Stop server</label>
-            <button
-              name="stop"
-              type="button"
-              className="pure-button pure-button-primary"
-              onClick={this.submitAction.bind(this)}>Stop
-            </button>
-          </fieldset>
-
-        </form>
 
       </div>
     )
