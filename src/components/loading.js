@@ -33,20 +33,26 @@ class AdminComponent extends Component {
   render() {
     return(                      
       <div className="loader">                  
+
+        <h1>Digital Signature Demos</h1>
         
-        {!this.state.showTip ? 
-          <div>
-            <label>loading...</label>              
-            <div className="spinner"></div>        
-          </div>
-        :null}         
+        <hr/>    
 
         <p>Web3: <Checkmark boolean={this.props.web3}/> </p>
         <p>Network: <Checkmark boolean={this.props.network}/></p>
         <p>Account: <Checkmark boolean={this.props.account}/></p>
+
+                
+        {!this.state.showTip ? 
+          <div>            
+            <div className="spinner"></div>        
+            <label>loading...</label>              
+          </div>
+        :null}    
         
         {!this.props.web3 && this.state.showTip ?           
           <div>
+            
             <p>web3 is not available. This application requires a browser that supports web3.</p>
             
             <div style={buttonGrid}>
