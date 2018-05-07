@@ -10,15 +10,6 @@ Demos:
 
 ## Install & Run 
 
-1. Install dependancies
-```
-$ npm install
-```
-2. Start server. Server is listening at http://localhost:8080
-```
-$ npm run dev
-```
-3. Start client. Will open browser at http://localhost:3000
-```
-$ npm start
-```
+1. Run `$ npm install` to install dependancies
+2. Run `$ npm run dev` to start the server. Server will be listening at http://localhost:8080
+3. In a new terminal window, run `$ npm start` to start the client. Browser will open at http://localhost:3000
