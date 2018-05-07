@@ -17,6 +17,13 @@ html, body, #root, .App, .container{
   height: 100%;
 }
 
+@media screen and (min-width: 992px) {
+  .container {
+    max-width: 800px;
+    margin: 0 30% 0 auto;
+  }
+}
+
 body,
 .pure-g [class*=pure-u] {
   margin: 0;
