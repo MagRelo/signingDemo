@@ -1,6 +1,6 @@
 # Digital Signature Demo
 
-This repo is a collection of demonstrations of uses of digital signatures insead of email/password logins.
+This repo is a collection of demonstrations of uses of digital signatures instead of email/password logins.
 
 Demos:
 1. Signed messages
