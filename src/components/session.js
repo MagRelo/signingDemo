@@ -5,6 +5,13 @@ import moment from 'moment'
 import {loadSession, saveSession, clearSession } from '../reducers/user'
 
 
+const buttonGrid = {
+  'display': 'grid',
+  'gridTemplateRows': '1fr',
+  'gridTemplateColumns': '1fr 1fr 1fr',
+  'margin': '0.5em 0 1em'
+}
+
 class LoginComponent extends Component {
   constructor(props) {
     super(props)
@@ -21,7 +28,7 @@ class LoginComponent extends Component {
   }
 
   logout(){
-    this.setState({messages: []})
+    this.setState({messages: [], noMessages: false})
     this.props.clearSession()
   }
 
@@ -37,22 +44,22 @@ class LoginComponent extends Component {
       signature: this.props.signature
     })
       
-    return fetch('/api/userdata', {
+    return fetch('/api/user/data', {
       method: 'GET',
       headers: {'x-servesa': servesaHeader}
     })
     .then(response => {
       if(response.status === 401){
-        this.props.clearSession()
-        this.setState({alert: true, error: ''})
-        return []
+        this.props.clearSession()        
+        return this.setState({alert: true, error: ''})
       }
             
       return response.json()
+        .then(responseBody => {
+          this.setState({messages: responseBody, noMessages: !responseBody.length})
+        })
     })
-    .then(responseBody => {
-      this.setState({messages: responseBody})
-    })
+    
 
 
   }
@@ -63,6 +70,7 @@ class LoginComponent extends Component {
 
         <h1><Link to="/">Demos</Link>&nbsp;> Sessions</h1>
         <hr/>
+        <p> The user can create a session token for themselves. </p>
         
         <h2>User Session</h2>
         <p>Status: {this.props.expires ? 'Active' : 'Not active'}</p>
@@ -101,6 +109,13 @@ class LoginComponent extends Component {
             return <li key={message._id}>{message.content}</li>
           })}
         </ul>
+
+          {this.state.noMessages ? 
+
+            <label>(No data found. Post a message on the 'message' demo.)</label>
+
+          :null}
+
         
 
         {this.state.alert ? 
@@ -108,26 +123,31 @@ class LoginComponent extends Component {
           <div style={{border: 'solid pink 1px', padding: '0.5em', marginTop: '1em'}}>            
             <h3>401 - Unauthorized</h3>
             <p>You must create a session to view this content:</p>                      
-            <label className="label-upper">Session Length</label>
-            <button
-              name="1"
-              type="button"
-              className="pure-button pure-button-primary"
-              onClick={this.createSession.bind(this, 1)}>1 minute
-            </button>
-            <button
-              name="30"
-              type="button"
-              className="pure-button pure-button-primary"
-              onClick={this.createSession.bind(this, 30)}>30 minutes
-            </button>
-            <button
-              name="90"
-              type="button"
-              className="pure-button pure-button-primary"
-              onClick={this.createSession.bind(this, 90)}>90 minutes
-            </button>
-
+            
+            <div>
+              <label className="label-upper">Session Length</label>
+            </div>
+            
+            <div style={buttonGrid}>
+              <button
+                name="1"
+                type="button"
+                className="pure-button pure-button-primary"
+                onClick={this.createSession.bind(this, 1)}>1 minute
+              </button>
+              <button
+                name="30"
+                type="button"
+                className="pure-button pure-button-primary"
+                onClick={this.createSession.bind(this, 30)}>30 minutes
+              </button>
+              <button
+                name="90"
+                type="button"
+                className="pure-button pure-button-primary"
+                onClick={this.createSession.bind(this, 90)}>90 minutes
+              </button>
+            </div>   
           </div>        
 
         :null}

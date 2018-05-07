@@ -30,7 +30,6 @@ export function loadPreferences(){
       })
   }
 }
-
 export function savePreferences(preferences){
   return function(dispatch){
 
@@ -44,7 +43,6 @@ export function savePreferences(preferences){
       })
   }
 }
-
 export function clearPreferences(){
   return function(dispatch){
 
@@ -56,6 +54,94 @@ export function clearPreferences(){
   }
 }
 
+
+
+export function savePreferences_server(preferences){
+  return function(dispatch){
+    
+    const web3 = store.getState().web3.instance
+    const userAddress = store.getState().user.userAccount
+
+    // prepare the message for signing
+    const content = JSON.stringify(preferences)
+    const contentHex = ethUtil.bufferToHex(new Buffer(content, 'utf8'))    
+    
+    // sign message
+    web3.currentProvider.sendAsync({
+        method: 'personal_sign',
+        params: [contentHex, userAddress],
+        from: userAddress,
+      }, (err, result) => {
+        if (err) return console.error(err)
+        if (result.error) { return console.log('User denied signature.'); }
+
+        const servesaHeader = {
+          'message': contentHex, 
+          'signature': result.result
+        }
+
+        // fetch
+        return fetch('/api/user/preferences', {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+            'x-servesa': JSON.stringify(servesaHeader)
+          },
+          body: JSON.stringify(preferences)
+        })
+        .then(response => response.json())
+        .then(responseBody => {
+          return dispatch({
+            type: 'SERVER_PREFS_LOAD',
+            payload: responseBody
+          })
+        })        
+
+      })
+  }
+}
+
+
+export function clearPreferences_server(){
+  return function(dispatch){
+    const web3 = store.getState().web3.instance
+    const userAddress = store.getState().user.userAccount
+
+    // prepare the message for signing
+    const content = JSON.stringify({action: 'delete user'})
+    const contentHex = ethUtil.bufferToHex(new Buffer(content, 'utf8'))    
+    
+    // sign message
+    web3.currentProvider.sendAsync({
+        method: 'personal_sign',
+        params: [contentHex, userAddress],
+        from: userAddress,
+      }, (err, result) => {
+        if (err) return console.error(err)
+        if (result.error) { return console.log('User denied signature.'); }
+
+        const servesaHeader = {
+          'message': contentHex, 
+          'signature': result.result
+        }
+
+        // fetch
+        return fetch('/api/user/delete', {
+          method: 'DELETE',
+          headers: {
+            'x-servesa': JSON.stringify(servesaHeader)
+          }
+        })
+        .then(response => response.json())
+        .then(responseBody => {
+          return dispatch({
+            type: 'SERVER_PREFS_CLEAR'
+          })
+        })        
+
+      })
+  }
+}
 
 
 
@@ -147,6 +233,7 @@ const initialState = {
   duration: 0,
   expires: null  
 }
+
 const userReducer = (state = initialState, action) => {  
   if (action.type === 'WEB3_INITIALIZED'){    
     return Object.assign({}, state, {'userAccount': action.payload.accounts[0]})
@@ -161,6 +248,13 @@ const userReducer = (state = initialState, action) => {
       theme: 'light',
       text: 'medium'
     })
+  }
+
+  if (action.type === 'SERVER_PREFS_LOAD'){    
+    return Object.assign({}, state, action.payload, {serverSaved: true})
+  }
+  if (action.type === 'SERVER_PREFS_CLEAR'){    
+    return Object.assign({}, state, {serverSaved: false})
   }
 
   if (action.type === 'SESSION_LOAD'){    

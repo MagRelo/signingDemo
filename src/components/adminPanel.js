@@ -66,6 +66,9 @@ class AdminComponent extends Component {
         </h1>
 
         <hr/>
+        <p>
+          This button will only work for a message and signature that produces the public key "0x863afa452f38966b54cb1149d934e34670d0683a".
+        </p>
 
         <div>
           <button

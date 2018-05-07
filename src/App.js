@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Switch, Route } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
 
 import Loader from './components/loading.js'
@@ -16,6 +17,14 @@ import './css/grids-responsive-min.css'
 // App css
 import './App.css'
 import githubLogo from './icon/GitHub-Mark-Light-32px.png'
+
+// routing 
+import Home from './components/home';
+import Preferences from './components/preferences';
+import Admin from './components/adminPanel';
+import Session from './components/session';
+import Message from './components/messageContainer';
+import Detail from './components/messageDetail';
 
 class App extends Component {
   render() {
@@ -42,15 +51,23 @@ class App extends Component {
           </ul>
         </nav>
 
-        <div className="container">
+        <div className="container" style={{fontSize: this.props.fontSize}}>
           
           {!this.props.web3 || !this.props.account ?         
               
             <Loader web3={this.props.web3} account={this.props.account} network={this.props.network} />                          
           :           
 
-            {...this.props.children}
             
+            <Switch>
+              <Route path="/preferences" component={Preferences}></Route>        
+              <Route path="/chat" component={Message}></Route>
+              <Route path="/message/:id" component={Detail}></Route>
+              <Route path="/admin" component={Admin}></Route>
+              <Route path="/sessions" component={Session}></Route>
+              <Route component={Home}></Route>
+            </Switch>
+              
           }          
 
         </div>
@@ -64,7 +81,9 @@ const mapStateToProps = state => {
   return {
     web3: state.web3.instance,
     account: state.web3.accounts[0] || '',
-    network: state.web3.network
+    network: state.web3.network,
+    fontSize: state.user.text,
+    theme: state.user.theme
   }
 }
 

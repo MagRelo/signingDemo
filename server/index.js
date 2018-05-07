@@ -2,10 +2,15 @@
 const express = require('express');
 const app = require('express')();
 const server = require('http').Server(app);
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+
 const io = require('socket.io')(server);
+
 const sigUtil = require('eth-sig-util')
 const ethUtil = require('ethereumjs-util')
-const camelCase = require('camelcase')
+
+// const camelCase = require('camelcase')
 
 // *
 // db
@@ -30,10 +35,33 @@ const MessageSchema = new mongoose.Schema({
 }, {timestamps: true});
 const MessageModel = mongoose.model('Message', MessageSchema);
 
+const UserSchema = new mongoose.Schema({  
+  userAddress: String,
+  text: String,
+  theme: String
+}, {timestamps: true});
+const UserModel = mongoose.model('User', UserSchema);
+
 
 // *
 // Server & http routing
 // *
+
+// configure express middleware
+app.use(express.static('build'))
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({limit: '1mb'}));
+app.use(morgan('dev', {
+  skip: function (req, res) {
+    // remove the frontend dev server's 'json' calls from the console output
+    return req.originalUrl.indexOf('json') > 0
+  }
+}));
+
+// start server
+server.listen(8080, () => {
+  console.log('server listening on 8080');  
+});
 
 // delete all messages
 app.post('/api/messages/delete', servesaAuth, function(req, res){
@@ -49,10 +77,34 @@ app.post('/api/messages/delete', servesaAuth, function(req, res){
     .catch(error => {return res.status(500).send(error)}) 
 })
 
-// get user data
-app.get('/api/userdata', servesaAuth, function(req, res){
+// save user preferences
+app.post('/api/user/preferences', servesaAuth, function(req, res){
+
+  const userUpdate = {
+    userAddress: req.userAddress,
+    text: req.body.text,
+    theme: req.body.theme
+  }
   
-  const expirationDate = new Date(req.message.expires)
+  // update user 
+  UserModel.update({userAddress: req.userAddress}, userUpdate, {upsert: true})
+    .then(result => {return res.send(result)})
+    .catch(error => {return res.status(500).send(error)}) 
+})
+
+// delete user preferences
+app.delete('/api/user/delete', servesaAuth, function(req, res){
+
+  // update user 
+  UserModel.remove({userAddress: req.userAddress})
+    .then(result => {return res.send(result)})
+    .catch(error => {return res.status(500).send(error)}) 
+})
+
+// get user data
+app.get('/api/user/data', servesaAuth, function(req, res){
+  
+  const expirationDate = new Date(req.userMessage.expires)
   if(expirationDate < Date.now()){    
     return res.status(401).send([])
   }
@@ -69,13 +121,9 @@ app.get('/api/message/:id', function(req, res){
     .then(message => {return res.send(message)})
     .catch(error => {return res.status(500).send(error)})
 })
-app.use(express.static('build'))
+
 app.get('/*', function(req, res){
   res.sendFile('index.html', { root: './build'});
-});
-// start server
-server.listen(8080, () => {
-  console.log('server listening on 8080');  
 });
 
 

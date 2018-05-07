@@ -2,30 +2,12 @@ import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import Checkmark from './checkmark'
-import {loadPreferences, savePreferences, clearPreferences } from '../reducers/user'
-
-const Caption = ({label, caption, loading, children}) => {
-  return (    
-    <div>
-
-      <span>{label}</span>
-      
-      <span>
-        {caption}
-        
-        {loading ?         
-          <div style={{display: 'inline-block', marginLeft: '0.5em'}}>
-            <span className="small-spinner"></span>
-          </div>          
-        :null}
-
-        {children}
-      </span>
-
-    </div>
-  )
-}
+import {
+  loadPreferences, 
+  savePreferences, 
+  clearPreferences, 
+  savePreferences_server,
+  clearPreferences_server } from '../reducers/user'
 
 const buttonGrid = {
   'display': 'grid',
@@ -37,18 +19,7 @@ class DetailComponent extends Component {
   constructor(props){
     super(props)
 
-    this.state = {      
-      clientIsLoading: false,      
-      clientIsDeleteing: false,       
-      clientIsSaving: false,       
-      clientSaved: true,          
-      clientNoData: false,      
-
-      serverIsLoading: true,
-      serverLoaded: false,
-
-      clientServerMismatch: true
-    }
+    this.state = {}
   }
 
   componentDidMount(){
@@ -58,20 +29,22 @@ class DetailComponent extends Component {
   }
 
   setPreference(type, value){
-    const currentPrefs = {
-      animal: this.props.animal,
-      vegtable: this.props.vegtable,
-      mineral: this.props.mineral
-    }
-
-    // merge with other prefs and auto-save in local storage
-    this.props.savePreferences( Object.assign({}, currentPrefs, {[type]: value }))    
+    // auto-save in local storage
+    this.props.savePreferences({[type]: value })    
   }
 
   syncToCloud(){
-
+    // save to server
+    this.props.savePreferences_server({text: this.props.text, theme: this.props.theme})   
   }
 
+
+  clearCloud(){
+    // save to server
+    this.props.clearPreferences_server()   
+  }
+
+  
   setActive(type, value){
     if(this.props[type] === value){
       return 'pure-button pure-button-active'
@@ -87,11 +60,7 @@ class DetailComponent extends Component {
         <h1> <Link to="/">Demos</Link>&nbsp;> Preferences </h1>
         <hr/>
         <p>
-          This demo shows how the user's public key can be used as a 
-          unique identifier to save the user's preferences.
-        </p>
-        <p>
-          We'll automatically save the data on the user's device.
+          We'll automatically save the data on the user's device using the public key as an identifier.
         </p>
         <p>
           For saving to the cloud we'll require that the user digitally 
@@ -107,7 +76,7 @@ class DetailComponent extends Component {
           </button>
           <button 
             onClick={this.setPreference.bind(this, 'text', 'medium')}
-            className={this.setActive('text', 'medium')}>Medium
+            className={this.setActive('text', 'medium')}>Default
           </button>
           <button 
             onClick={this.setPreference.bind(this, 'text', 'larger')}
@@ -119,7 +88,7 @@ class DetailComponent extends Component {
         <div style={buttonGrid}>
           <button 
             onClick={this.setPreference.bind(this, 'theme', 'light')}
-            className={this.setActive('theme', 'light')}>Light
+            className={this.setActive('theme', 'light')}>Default
           </button>
           <button 
             onClick={this.setPreference.bind(this, 'theme', 'dark')}
@@ -137,7 +106,7 @@ class DetailComponent extends Component {
                 className="pure-button"
                 style={{float: 'right', verticalAlign: 'unset'}}
                 disabled={!this.props.clientSaved}
-                onClick={()=>{this.props.clearPreferences()}}>delete data
+                onClick={()=>{this.props.clearPreferences()}}>delete
               </button>
               <span className="label-upper" style={{float: 'right', marginRight: '0.5em'}}>saved <span style={{color: 'green'}}> ✓ </span> </span>
             </span>
@@ -151,17 +120,19 @@ class DetailComponent extends Component {
 
         <p style={{lineHeight: '35px'}}>Cloud Data:          
           {this.props.serverSaved ? 
-            <button
-              className="pure-button"
-              style={{float: 'right', verticalAlign: 'unset'}}
-              onClick={() => {this.props.clearCloud()}}>{this.props.serverSaved ? 'delete data' : '(no data saved)'}
-            </button>          
+            <span>
+              <button
+                className="pure-button"
+                style={{float: 'right', verticalAlign: 'unset'}}
+                onClick={() => {this.clearCloud()}}>delete
+              </button>         
+              <span className="label-upper" style={{float: 'right', marginRight: '0.5em'}}>saved <span style={{color: 'green'}}> ✓ </span> </span> 
+            </span>
           :          
             <button
               className="pure-button"
               style={{float: 'right', verticalAlign: 'unset'}}
-              disabled={!this.state.clientServerMismatch}
-              onClick={() => {this.props.syncToCloud()}}>save data
+              onClick={() => {this.syncToCloud()}}>sync to cloud
             </button>          
           }          
         </p>
@@ -176,7 +147,7 @@ const mapStateToProps = state => {
     clientSessionFound: false,
     serverSessionFound: false,
     clientSaved: state.user.clientSaved,
-    serverSaved: false,
+    serverSaved: state.user.serverSaved,
     text: state.user.text,
     theme: state.user.theme,
   }
@@ -185,7 +156,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     savePreferences: (preferences) => { dispatch(savePreferences(preferences)) },
     loadPreferences: () => { dispatch(loadPreferences()) },
-    clearPreferences: () => { dispatch(clearPreferences()) }
+    clearPreferences: () => { dispatch(clearPreferences()) },
+    savePreferences_server: (preferences) => { dispatch(savePreferences_server(preferences)) },
+    clearPreferences_server: () => { dispatch(clearPreferences_server()) },
   }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(DetailComponent)

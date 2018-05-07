@@ -11,8 +11,8 @@ class HomeComponent extends Component {
         
         <hr/>
         <p>
-          We can use digital signatures in place of email and password 
-          to reduce the amount of personal data is collected and stored.
+          Digital signatures can be used in place of email and password logins
+          to reduce the amount of personal data is collected and stored. 
         </p>        
 
         <h3> <Link to="/chat"> Post signed messages</Link> </h3>        
@@ -35,9 +35,14 @@ class HomeComponent extends Component {
           Create a session token to let users "login" without needing an email or password.
         </p>
 
+        <h3>Transfer control of account (coming soon)</h3>        
+        <p className="demo-description">
+          Users can create a new identity and transfer some or all of their data to the new identity.
+        </p>
+
         <hr/>
         
-        <h3> <Link to="/chat"> Dead-man switch</Link> </h3>        
+        <h3> Dead-man switch (coming soon) </h3>        
         <p className="demo-description">
           Periodically post a message to declare that you are not under duress. If the message 
           fails to appear then observers will know that something is wrong (
