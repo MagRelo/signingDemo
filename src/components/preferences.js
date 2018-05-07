@@ -15,6 +15,7 @@ const buttonGrid = {
   'gridTemplateColumns': '1fr 1fr 1fr',
   'margin': '0.5em 0 1em'
 }
+
 class DetailComponent extends Component {
   constructor(props){
     super(props)
