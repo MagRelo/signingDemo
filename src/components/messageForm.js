@@ -79,7 +79,7 @@ class FormComponent extends Component {
 
           <div>
             
-            <div style={{textAlign: 'right'}}>
+            <div style={{textAlign: 'right', marginBottom: '0.5em'}}>
               <button 
                 className="pure-button" 
                 onClick={()=>{this.setState({formOpen: false})}}> close

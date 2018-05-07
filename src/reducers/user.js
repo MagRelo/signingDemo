@@ -100,8 +100,6 @@ export function savePreferences_server(preferences){
       })
   }
 }
-
-
 export function clearPreferences_server(){
   return function(dispatch){
     const web3 = store.getState().web3.instance
@@ -165,7 +163,6 @@ export function loadSession(){
       })
   }
 }
-
 export function clearSession(){
   return function(dispatch){
     
@@ -176,7 +173,6 @@ export function clearSession(){
       })    
   }
 }
-
 export function saveSession(duration){
   return function(dispatch){
     
