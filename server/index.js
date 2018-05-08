@@ -10,8 +10,6 @@ const io = require('socket.io')(server);
 const sigUtil = require('eth-sig-util')
 const ethUtil = require('ethereumjs-util')
 
-// const camelCase = require('camelcase')
-
 // *
 // db
 // *
@@ -200,6 +198,6 @@ function servesaAuth(req, res, next){
   req.userAddress = userAddress
   req.userMessage = message
 
-  // pass on to next middleware function
+  // call next middleware function
   next()
 }
