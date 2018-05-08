@@ -61,18 +61,19 @@ server.listen(8080, () => {
   console.log('server listening on 8080');  
 });
 
-// delete all messages
-app.post('/api/messages/delete', servesaAuth, function(req, res){
+// User
 
-  // auth
-  if(req.userAddress != '0x863afa452f38966b54cb1149d934e34670d0683a'){
-    return res.status(401).send({})
-  }
+// get user preferences
+app.get('/api/user/preferences', servesaAuth, function(req, res){
   
-  // delete all messages
-  MessageModel.remove()
-    .then(result => {return res.send(result)})
-    .catch(error => {return res.status(500).send(error)}) 
+  const expirationDate = new Date(req.userMessage.expires)
+  if(expirationDate < Date.now()){    
+    return res.status(401).send([])
+  }
+
+  MessageModel.find({'userAddress': req.userAddress})
+    .then(messages => {return res.send(messages)})
+    .catch(error => {return res.status(500).send(error)})      
 })
 
 // save user preferences
@@ -99,21 +100,11 @@ app.delete('/api/user/delete', servesaAuth, function(req, res){
     .catch(error => {return res.status(500).send(error)}) 
 })
 
-// get user data
-app.get('/api/user/data', servesaAuth, function(req, res){
-  
-  const expirationDate = new Date(req.userMessage.expires)
-  if(expirationDate < Date.now()){    
-    return res.status(401).send([])
-  }
 
-  MessageModel.find({'userAddress': req.userAddress})
-    .then(messages => {return res.send(messages)})
-    .catch(error => {return res.status(500).send(error)})      
-})
+// Messages
 
 // message detail
-app.get('/api/message/:id', function(req, res){
+app.get('/api/messages/:id', function(req, res){
 
   MessageModel.findOne({_id: req.params.id})
     .then(message => {return res.send(message)})
@@ -123,6 +114,21 @@ app.get('/api/message/:id', function(req, res){
 app.get('/*', function(req, res){
   res.sendFile('index.html', { root: './build'});
 });
+
+// delete all messages
+app.post('/api/messages/delete', servesaAuth, function(req, res){
+
+  // auth
+  if(req.userAddress != '0x863afa452f38966b54cb1149d934e34670d0683a'){
+    return res.status(401).send({})
+  }
+  
+  // delete all messages
+  MessageModel.remove()
+    .then(result => {return res.send(result)})
+    .catch(error => {return res.status(500).send(error)}) 
+})
+
 
 
 // *

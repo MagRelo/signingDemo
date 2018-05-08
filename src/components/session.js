@@ -44,7 +44,7 @@ class LoginComponent extends Component {
       signature: this.props.signature
     })
       
-    return fetch('/api/user/data', {
+    return fetch('/api/user/preferences', {
       method: 'GET',
       headers: {'x-servesa': servesaHeader}
     })
