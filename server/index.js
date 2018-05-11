@@ -145,7 +145,7 @@ app.post('/api/messages/delete', servesaAuth, function(req, res) {
 });
 
 app.get('/*', function(req, res) {
-  res.sendFile('index.html', { root: './build' });
+  res.sendFile('index.html', { root: './build_client' });
 });
 
 // *
