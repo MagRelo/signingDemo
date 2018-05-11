@@ -91,7 +91,7 @@ class NestingComponent extends Component {
         </ol>
 
         <button className="pure-button" onClick={this.sign.bind(this)}>
-          Add my signature
+          Add my signature to the chain
         </button>
 
         <h2>Chain of possesion</h2>
