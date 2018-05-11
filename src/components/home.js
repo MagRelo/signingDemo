@@ -42,6 +42,13 @@ class HomeComponent extends Component {
           Create a session token to let users "login" without needing an email
           or password.
         </p>
+        <h3>
+          <Link to="/possesion"> Chain of possesion</Link>
+        </h3>
+        <p className="demo-description">
+          Create a list of signatures to prove the chain of possesion of a
+          message.
+        </p>
       </div>
     );
   }

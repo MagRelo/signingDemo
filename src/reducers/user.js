@@ -228,7 +228,6 @@ const userReducer = (state = initialState, action) => {
   if (action.type === 'WEB3_INITIALIZED') {
     let gtag = window.gtag;
     if (gtag) {
-      console.log('party!');
       gtag('set', { user_id: action.payload.accounts[0] });
     }
     return Object.assign({}, state, {
