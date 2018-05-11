@@ -25,7 +25,7 @@ import Admin from './components/adminPanel';
 import Session from './components/session';
 import Message from './components/messageContainer';
 import Detail from './components/messageDetail';
-import Possesion from './components/posession';
+import Possesion from './components/possesion';
 
 class App extends Component {
   render() {
