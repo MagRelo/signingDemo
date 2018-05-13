@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 import sigUtil from 'eth-sig-util';
 import ethUtil from 'ethereumjs-util';
+import crypto from 'crypto';
 
 class NestingComponent extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      data: [{ signature: 'root' }],
-      chain: this.unwind([{ signature: 'root' }])
+      seed: {
+        item: 120912031298,
+        previousSignature: null
+      },
+      data: []
     };
   }
 
@@ -19,9 +24,25 @@ class NestingComponent extends Component {
     const web3 = this.props.web3;
     const userAddress = this.props.account;
 
+    // create next block
+    const now = new Date();
+    let newContent = {
+      timestamp: now.toUTCString()
+    };
+
+    const previousBlock = this.state.data[this.state.data.length - 1];
+    if (previousBlock) {
+      newContent.item = previousBlock.content.item;
+      newContent.previousSignature = previousBlock.signature;
+    } else {
+      newContent.item = this.state.seed.item;
+      newContent.previousSignature = this.state.seed.previousSignature;
+    }
+
     // prepare the data for signing
-    const content = JSON.stringify(this.state.data);
-    const contentAsHex = ethUtil.bufferToHex(new Buffer(content, 'utf8'));
+    const contentAsHex = ethUtil.bufferToHex(
+      new Buffer(JSON.stringify(newContent), 'utf8')
+    );
 
     // sign message
     web3.currentProvider.sendAsync(
@@ -40,29 +61,29 @@ class NestingComponent extends Component {
         }
 
         const element = {
-          content: content,
+          content: newContent,
           signature: result.result
         };
 
         return this.setState({
-          data: [...this.state.data, element],
-          chain: this.unwind([...this.state.data, element])
+          data: [...this.state.data, element]
         });
       }
     );
   }
 
-  unwind(data) {
-    return data.map(item => {
-      if (item.content && item.signature) {
-        return sigUtil.recoverPersonalSignature({
-          data: item.content,
-          sig: item.signature
-        });
-      }
+  unwind(item) {
+    let publicKey = 'n/a';
+    if (item.content && item.signature) {
+      publicKey = sigUtil.recoverPersonalSignature({
+        data: ethUtil.bufferToHex(
+          new Buffer(JSON.stringify(item.content), 'utf8')
+        ),
+        sig: item.signature
+      });
+    }
 
-      return item.signature;
-    });
+    return publicKey;
   }
 
   render() {
@@ -79,27 +100,53 @@ class NestingComponent extends Component {
           possesion of the original message.
         </p>
 
-        <h2>Signatures</h2>
+        <h2>Item: 120912031298 </h2>
         <ol>
           {this.state.data.map((item, index) => {
             return (
-              <li key={item.signature + index}>
-                <span>{item.signature}</span>
+              <li key={item + index}>
+                <p>
+                  <code>{this.unwind(item)}</code> took possesion at{' '}
+                  {item.content.timestamp}
+                </p>
               </li>
             );
           })}
         </ol>
 
         <button className="pure-button" onClick={this.sign.bind(this)}>
-          Add my signature to the chain
+          Accept possesion of item
         </button>
 
-        <h2>Chain of possesion</h2>
+        <hr />
+
+        <h2>Data</h2>
         <ol>
-          {this.state.chain.map((item, index) => {
+          {this.state.data.map((item, index) => {
             return (
-              <li key={item + index}>
-                <span>{item}</span>
+              <li key={item.signature + index}>
+                <div>
+                  <p>Item #: {item.content.item}</p>
+                  <p>Timestamp: {item.content.timestamp}</p>
+                  <p
+                    style={{
+                      color: item.content.previousSignature
+                        ? '#' + item.content.previousSignature.substring(5, 11)
+                        : 'inherit'
+                    }}
+                  >
+                    Previous Signature: {item.content.previousSignature}
+                  </p>
+                </div>
+                <p
+                  style={{
+                    color: item.signature
+                      ? '#' + item.signature.substring(5, 11)
+                      : 'inherit'
+                  }}
+                >
+                  Signature: {item.signature}
+                </p>
               </li>
             );
           })}
