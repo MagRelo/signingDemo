@@ -5,49 +5,31 @@ class HomeComponent extends Component {
   render() {
     return (
       <div className="home">
-        <h1>Digital Signature Demos</h1>
+        <h1>Fluid Teams</h1>
 
         <hr />
+
+        <h2>Advantages for pricipals:</h2>
+        <ul>
+          <li>Only pay for the time that you use</li>
+          <li>Maintain long-term relationships with employees</li>
+          <li>Build tacit knowledge in the organization</li>
+          <li>Find and retain employees before they are needed</li>
+        </ul>
+
+        <h2>Advantages for agents:</h2>
+        <ul>
+          <li>Flexibility in scheduling</li>
+          <li>Steady stream of income</li>
+          <li>Maintain long-term relationships with employers</li>
+        </ul>
+
+        <h2>Demo</h2>
         <p>
-          Digital signatures can be used in place of email and password logins
-          to reduce the amount of personal data is collected and stored.
+          <Link to="search">I'm an employer – search for talent</Link>
         </p>
-
-        <h3>
-          {' '}
-          <Link to="/chat"> Post signed messages</Link>{' '}
-        </h3>
-        <p className="demo-description">Live chat with verifiable messages</p>
-
-        <h3>
-          <Link to="/admin">Admin panel</Link>
-        </h3>
-        <p className="demo-description">
-          Use signed messages to restrict access to a server API without
-          requiring the user to login.
-        </p>
-
-        <h3>
-          <Link to="/preferences">User preferences</Link>
-        </h3>
-        <p className="demo-description">
-          Use the user's public key to remember their preferences without
-          requiring the user to login.
-        </p>
-
-        <h3>
-          <Link to="/sessions"> Sessions</Link>
-        </h3>
-        <p className="demo-description">
-          Create a session token to let users "login" without needing an email
-          or password.
-        </p>
-        <h3>
-          <Link to="/possesion"> Chain of possesion</Link>
-        </h3>
-        <p className="demo-description">
-          Create a list of signatures to prove the chain of possesion of a
-          message.
+        <p>
+          <Link to="search">I'm a contractor – build my profile</Link>
         </p>
       </div>
     );

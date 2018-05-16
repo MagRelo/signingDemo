@@ -20,12 +20,16 @@ import githubLogo from './icon/GitHub-Mark-Light-32px.png';
 
 // routing
 import Home from './components/home';
-import Preferences from './components/preferences';
-import Admin from './components/adminPanel';
-import Session from './components/session';
-import Message from './components/messageContainer';
-import Detail from './components/messageDetail';
-import Possesion from './components/possesion';
+
+// import Preferences from './components/preferences';
+// import Admin from './components/adminPanel';
+// import Session from './components/session';
+// import Message from './components/messageContainer';
+// import Detail from './components/messageDetail';
+// import Possesion from './components/possesion';
+
+import Profile from './components/profile';
+import List from './components/list';
 
 class App extends Component {
   render() {
@@ -72,12 +76,9 @@ class App extends Component {
             />
           ) : (
             <Switch>
-              <Route path="/preferences" component={Preferences} />
-              <Route path="/chat" component={Message} />
-              <Route path="/message/:id" component={Detail} />
-              <Route path="/admin" component={Admin} />
-              <Route path="/sessions" component={Session} />
-              <Route path="/possesion" component={Possesion} />
+              <Route path="/profile/mattlovan" component={Profile} />
+              <Route path="/team/123" component={Profile} />
+              <Route path="/search" component={List} />
               <Route component={Home} />
             </Switch>
           )}
