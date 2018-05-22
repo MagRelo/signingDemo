@@ -1,5 +1,5 @@
 
-FROM node:latest
+FROM node:8.11.2-stretch
 
 ENV APP_HOME /app
 RUN mkdir -pv $APP_HOME
