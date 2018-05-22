@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ethUtil from 'ethereumjs-util';
-
-import settingsIcon from '../icon/gear-icon.svg';
-import composeIcon from '../icon/compose-outline.svg';
 
 const loremIpsum = `Lorem ipsum dolor sit amet, deserunt gloriatur consetetur nam ut, harum numquam ex vim. Pri tale iisque oportere ad, ius fabulas scaevola ei. Ad est omnium nonumes. Mea postulant reprimique in, in euismod accusata moderatius vim, mel atqui quaerendum no.
 Ad ridens numquam vis, putant tritani minimum eum no. Cum at aeterno consectetuer. Eu vim adhuc audiam prompta. Mea alia graeci eu, verear commodo ad vis.`;

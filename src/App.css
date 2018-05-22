@@ -393,3 +393,8 @@ ul.chat-list>li>p {
   margin-top: 0.25em;
   margin-left: 0.5em;
 }
+
+.inset {
+  border: solid 1px lightgray;
+  padding: 1em;
+}
