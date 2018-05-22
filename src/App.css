@@ -12,13 +12,14 @@ toape? - FAE7C7
 
 */
 
+/* 
 html,
 body,
 #root,
 .App,
 .container {
   height: 100%;
-}
+} */
 
 @media screen and (min-width: 992px) {
   .container {
