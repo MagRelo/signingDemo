@@ -119,6 +119,24 @@ class HomeComponent extends Component {
           </li>
         </ol>
 
+        <h2>Advantages for agents (Alice) </h2>
+        <ul>
+          <li>
+            <p>
+              Higher rates: The 'sell' price of the token will include both the
+              base rate for their services as well as the premium that
+              token-holders pay to hold early tokens (i.e., to hold their place
+              in line).
+            </p>
+          </li>
+          <li>
+            <p>Ultimate flexibility</p>
+          </li>
+          <li>
+            <p>Verifiable signals of quality and demand for services</p>
+          </li>
+        </ul>
+
         <h2>Advantages for pricipals (Bob)</h2>
         <ul>
           <li>
@@ -135,47 +153,55 @@ class HomeComponent extends Component {
           </li>
         </ul>
 
-        <h2>Advantages for agents (Alice) </h2>
-        <ul>
-          <li>
-            <p>
-              Allow market to set prices for an agent's services based on
-              demand. The 'sell' price of the token will include both the base
-              rate for their services as well as the premium that token-holders
-              pay to hold early tokens (i.e., to hold their place in line).
-            </p>
-          </li>
-          <li>
-            <p>More flexibility in when and how to work</p>
-          </li>
-          <li>
-            <p>Verifiable signals of quality and demand for services</p>
-          </li>
-        </ul>
-
         <h2>Market Dynamics</h2>
+
+        <h3>Scheduling, and honoring the priority of tokens</h3>
+        <p>
+          When tokens are sold back to the contract the token is exchanged for
+          1/n of the contract balance so from the point of view of the agent
+          (Alice) it is smart to encourage pricipals to hold tokens. For a
+          principal, holding tokens is essentially holding your place in line
+          and pricipals will not wait in a line that is not honored.
+        </p>
+
+        <p>
+          This same dynamic will apply to situations where there agent would
+          prefer not to take the work. Pricipals always have the option to sell
+          their tokens back to the contract for a refund, but this is not ideal
+          for the agent in two ways: 1) the total contract balance is reduced
+          which reduces the agents marginal rate, and 2) it acts as a signal to
+          token holders and prospective token holders that there is uncertainty
+          around the redemtion of the token which will tend to depress the
+          price.
+        </p>
+
+        <h3>Market-tuning parameters</h3>
+        <p>
+          It may be desirable to introduce fees to shape market dynamics. If
+          speculation begins to cause too much churn we could introduce 'buy'
+          and 'sell' taxes on token purchases to discourage trading.
+        </p>
+        <p>
+          If principals are hoarding tokens we could introduce{' '}
+          <a href="https://en.wikipedia.org/wiki/Demurrage_(currency)">
+            demmurage
+          </a>{' '}
+          to increase the cost of holding.
+        </p>
 
         <h3>Incentive to hold tokens</h3>
         <p>
           For principals, buying and holding tokens means that they pay less for
           each token (curved-bonding pricing) and that they have higher priority
-          when they choose to redeem the service.
+          when they choose to redeem the service. For agents, they may be able
+          to
         </p>
 
         <h3>Speculation</h3>
         <p>
           This could create an incentive for secondary markets to emerge by
-          identifying and flipping under-priced services. This may be a poitive
-          feature of the system
-        </p>
-
-        <h3>Market-tuning parameters</h3>
-        <p>
-          It mat be desirable to introduce fees to shape market dynamics. If
-          speculation begins to cause too much churn we could introduce 'buy'
-          and 'sell' taxes to reduce velocity. If principals are holding too
-          many tokens we could introduce demmurage to increase the cost of
-          carrying capital.
+          identifying and flipping under-priced services. This may be a positive
+          feature of the system.
         </p>
 
         <h2>Demo</h2>
