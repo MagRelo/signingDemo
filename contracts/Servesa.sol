@@ -21,7 +21,6 @@ contract Servesa {
     uint public totalCurrentFunders = 0;
 
     address public owner;
-    address public Provider;
     uint public tokenBasePrice = 100000000000000;
 
     event NewContract(address ownerAddress, string contractName);
@@ -51,10 +50,6 @@ contract Servesa {
     // Auth
     modifier onlyByOwner() {
         require(msg.sender == owner);
-        _;
-    }
-    modifier onlyByOracle() {
-        require(msg.sender == oracle);
         _;
     }
     modifier onlyByFunder() {
