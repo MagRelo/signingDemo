@@ -153,7 +153,22 @@ class HomeComponent extends Component {
           </li>
         </ul>
 
+        <h2>Teams</h2>
+        <p>
+          The example above uses a single person (Alice) as an example of an
+          agent but this construction will work even better for teams becuase of
+          the inherent scarcity of 'priority' – if a sought-after group chooses
+          to create a team they will multiply the effect of the piority tokens.
+        </p>
+
         <h2>Market Dynamics</h2>
+
+        <h3>Incentive to hold tokens</h3>
+        <p>
+          For principals, buying and holding tokens means that they pay less for
+          each token (curved-bonding pricing) and that they have higher priority
+          when they choose to redeem the service.
+        </p>
 
         <h3>Scheduling, and honoring the priority of tokens</h3>
         <p>
@@ -177,25 +192,32 @@ class HomeComponent extends Component {
 
         <h3>Market-tuning parameters</h3>
         <p>
-          It may be desirable to introduce fees to shape market dynamics. If
-          speculation begins to cause too much churn we could introduce 'buy'
-          and 'sell' taxes on token purchases to discourage trading.
+          The following parameters can be used to shape market dynamics (these
+          fees will be split between the agent contract and the Servésa
+          platform.)
         </p>
-        <p>
-          If principals are hoarding tokens we could introduce{' '}
-          <a href="https://en.wikipedia.org/wiki/Demurrage_(currency)">
-            demmurage
-          </a>{' '}
-          to increase the cost of holding.
-        </p>
-
-        <h3>Incentive to hold tokens</h3>
-        <p>
-          For principals, buying and holding tokens means that they pay less for
-          each token (curved-bonding pricing) and that they have higher priority
-          when they choose to redeem the service. For agents, they may be able
-          to
-        </p>
+        <ul>
+          <li>
+            <p>
+              Transaction fees: each agent contract could choose to implement
+              fees on each token transaction (i.e., 'buy', 'sell', and
+              'transfer') in order to reduce the velocity of the token. From the
+              agent's perspective, this friction may be desirable in order to
+              reduce speculation.
+            </p>
+          </li>
+          <li>
+            <p>
+              Demmurage: each agent contract could choose to implement a form of{' '}
+              <a href="https://en.wikipedia.org/wiki/Demurrage_(currency)">
+                demmurage
+              </a>{' '}
+              to increase the cost of their holding tokens. From the agent's
+              perspective, this friction may be desirable in order to limit the
+              incentive for pricipals to purchase and sit on the agent's tokens.
+            </p>
+          </li>
+        </ul>
 
         <h3>Speculation</h3>
         <p>
