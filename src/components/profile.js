@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { loadSession, saveSession, clearSession } from '../reducers/user';
 
 import MessageForm from './messageForm';
 
@@ -31,49 +30,7 @@ class ProfileComponent extends Component {
   }
 
   componentDidMount() {
-    this.props.loadSession();
     this.setState(dummyData);
-  }
-
-  logout() {
-    this.setState({ messages: [], noMessages: false });
-    this.props.clearSession();
-  }
-
-  createSession(duration) {
-    this.setState({ alert: false });
-    this.props.saveSession(duration);
-  }
-
-  getMessages() {
-    // clear data
-    this.setState({
-      alert: false,
-      error: '',
-      messages: []
-    });
-
-    const servesaHeader = JSON.stringify({
-      message: this.props.message,
-      signature: this.props.signature
-    });
-
-    return fetch('/api/user/preferences', {
-      method: 'GET',
-      headers: { 'x-servesa': servesaHeader }
-    }).then(response => {
-      if (response.status === 401) {
-        this.props.clearSession();
-        return this.setState({ alert: true, error: '' });
-      }
-
-      return response.json().then(responseBody => {
-        this.setState({
-          messages: responseBody,
-          noMessages: !responseBody.length
-        });
-      });
-    });
   }
 
   render() {
@@ -98,6 +55,24 @@ class ProfileComponent extends Component {
 
         <div style={rowGrid}>
           <div>
+            <h2>Status</h2>
+            <p>Demand: High</p>
+            <p>Churn: Low</p>
+            <p>Current Token Rate: 0.01 ETH ($87)</p>
+            <p>Oustanding Tokens: 128</p>
+          </div>
+
+          <div>
+            <h2>Schedule</h2>
+            <p>Short-term availability: Medium</p>
+            <p>Long-term availability: Good</p>
+          </div>
+        </div>
+
+        <hr />
+
+        <div style={rowGrid}>
+          <div>
             <h2>Profile</h2>
             <ul>
               <li>Biography</li>
@@ -107,23 +82,10 @@ class ProfileComponent extends Component {
               <li>Work History</li>
             </ul>
           </div>
+
           <div>
             <h2>History & Reviews</h2>
           </div>
-
-          <div />
-
-          <div />
-        </div>
-
-        <hr />
-
-        <div style={rowGrid}>
-          <div>
-            <h2>Schedule</h2>
-          </div>
-
-          <div />
 
           <div>
             <h2>Contact</h2>
@@ -204,16 +166,6 @@ const mapStateToProps = state => {
   };
 };
 const mapDispatchToProps = dispatch => {
-  return {
-    saveSession: duration => {
-      dispatch(saveSession(duration));
-    },
-    loadSession: () => {
-      dispatch(loadSession());
-    },
-    clearSession: () => {
-      dispatch(clearSession());
-    }
-  };
+  return {};
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileComponent);
