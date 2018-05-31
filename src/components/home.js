@@ -5,17 +5,19 @@ class HomeComponent extends Component {
   render() {
     return (
       <div className="home">
-        <h1>Servésa Labor Market</h1>
+        <h1>Servésa – World Labor Market</h1>
         <hr />
 
-        <h2>Thesis</h2>
+        <p>The Servésa platform is a marketplace for consulting.</p>
+
+        <h2>Description</h2>
         <p>
-          By increasing transperancy around the availablilty, pricing and
-          scheduling of labor we can unlock new opportunities for profitable
-          cooperation. We'll create a unique token to represent each agent's
-          unit of work. We'll then create financial incentives around how tokens
-          are priced and redeemed to encourage cooperation between prinicipals
-          and agents.
+          We'll create a unique token to represent each agent's unit of work.
+          We'll then create financial incentives around how tokens are priced
+          and redeemed to encourage long-term relationships between prinicipals
+          and agents. By increasing transperancy around the availability,
+          pricing and scheduling of labor we can reduce transaction costs and
+          unlock new opportunities for profitable cooperation.
         </p>
         <p>
           As this strategy focuses on reducing transaction costs we expect it
@@ -119,7 +121,7 @@ class HomeComponent extends Component {
           </li>
         </ol>
 
-        <h2>Advantages for agents (Alice) </h2>
+        <h3>Advantages for agents (Alice) </h3>
         <ul>
           <li>
             <p>
@@ -137,7 +139,7 @@ class HomeComponent extends Component {
           </li>
         </ul>
 
-        <h2>Advantages for pricipals (Bob)</h2>
+        <h3>Advantages for pricipals (Bob)</h3>
         <ul>
           <li>
             <p>
@@ -153,7 +155,7 @@ class HomeComponent extends Component {
           </li>
         </ul>
 
-        <h2>Teams</h2>
+        <h3>Teams</h3>
         <p>
           The example above uses a single person (Alice) as an example of an
           agent but this construction will work even better for teams becuase of
@@ -186,7 +188,7 @@ class HomeComponent extends Component {
           for the agent in two ways: 1) the total contract balance is reduced
           which reduces the agents marginal rate, and 2) it acts as a signal to
           token holders and prospective token holders that there is uncertainty
-          around the redemtion of the token which will tend to depress the
+          around the redemption of the token which will tend to depress the
           price.
         </p>
 

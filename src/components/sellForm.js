@@ -53,34 +53,15 @@ class FormComponent extends Component {
 
   render() {
     return (
-      <div>
-        <div>
-          <form className="pure-form chat-form">
-            <legend>Contact</legend>
-            <feildset>
-              <label htmlFor="content">Message</label>
-              <div>
-                <textarea
-                  rows="3"
-                  className="pure-input"
-                  value={this.state.content}
-                  name="content"
-                  onChange={this.handleChange.bind(this)}
-                />
-              </div>
-            </feildset>
-            <button
-              type="button"
-              style={{ marginTop: '0.5em' }}
-              className="pure-button pure-button-primary"
-              disabled={!this.state.content}
-              onClick={this.submitMessage.bind(this)}
-            >
-              Send
-            </button>
-          </form>
-        </div>
-      </div>
+      <form className="pure-form" action="">
+        <legend>Sell Tokens</legend>
+        <fieldset>
+          <label htmlFor="">Quantity</label>
+          <input type="text" />
+        </fieldset>
+
+        <button className="pure-button pure-button-primary">Sell Tokens</button>
+      </form>
     );
   }
 }
