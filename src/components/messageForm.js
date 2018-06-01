@@ -57,7 +57,7 @@ class FormComponent extends Component {
         <div>
           <form className="pure-form chat-form">
             <legend>Contact</legend>
-            <feildset>
+            <fieldset>
               <label htmlFor="content">Message</label>
               <div>
                 <textarea
@@ -68,10 +68,9 @@ class FormComponent extends Component {
                   onChange={this.handleChange.bind(this)}
                 />
               </div>
-            </feildset>
+            </fieldset>
             <button
               type="button"
-              style={{ marginTop: '0.5em' }}
               className="pure-button pure-button-primary"
               disabled={!this.state.content}
               onClick={this.submitMessage.bind(this)}

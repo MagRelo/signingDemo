@@ -59,9 +59,7 @@ class FormComponent extends Component {
         <fieldset>
           <label htmlFor="">Quantity</label>
           <input type="text" />
-        </fieldset>
 
-        <fieldset>
           <label htmlFor="">Average Price</label>
           <input type="text" value={this.state.currentPrice} disabled />
         </fieldset>

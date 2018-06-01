@@ -160,7 +160,7 @@ class HomeComponent extends Component {
           The example above uses a single person (Alice) as an example of an
           agent but this construction will work even better for teams becuase of
           the inherent scarcity of 'priority' – if a sought-after group chooses
-          to create a team they will multiply the effect of the piority tokens.
+          to create a team they will multiply the effect of the priority tokens.
         </p>
 
         <h2>Market Dynamics</h2>

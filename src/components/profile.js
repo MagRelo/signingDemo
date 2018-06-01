@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import MessageForm from './messageForm';
 import BuyForm from './buyForm';
 import SellForm from './sellForm';
+
 import Chart from './chart';
+import Indicator from './indicator';
 
 const rowGrid = {
   display: 'grid',
@@ -13,31 +15,9 @@ const rowGrid = {
   margin: '0.5em 0 1em'
 };
 
-const Indicator = ({ value, label }) => {
-  function rotateArrow(input) {
-    return 180 - input * 1.8;
-  }
-
-  return (
-    <div>
-      <p>
-        <div
-          style={{
-            fontSize: 'larger',
-            transform: 'rotateZ(' + rotateArrow(value) + 'deg)'
-          }}
-        >
-          &uarr;
-        </div>
-      </p>
-      <label className="label-upper"> {label} </label>
-    </div>
-  );
-};
-
 const dummyData = {
   name: 'Matt Lovan',
-  position: 'Web Architect',
+  position: 'Web Developer',
   avatar:
     'https://pbs.twimg.com/profile_images/934866609352658944/5kUvOvnZ_400x400.jpg',
   intro: 'Available for consulting. Fullstack (Node, React, MongoDB, Postgres)',
@@ -54,13 +34,17 @@ const dummyData = {
     { type: 'youtube', url: 'https://github.com/party' }
   ],
   tokenDemand: 87,
+  demandHistory: [],
   tokenAvailability: 65,
+  availabilityHistory: [],
   tokenActivity: 64,
+  activityHistory: [],
   tokenChurn: 28,
+  churnHistrory: [],
   basePrice: 80.0,
+  totalSupply: 400,
   currentPrice: 105.05,
-  currentSupply: 300,
-  totalSupply: 400
+  currentSupply: 300
 };
 
 class ProfileComponent extends Component {
@@ -122,7 +106,7 @@ class ProfileComponent extends Component {
             <h3>Social</h3>
             <ul>
               {this.state.social.map(item => {
-                return <li>{item.url}</li>;
+                return <li key={item.url}>{item.url}</li>;
               })}
             </ul>
           </div>
@@ -131,7 +115,7 @@ class ProfileComponent extends Component {
             <h3>Publications</h3>
             <ul>
               {this.state.media.map(item => {
-                return <li>{item.url}</li>;
+                return <li key={item.url}>{item.url}</li>;
               })}
             </ul>
           </div>
@@ -140,14 +124,13 @@ class ProfileComponent extends Component {
             <h3>Projects</h3>
             <ul>
               {this.state.projects.map(item => {
-                return <li>{item.url}</li>;
+                return <li key={item.url}>{item.url}</li>;
               })}
             </ul>
           </div>
         </div>
 
-        <hr />
-        <h2>Token Activity</h2>
+        <h2>Token Status</h2>
 
         <div
           style={{
@@ -173,12 +156,56 @@ class ProfileComponent extends Component {
             currentPrice={this.state.currentPrice}
             currentSupply={this.state.currentSupply}
             totalSupply={this.state.totalSupply}
+            basis={0.01}
+            exponent={1.8}
           />
 
           <BuyForm />
         </div>
 
-        <hr />
+        <h2>My Contract</h2>
+        <div style={rowGrid}>
+          <div>
+            <h3>Detail</h3>
+            <p>Balance: {204} ETH</p>
+            <p>Outstanding Tokens: 120</p>
+            <p>Token Base Price: {0.15} ETH</p>
+            <p>Basis: 0.01</p>
+            <p>Exponent: 1.8</p>
+          </div>
+          <div>
+            <h3>Token Holders</h3>
+            <table className="pure-table" style={{ width: '100%' }}>
+              <thead>
+                <tr>
+                  <th>Address</th>
+                  <th>Balance</th>
+                  <th>Request Transfer</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>10238123</td>
+                  <td>90</td>
+                  <td>
+                    <button className="pure-button pure-button-primary">
+                      Request
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>af89sd9fs</td>
+                  <td>30</td>
+                  <td>
+                    <button className="pure-button pure-button-primary">
+                      Request
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
         <h2>My Account</h2>
         <p>Token Balance: 65</p>

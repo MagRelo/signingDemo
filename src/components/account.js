@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import ethUtil from 'ethereumjs-util';
+
 import { Link } from 'react-router-dom';
 
 import Indicator from './indicator';
 
 const dummyData = {
-  list: [
+  items: [
     {
       name: 'Matt Lovan',
       position: 'Web Developer',
@@ -74,58 +76,75 @@ const dummyData = {
   ]
 };
 
-class ListComponent extends Component {
+class MyAccount extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      alert: false,
-      error: '',
-      list: []
+      items: []
     };
   }
 
   componentDidMount() {
-    // this.search();
     this.setState(dummyData);
   }
 
-  search(parameters) {
-    return fetch('/api/profile/search', {
-      method: 'POST',
-      body: JSON.stringify({ testbody: true })
-    }).then(response => {
-      if (response.status === 401) {
-        return this.setState({ alert: true, error: '' });
-      }
+  // Form functions
+  handleChange(event) {
+    event.preventDefault();
+    this.setState({ [event.target.name]: event.target.value });
+  }
 
-      return response.json().then(responseBody => {
-        this.setState({
-          list: responseBody,
-          noList: !responseBody.length
-        });
-      });
-    });
+  submitMessage() {
+    const web3 = this.props.web3;
+    const userAddress = this.props.account;
+
+    const msg = ethUtil.bufferToHex(new Buffer(this.state.content, 'utf8'));
+    const params = [msg, userAddress];
+
+    console.group('Digital Signature');
+    console.log('Message:');
+    console.dir(params);
+
+    web3.currentProvider.sendAsync(
+      {
+        method: 'personal_sign',
+        params: params,
+        from: userAddress
+      },
+      (err, result) => {
+        if (err) return console.error(err);
+        if (result.error) return console.error(result.error.message);
+
+        console.log('Signature: ');
+        console.log(result.result);
+        console.groupEnd();
+
+        // send to server
+        // this.props.emitMessage(msg, result.result, this.state.content);
+        console.log('implement POST to server');
+
+        this.setState({ content: '' });
+      }
+    );
   }
 
   render() {
     return (
       <div>
-        <h1>Search</h1>
-        <form className="pure-form">
-          <fieldset>
-            <label htmlFor="search">Search</label>
-            <input type="text" />
-          </fieldset>
-          <button className="pure-button pure-button-primary">Search</button>
-        </form>
+        <h1>My Account</h1>
+        <hr />
+        <Link style={{ float: 'right' }} to="/create">
+          Add New Contract
+        </Link>
+        <h2>My Contracts</h2>
 
         <table className="pure-table" style={{ width: '100%' }}>
           <thead>
             <tr>
               <th>Name</th>
-              <th>Position</th>
-              <th>Rate</th>
+              <th>Balance</th>
+              <th>Current Price</th>
               <th>Supply</th>
               <th>Demand</th>
               <th>Churn</th>
@@ -133,15 +152,64 @@ class ListComponent extends Component {
               <th>Availability</th>
             </tr>
           </thead>
+
           <tbody>
-            {this.state.list.map(item => {
+            {this.state.items.map(item => {
               return (
                 <tr key={item.name}>
                   <td>
                     <Link to={item.url}>{item.name}</Link>
                   </td>
+                  <td>120 </td>
+                  <td>${item.currentPrice}</td>
+                  <td>
+                    {item.currentSupply} / {item.totalSupply}
+                  </td>
+                  <td>
+                    <Indicator value={item.tokenDemand} />
+                  </td>
+                  <td>
+                    <Indicator value={item.tokenChurn} />
+                  </td>
+                  <td>
+                    <Indicator value={item.tokenActivity} />
+                  </td>
+                  <td>
+                    <Indicator value={item.tokenAvailability} />
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
 
-                  <td>{item.position}</td>
+        <hr />
+        <Link style={{ float: 'right' }} to="/search">
+          Search
+        </Link>
+        <h2>Tokens</h2>
+        <table className="pure-table" style={{ width: '100%' }}>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Balance</th>
+              <th>Current Price</th>
+              <th>Supply</th>
+              <th>Demand</th>
+              <th>Churn</th>
+              <th>Activity</th>
+              <th>Availability</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {this.state.items.map(item => {
+              return (
+                <tr key={item.name}>
+                  <td>
+                    <Link to={item.url}>{item.name}</Link>
+                  </td>
+                  <td>90 </td>
                   <td>${item.currentPrice}</td>
                   <td>
                     {item.currentSupply} / {item.totalSupply}
@@ -171,10 +239,7 @@ class ListComponent extends Component {
 const mapStateToProps = state => {
   return {
     web3: state.web3.instance,
-    account: state.web3.accounts[0]
+    account: state.web3.accounts[0] || ''
   };
 };
-const mapDispatchToProps = dispatch => {
-  return {};
-};
-export default connect(mapStateToProps, mapDispatchToProps)(ListComponent);
+export default connect(mapStateToProps)(MyAccount);

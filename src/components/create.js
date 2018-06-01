@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import Chart from './chart';
+
 class CreateContractForm extends Component {
   constructor(props) {
     super(props);
@@ -8,17 +10,10 @@ class CreateContractForm extends Component {
     this.state = {
       contractOwner: '',
       oracleAddress: '',
-      tournamentName: '',
-      playerWhitelist: [
-        '0x863afa452F38966b54Cb1149D934e34670D0683a',
-        '0x106F681949E222D57A175cD85685E3bD9975b973',
-        '0xdf396910e693f7De31eF88d0090F2A4333ffcCF3'
-      ],
-      newPlayer: '',
-      rounds: 5,
-      minDeposit: 0.1,
-      exchangeRate: 1,
-      gameType: 'push'
+      basePrice: 0.15,
+      totalSupply: 400,
+      basis: 0.01,
+      exponent: 1.8
     };
   }
   componentDidMount() {
@@ -36,7 +31,12 @@ class CreateContractForm extends Component {
   // Form functions
   handleChange(event) {
     event.preventDefault();
-    this.setState({ [event.target.name]: event.target.value });
+
+    console.log(this.state.totalSupply / 4);
+
+    this.setState({
+      [event.target.name]: event.target.value
+    });
   }
 
   handleSubmit(event) {
@@ -78,10 +78,11 @@ class CreateContractForm extends Component {
 
     return (
       <div>
-        <h1>Create profile</h1>
+        <h1>Create contract</h1>
         <hr />
 
         <form className="pure-form" onSubmit={this.handleSubmit.bind(this)}>
+          <legend>Profile</legend>
           <fieldset>
             <label>Name</label>
             <input
@@ -101,36 +102,96 @@ class CreateContractForm extends Component {
               onChange={this.handleChange.bind(this)}
             />
 
-            <label>
-              Describe what your tokens represents (e.g., one hour of
-              consulting)
-            </label>
+            <label>Position</label>
             <input
               className="pure-input-1"
               type="text"
-              name="avatar"
-              value={this.state.avatar}
+              name="postion"
+              value={this.state.postion}
               onChange={this.handleChange.bind(this)}
             />
-          </fieldset>
 
-          <h2>Contract Details</h2>
-          <fieldset>
-            <label>
-              Minimum token price: {this.formatEth(this.state.minDeposit)}
-            </label>
+            <label>Introduction</label>
             <input
               className="pure-input-1"
-              type="number"
-              name="minDeposit"
-              min="0.01"
-              step="any"
-              value={this.state.tokenBasePrice}
+              type="text"
+              name="intro"
+              value={this.state.intro}
               onChange={this.handleChange.bind(this)}
             />
           </fieldset>
 
-          <hr />
+          <legend>Pricing</legend>
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateRows: '1fr',
+              gridTemplateColumns: '1fr 1fr',
+              margin: '0.5em 0 1em'
+            }}
+          >
+            <div>
+              <fieldset>
+                <label>
+                  Base Price: {this.formatEth(this.state.basePrice)}
+                </label>
+                <input
+                  className="pure-input-1"
+                  type="number"
+                  name="basePrice"
+                  min="0.01"
+                  step="any"
+                  value={this.state.basePrice}
+                  onChange={this.handleChange.bind(this)}
+                />
+                <label>Total Supply</label>
+                <input
+                  className="pure-input-1"
+                  type="number"
+                  name="totalSupply"
+                  min="1"
+                  step="any"
+                  value={this.state.totalSupply}
+                  onChange={this.handleChange.bind(this)}
+                />
+                <label>Exponent</label>
+                <input
+                  className="pure-input-1"
+                  type="number"
+                  name="exponent"
+                  min="1"
+                  step="any"
+                  value={this.state.exponent}
+                  onChange={this.handleChange.bind(this)}
+                />
+                <label>Basis</label>
+                <input
+                  className="pure-input-1"
+                  type="number"
+                  name="basis"
+                  min="1"
+                  step="any"
+                  value={this.state.basis}
+                  onChange={this.handleChange.bind(this)}
+                />
+              </fieldset>
+            </div>
+            <div>
+              <Chart
+                basePrice={this.round(
+                  this.state.exchangeRate * this.state.basePrice
+                )}
+                totalSupply={this.state.totalSupply}
+                basis={this.state.basis}
+                exponent={this.state.exponent}
+                currentPrice={this.round(
+                  this.state.exchangeRate * this.state.currentPrice
+                )}
+                currentSupply={this.state.currentSupply}
+              />
+            </div>
+          </div>
 
           <Link to="/profile/mattlovan"> + Create profile</Link>
         </form>

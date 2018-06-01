@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 
 import Loader from './components/loading.js';
@@ -23,6 +23,7 @@ import Home from './components/home';
 import Profile from './components/profile';
 import List from './components/list';
 import Create from './components/create';
+import Account from './components/account';
 
 class App extends Component {
   render() {
@@ -44,18 +45,14 @@ class App extends Component {
 
           <ul className="pure-menu-list navbar-right">
             <li className="pure-menu-item">
-              <a
-                href="https://github.com/MagRelo/signingDemo"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="pure-menu-link"
-              >
-                <img
-                  alt="github logo"
-                  className="header-logo"
-                  src={githubLogo}
-                />
-              </a>
+              <Link className="pure-menu-link" to="/account">
+                My Account
+              </Link>
+            </li>
+            <li className="pure-menu-item">
+              <Link className="pure-menu-link" to="/search">
+                Search
+              </Link>
             </li>
           </ul>
         </nav>
@@ -73,6 +70,7 @@ class App extends Component {
               <Route path="/team/12309" component={Profile} />
               <Route path="/search" component={List} />
               <Route path="/create" component={Create} />
+              <Route path="/account" component={Account} />
               <Route component={Home} />
             </Switch>
           )}
