@@ -24,27 +24,22 @@ mongoose.connection.on('error', function(err) {
   process.exit(-1);
 });
 
-// setup Mongoose message schema & model
-const MessageSchema = new mongoose.Schema(
+const ContractSchema = new mongoose.Schema(
   {
-    messageParams: Object,
-    signature: String,
+    contractAddress: String,
     userAddress: String,
-    content: String
+    name: String,
+    position: String,
+    intro: String,
+    basePrice: Number,
+    totalSupply: Number,
+    basis: Number,
+    exponent: Number,
+    transactions: []
   },
   { timestamps: true }
 );
-const MessageModel = mongoose.model('Message', MessageSchema);
-
-const UserSchema = new mongoose.Schema(
-  {
-    userAddress: String,
-    text: String,
-    theme: String
-  },
-  { timestamps: true }
-);
-const UserModel = mongoose.model('User', UserSchema);
+const ContractModel = mongoose.model('Contract', ContractSchema);
 
 // *
 // Server & http routing
@@ -68,76 +63,44 @@ server.listen(8080, () => {
   console.log('server listening on 8080');
 });
 
-// get user preferences
-app.get('/api/user/preferences', servesaAuth, function(req, res) {
-  const expirationDate = new Date(req.userMessage.expires);
-  if (expirationDate < Date.now()) {
-    return res.status(401).send([]);
-  }
-
-  MessageModel.find({ userAddress: req.userAddress })
-    .then(messages => {
-      return res.send(messages);
+app.post('/api/contracts', function(req, res) {
+  const newContract = new ContractModel();
+  newContract
+    .save(req.body)
+    .then(contract => {
+      return res.send(contract);
     })
     .catch(error => {
       return res.status(500).send(error);
     });
 });
 
-// save user preferences
-app.post('/api/user/preferences', servesaAuth, function(req, res) {
-  const userUpdate = {
-    userAddress: req.userAddress,
-    text: req.body.text,
-    theme: req.body.theme
-  };
-
-  // update user
-  UserModel.update({ userAddress: req.userAddress }, userUpdate, {
-    upsert: true
-  })
-    .then(result => {
-      return res.send(result);
+// get contract by internal id
+app.get('/api/contracts/:id', function(req, res) {
+  ContractModel.find({ _id: req.params.id })
+    .then(contract => {
+      return res.send(contract);
     })
     .catch(error => {
       return res.status(500).send(error);
     });
 });
 
-// delete user preferences
-app.delete('/api/user/delete', servesaAuth, function(req, res) {
-  // update user
-  UserModel.remove({ userAddress: req.userAddress })
-    .then(result => {
-      return res.send(result);
+// list contracts
+app.get('/api/contracts', function(req, res) {
+  ContractModel.find({})
+    .then(list => {
+      return res.send(list);
     })
     .catch(error => {
       return res.status(500).send(error);
     });
 });
 
-// message detail
-app.get('/api/messages/:id', function(req, res) {
-  MessageModel.findOne({ _id: req.params.id })
-    .then(message => {
-      return res.send(message);
-    })
-    .catch(error => {
-      return res.status(500).send(error);
-    });
-});
-
-// delete all messages
-app.post('/api/messages/delete', servesaAuth, function(req, res) {
-  // auth
-  if (req.userAddress != '0x863afa452f38966b54cb1149d934e34670d0683a') {
-    return res.status(401).send({});
-  }
-
-  // delete all messages
-  MessageModel.remove()
-    .then(result => {
-      return res.send(result);
+app.get('/api/account/:address', function(req, res) {
+  ContractModel.find({ userAddress: req.params.address })
+    .then(contract => {
+      return res.send(contract);
     })
     .catch(error => {
       return res.status(500).send(error);
@@ -154,42 +117,39 @@ app.get('/*', function(req, res) {
 
 io.on('connection', function(socket) {
   // send out fresh data on connect
-  MessageModel.find()
-    .sort({ updatedAt: 1 })
-    .then(messageArray => {
-      return socket.emit('update', messageArray);
-    })
-    .catch(error => {
-      return socket.emit('error', error.message);
-    });
-
-  socket.on('message', function(data) {
-    // authenticate (verify)
-    const userAddress = sigUtil.recoverPersonalSignature({
-      data: data.message,
-      sig: data.signature
-    });
-
-    // save message
-    const message = new MessageModel({
-      userAddress: userAddress,
-      messageParams: data.message,
-      signature: data.signature,
-      content: ethUtil.toBuffer(data.message).toString('utf8')
-    });
-
-    message
-      .save()
-      .then(savedMessage => {
-        return MessageModel.find().sort({ updatedAt: 1 });
-      })
-      .then(messageArray => {
-        return socket.emit('update', messageArray);
-      })
-      .catch(error => {
-        return socket.emit('error', error.message);
-      });
-  });
+  // MessageModel.find()
+  //   .sort({ updatedAt: 1 })
+  //   .then(messageArray => {
+  //     return socket.emit('update', messageArray);
+  //   })
+  //   .catch(error => {
+  //     return socket.emit('error', error.message);
+  //   });
+  // socket.on('message', function(data) {
+  //   // authenticate (verify)
+  //   const userAddress = sigUtil.recoverPersonalSignature({
+  //     data: data.message,
+  //     sig: data.signature
+  //   });
+  //   // save message
+  //   const message = new MessageModel({
+  //     userAddress: userAddress,
+  //     messageParams: data.message,
+  //     signature: data.signature,
+  //     content: ethUtil.toBuffer(data.message).toString('utf8')
+  //   });
+  //   message
+  //     .save()
+  //     .then(savedMessage => {
+  //       return MessageModel.find().sort({ updatedAt: 1 });
+  //     })
+  //     .then(messageArray => {
+  //       return socket.emit('update', messageArray);
+  //     })
+  //     .catch(error => {
+  //       return socket.emit('error', error.message);
+  //     });
+  // });
 });
 
 // *
