@@ -10,10 +10,10 @@ class HomeComponent extends Component {
         <hr />
 
         <p>
-          Servésa is a marketplace for services that provides radical
-          transperancy around the availability, pricing and scheduling of
-          service providers. we can reduce transaction costs and unlock new
-          opportunities for profitable cooperation.
+          Servésa is a marketplace that provides radical transperancy around the
+          availability, pricing and scheduling of services. we can reduce
+          transaction costs and unlock new opportunities for profitable
+          cooperation.
         </p>
 
         <h2>Implementation</h2>

@@ -63,21 +63,11 @@ server.listen(8080, () => {
   console.log('server listening on 8080');
 });
 
+// create contract
 app.post('/api/contracts', function(req, res) {
   const newContract = new ContractModel();
   newContract
     .save(req.body)
-    .then(contract => {
-      return res.send(contract);
-    })
-    .catch(error => {
-      return res.status(500).send(error);
-    });
-});
-
-// get contract by internal id
-app.get('/api/contracts/:id', function(req, res) {
-  ContractModel.find({ _id: req.params.id })
     .then(contract => {
       return res.send(contract);
     })
@@ -97,8 +87,38 @@ app.get('/api/contracts', function(req, res) {
     });
 });
 
+// get contract by internal id
+app.get('/api/contracts/:id', function(req, res) {
+  ContractModel.find({ _id: req.params.id })
+    .then(contract => {
+      return res.send(contract);
+    })
+    .catch(error => {
+      return res.status(500).send(error);
+    });
+});
+
+// get contracts by account
 app.get('/api/account/:address', function(req, res) {
   ContractModel.find({ userAddress: req.params.address })
+    .then(contract => {
+      return res.send(contract);
+    })
+    .catch(error => {
+      return res.status(500).send(error);
+    });
+});
+
+app.get('/api/search', function(req, res) {
+  const query = req.query.searchValue;
+
+  ContractModel.find({
+    $or: [
+      { name: searchValue },
+      { position: searchValue },
+      { intro: searchValue }
+    ]
+  })
     .then(contract => {
       return res.send(contract);
     })

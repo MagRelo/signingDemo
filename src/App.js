@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route, Link, NavLink } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 
 import Loader from './components/loading.js';
@@ -44,14 +44,22 @@ class App extends Component {
 
           <ul className="pure-menu-list navbar-right">
             <li className="pure-menu-item">
-              <Link className="pure-menu-link" to="/account">
+              <NavLink
+                className="pure-menu-link"
+                to="/account"
+                activeStyle={{ color: '#FF5934' }}
+              >
                 My Account
-              </Link>
+              </NavLink>
             </li>
             <li className="pure-menu-item">
-              <Link className="pure-menu-link" to="/search">
+              <NavLink
+                className="pure-menu-link"
+                to="/search"
+                activeStyle={{ color: '#FF5934' }}
+              >
                 Search
-              </Link>
+              </NavLink>
             </li>
           </ul>
         </nav>
