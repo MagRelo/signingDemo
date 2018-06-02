@@ -85,8 +85,8 @@ class CurveChart extends Component {
             isAnimationActive={false}
             stackOffset={'none'}
             dataKey="value"
-            stroke="#ff5935"
-            fill="#ff5935"
+            stroke="#175772"
+            fill="#175772"
           />
 
           <ReferenceDot
@@ -96,7 +96,7 @@ class CurveChart extends Component {
             y={currentPrice.value}
             r={36}
             fill="#fff"
-            stroke="#103A52"
+            stroke="#175772"
             label={'$' + currentPrice.value}
           />
         </ComposedChart>

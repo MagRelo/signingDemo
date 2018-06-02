@@ -58,10 +58,15 @@ class FormComponent extends Component {
 
         <fieldset>
           <label htmlFor="">Quantity</label>
-          <input type="text" />
+          <input className="pure-input-1" type="text" />
 
           <label htmlFor="">Average Price</label>
-          <input type="text" value={this.state.currentPrice} disabled />
+          <input
+            className="pure-input-1"
+            type="text"
+            value={this.state.currentPrice}
+            disabled
+          />
         </fieldset>
 
         <button className="pure-button pure-button-primary">Buy Tokens</button>

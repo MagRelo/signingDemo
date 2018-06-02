@@ -20,7 +20,7 @@ import githubLogo from './icon/GitHub-Mark-Light-32px.png';
 
 // routing
 import Home from './components/home';
-import Profile from './components/profile';
+import Contract from './components/contract';
 import List from './components/list';
 import Create from './components/create';
 import Account from './components/account';
@@ -38,10 +38,9 @@ class App extends Component {
             </div>
           </div>
 
-          <a href="/" className="pure-menu-heading pure-menu-link">
-            {' '}
-            Servésa{' '}
-          </a>
+          <Link className="pure-menu-heading pure-menu-link" to="/">
+            Servésa
+          </Link>
 
           <ul className="pure-menu-list navbar-right">
             <li className="pure-menu-item">
@@ -66,8 +65,10 @@ class App extends Component {
             />
           ) : (
             <Switch>
-              <Route path="/profile/mattlovan" component={Profile} />
-              <Route path="/team/12309" component={Profile} />
+              <Route path="/profile/mattlovan" component={Contract} />
+              <Route path="/team/12309" component={Contract} />
+
+              <Route path="/contract/:id" component={Contract} />
               <Route path="/search" component={List} />
               <Route path="/create" component={Create} />
               <Route path="/account" component={Account} />

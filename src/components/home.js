@@ -5,19 +5,23 @@ class HomeComponent extends Component {
   render() {
     return (
       <div className="home">
-        <h1>Servésa – World Labor Market</h1>
+        <h1>Servésa</h1>
+        <h2>Service Marketplace</h2>
         <hr />
 
-        <p>The Servésa platform is a marketplace for consulting.</p>
+        <p>
+          Servésa is a marketplace for services that provides radical
+          transperancy around the availability, pricing and scheduling of
+          service providers. we can reduce transaction costs and unlock new
+          opportunities for profitable cooperation.
+        </p>
 
-        <h2>Description</h2>
+        <h2>Implementation</h2>
         <p>
           We'll create a unique token to represent each agent's unit of work.
           We'll then create financial incentives around how tokens are priced
           and redeemed to encourage long-term relationships between prinicipals
-          and agents. By increasing transperancy around the availability,
-          pricing and scheduling of labor we can reduce transaction costs and
-          unlock new opportunities for profitable cooperation.
+          and agents.
         </p>
         <p>
           As this strategy focuses on reducing transaction costs we expect it

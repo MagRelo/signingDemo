@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import MessageForm from './messageForm';
 import BuyForm from './buyForm';
 import SellForm from './sellForm';
+import TransferForm from './transferForm';
 
 import Chart from './chart';
 import Indicator from './indicator';
@@ -91,7 +92,6 @@ class ProfileComponent extends Component {
           </label>
         </h1>
 
-        <hr />
         <p>{this.state.intro}</p>
 
         <div
@@ -210,8 +210,17 @@ class ProfileComponent extends Component {
         <h2>My Account</h2>
         <p>Token Balance: 65</p>
         <p>Value: $6,522</p>
-        <div style={rowGrid}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateRows: '1fr',
+            gridTemplateColumns: '1fr  1fr 1fr',
+            margin: '0.5em 0 1em'
+          }}
+        >
           <MessageForm />
+
+          <TransferForm />
 
           <SellForm />
         </div>

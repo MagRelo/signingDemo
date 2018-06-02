@@ -33,12 +33,13 @@ body,
   margin: 0;
   padding: 0;
   font-family: 'Open Sans', sans-serif;
-  color: #103A52;
 }
 
 h1,
-h2 {
-  margin: .33em 0 0.33em;
+h2,
+h3 {
+  /* margin: .33em 0 0.33em; */
+  color: #175772;
 }
 
 .container {
@@ -133,6 +134,10 @@ form>p {
   margin-right: 1em;
 }
 
+.pure-form legend {
+  color: #175772;
+}
+
 .pure-form fieldset {
   padding-top: 0;
 }
@@ -198,6 +203,7 @@ form>p {
   padding: 5px;
   background: #103A52;
   font-family: 'Michroma', 'Arial Narrow', sans-serif;
+  z-index: 1;
 }
 
 .navbar a {
@@ -209,7 +215,7 @@ nav.navbar.pure-menu.pure-menu-horizontal {
 }
 
 a.pure-menu-link {
-  padding: 0.75em 1em;
+  padding: 1em;
   font-size: 14px;
 }
 

@@ -133,9 +133,8 @@ class MyAccount extends Component {
     return (
       <div>
         <h1>My Account</h1>
-        <hr />
         <Link style={{ float: 'right' }} to="/create">
-          Add New Contract
+          + Add New Contract
         </Link>
         <h2>My Contracts</h2>
 

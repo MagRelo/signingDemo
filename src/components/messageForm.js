@@ -62,7 +62,7 @@ class FormComponent extends Component {
               <div>
                 <textarea
                   rows="3"
-                  className="pure-input"
+                  className="pure-input-1"
                   value={this.state.content}
                   name="content"
                   onChange={this.handleChange.bind(this)}

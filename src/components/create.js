@@ -79,7 +79,6 @@ class CreateContractForm extends Component {
     return (
       <div>
         <h1>Create contract</h1>
-        <hr />
 
         <form className="pure-form" onSubmit={this.handleSubmit.bind(this)}>
           <legend>Profile</legend>
@@ -112,13 +111,15 @@ class CreateContractForm extends Component {
             />
 
             <label>Introduction</label>
-            <input
-              className="pure-input-1"
-              type="text"
-              name="intro"
-              value={this.state.intro}
-              onChange={this.handleChange.bind(this)}
-            />
+            <div>
+              <textarea
+                rows="3"
+                className="pure-input-1"
+                value={this.state.intro}
+                name="content"
+                onChange={this.handleChange.bind(this)}
+              />
+            </div>
           </fieldset>
 
           <legend>Pricing</legend>

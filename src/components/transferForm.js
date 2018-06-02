@@ -54,13 +54,15 @@ class FormComponent extends Component {
   render() {
     return (
       <form className="pure-form" action="">
-        <legend>Sell Tokens</legend>
+        <legend>Transfer Tokens</legend>
         <fieldset>
           <label htmlFor="">Quantity</label>
           <input className="pure-input-1" type="text" />
+          <label htmlFor="">Destination Address</label>
+          <input className="pure-input-1" type="text" />
         </fieldset>
 
-        <button className="pure-button pure-button-primary">Sell</button>
+        <button className="pure-button pure-button-primary">Transfer</button>
       </form>
     );
   }

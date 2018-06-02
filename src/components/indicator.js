@@ -1,21 +1,23 @@
 import React from 'react';
 
+import arrow from '../icon/arrow.svg';
+
 const Indicator = ({ value, label }) => {
   function rotateArrow(input) {
-    return 180 - input * 1.8;
+    return 270 - input * 1.8;
   }
 
   return (
     <div>
-      <div
+      <img
+        src={arrow}
         style={{
-          fontSize: 'larger',
+          maxHeight: '2em',
           transform: 'rotateZ(' + rotateArrow(value) + 'deg)',
-          marginBottom: '0.5em'
+          marginBottom: '0.5em',
+          marginTop: '0.5em'
         }}
-      >
-        &uarr;
-      </div>
+      />
       <label className="label-upper">{label}</label>
     </div>
   );
