@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import MessageForm from './messageForm';
-import BuyForm from './buyForm';
-import SellForm from './sellForm';
-import TransferForm from './transferForm';
+import MessageForm from './forms/messageForm';
+import BuyForm from './forms/buyForm';
+import SellForm from './forms/sellForm';
+import TransferForm from './forms/transferForm';
 
-import Chart from './chart';
-import Indicator from './indicator';
+import Chart from './misc/chart';
+import Indicator from './misc/indicator';
 
 const rowGrid = {
   display: 'grid',

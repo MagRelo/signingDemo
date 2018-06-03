@@ -1,6 +1,6 @@
 import React from 'react';
 
-import arrow from '../icon/arrow.svg';
+import arrow from '../../icon/arrow.svg';
 
 const Indicator = ({ value, label }) => {
   function rotateArrow(input) {

@@ -31,10 +31,6 @@ class AdminComponent extends Component {
   render() {
     return (
       <div className="loader">
-        <h1>Digital Signature Demos</h1>
-
-        <hr />
-
         <p>
           Web3: <Checkmark boolean={this.props.web3} />{' '}
         </p>

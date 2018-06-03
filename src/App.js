@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { Switch, Route, Link, NavLink } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 
-import Loader from './components/loading.js';
-
 // Fonts
 import './css/open-sans.css';
 import './css/michroma.css';
@@ -20,10 +18,10 @@ import githubLogo from './icon/GitHub-Mark-Light-32px.png';
 
 // routing
 import Home from './components/home';
-import Contract from './components/contract';
 import List from './components/list';
-import Create from './components/create';
 import Account from './components/account';
+import Contract from './components/contract';
+import Create from './components/forms/createForm';
 
 class App extends Component {
   render() {
@@ -64,25 +62,17 @@ class App extends Component {
           </ul>
         </nav>
 
-        <div className="container" style={{ fontSize: this.props.fontSize }}>
-          {!this.props.web3 || !this.props.account ? (
-            <Loader
-              web3={this.props.web3}
-              account={this.props.account}
-              network={this.props.network}
-            />
-          ) : (
-            <Switch>
-              <Route path="/profile/mattlovan" component={Contract} />
-              <Route path="/team/12309" component={Contract} />
+        <div className="container">
+          <Switch>
+            <Route path="/profile/mattlovan" component={Contract} />
+            <Route path="/team/12309" component={Contract} />
 
-              <Route path="/contract/:id" component={Contract} />
-              <Route path="/search" component={List} />
-              <Route path="/create" component={Create} />
-              <Route path="/account" component={Account} />
-              <Route component={Home} />
-            </Switch>
-          )}
+            <Route path="/contract/:id" component={Contract} />
+            <Route path="/search" component={List} />
+            <Route path="/create" component={Create} />
+            <Route path="/account" component={Account} />
+            <Route component={Home} />
+          </Switch>
         </div>
       </div>
     );
@@ -93,9 +83,7 @@ const mapStateToProps = state => {
   return {
     web3: state.web3.instance,
     account: state.web3.accounts[0] || '',
-    network: state.web3.network,
-    fontSize: state.user.text,
-    theme: state.user.theme
+    network: state.web3.network
   };
 };
 

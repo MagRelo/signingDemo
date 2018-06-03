@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import Chart from './chart';
+import Chart from '../misc/chart';
+import Loader from '../misc/loader';
 
 class CreateContractForm extends Component {
   constructor(props) {

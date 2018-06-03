@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ethUtil from 'ethereumjs-util';
 
+import LoadWrapper from '../misc/loader';
+
 class FormComponent extends Component {
   constructor(props) {
     super(props);
@@ -54,22 +56,16 @@ class FormComponent extends Component {
   render() {
     return (
       <form className="pure-form" action="">
-        <legend>Buy Tokens</legend>
+        <legend>Sell Tokens</legend>
 
-        <fieldset>
-          <label htmlFor="">Quantity</label>
-          <input className="pure-input-1" type="text" />
+        <LoadWrapper>
+          <fieldset>
+            <label htmlFor="">Quantity</label>
+            <input className="pure-input-1" type="text" />
+          </fieldset>
 
-          <label htmlFor="">Average Price</label>
-          <input
-            className="pure-input-1"
-            type="text"
-            value={this.state.currentPrice}
-            disabled
-          />
-        </fieldset>
-
-        <button className="pure-button pure-button-primary">Buy Tokens</button>
+          <button className="pure-button pure-button-primary">Sell</button>
+        </LoadWrapper>
       </form>
     );
   }

@@ -273,8 +273,6 @@ ul.pure-menu-list.navbar-right {
 /* ---- */
 
 .loader {
-  border: solid 1px #bbb;
-  border-radius: 0.33em;
   padding: 1em;
   text-align: center;
   margin-top: 1em;
