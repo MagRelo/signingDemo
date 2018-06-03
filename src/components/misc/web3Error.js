@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import Checkmark from './checkmark';
+import WarningIcon from '../../icon/warning.svg';
 
 let timer = null;
 const buttonGrid = {
@@ -31,16 +32,6 @@ class AdminComponent extends Component {
   render() {
     return (
       <div className="loader">
-        <p>
-          Web3: <Checkmark boolean={this.props.web3} />{' '}
-        </p>
-        <p>
-          Network: <b>{this.props.network}</b>{' '}
-        </p>
-        <p>
-          Account: <Checkmark boolean={this.props.account} />
-        </p>
-
         {!this.state.showTip ? (
           <div>
             <div className="spinner" />
@@ -50,6 +41,9 @@ class AdminComponent extends Component {
 
         {!this.props.web3 && this.state.showTip ? (
           <div>
+            <p>
+              <img src={WarningIcon} alt="warning icon" />
+            </p>
             <p>
               web3 is not available. This application requires a browser that
               supports web3.
@@ -97,9 +91,15 @@ class AdminComponent extends Component {
           </div>
         ) : null}
         {this.props.web3 && !this.props.account && this.state.showTip ? (
-          <p>
-            Your account is not available. You may need to unlock your account.
-          </p>
+          <div>
+            <p>
+              <img src={WarningIcon} alt="warning icon" />
+            </p>
+            <p>
+              Your account is not available. You may need to unlock your
+              account.
+            </p>
+          </div>
         ) : null}
       </div>
     );
