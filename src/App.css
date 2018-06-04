@@ -216,6 +216,11 @@ nav.navbar.pure-menu.pure-menu-horizontal {
 a.pure-menu-link {
   font-size: 14px;
   color: #FF5934;
+  margin-top: 0.5em;
+}
+
+.pure-menu-link {
+  padding: .25em 1em;
 }
 
 .pure-menu-active>.pure-menu-link,

@@ -1,16 +1,13 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
 
-// import { routerReducer } from 'react-router-redux'
-import web3Reducer from './reducers/web3'
-import chatReducer from './reducers/chat'
-import userReducer from './reducers/user'
-// user
+import web3Reducer from './reducers/web3';
+import contractReducer from './reducers/contract';
+import userReducer from './reducers/user';
 
 const reducer = combineReducers({
-  // routing: routerReducer,
-  chat: chatReducer,
+  contract: contractReducer,
   web3: web3Reducer,
   user: userReducer
-})
+});
 
-export default reducer
+export default reducer;
