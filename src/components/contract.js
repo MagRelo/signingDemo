@@ -36,10 +36,34 @@ const dummyData = {
     { type: 'youtube', url: 'https://github.com/party' }
   ],
   tokenHolders: [
-    { address: '12345678', tokenBalance: 60, url: '/contract/123', id: 1 },
-    { address: '12345678', tokenBalance: 21, url: '/contract/123', id: 2 },
-    { address: '12345678', tokenBalance: 80, url: '/contract/123', id: 3 },
-    { address: '12345678', tokenBalance: 10, url: '/contract/123', id: 4 }
+    {
+      address: '12345678',
+      tokenBalance: 60,
+      url: '/contract/123',
+      id: 1,
+      priority: 0.95
+    },
+    {
+      address: '12345678',
+      tokenBalance: 21,
+      url: '/contract/123',
+      id: 2,
+      priority: 0.81
+    },
+    {
+      address: '12345678',
+      tokenBalance: 80,
+      url: '/contract/123',
+      id: 3,
+      priority: 0.75
+    },
+    {
+      address: '12345678',
+      tokenBalance: 10,
+      url: '/contract/123',
+      id: 4,
+      priority: 0.55
+    }
   ],
   tokenDemand: 87,
   demandHistory: [],
@@ -184,6 +208,7 @@ class ProfileComponent extends Component {
               <thead>
                 <tr>
                   <th>Address</th>
+                  <th>Priority</th>
                   <th>Balance</th>
                 </tr>
               </thead>
@@ -194,6 +219,7 @@ class ProfileComponent extends Component {
                       <td>
                         <Link to={'/account/' + item.id}>{item.address}</Link>
                       </td>
+                      <td>{item.priority}</td>
                       <td>{item.tokenBalance}</td>
                     </tr>
                   );
