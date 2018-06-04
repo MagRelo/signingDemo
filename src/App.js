@@ -14,7 +14,6 @@ import './css/grids-responsive-min.css';
 
 // App css
 import './App.css';
-import githubLogo from './icon/GitHub-Mark-Light-32px.png';
 
 // routing
 import Home from './components/home';

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import MessageForm from './forms/messageForm';
 import BuyForm from './forms/buyForm';
@@ -34,6 +35,12 @@ const dummyData = {
     { type: 'medium', url: 'https://github.com/asdf' },
     { type: 'youtube', url: 'https://github.com/party' }
   ],
+  tokenHolders: [
+    { address: '12345678', tokenBalance: 60, url: '/contract/123', id: 1 },
+    { address: '12345678', tokenBalance: 21, url: '/contract/123', id: 2 },
+    { address: '12345678', tokenBalance: 80, url: '/contract/123', id: 3 },
+    { address: '12345678', tokenBalance: 10, url: '/contract/123', id: 4 }
+  ],
   tokenDemand: 87,
   demandHistory: [],
   tokenAvailability: 65,
@@ -59,6 +66,7 @@ class ProfileComponent extends Component {
       social: [],
       media: [],
       projects: [],
+      tokenHolders: [],
       basePrice: 0,
       currentPrice: 0,
       currentSupply: 0,
@@ -163,10 +171,9 @@ class ProfileComponent extends Component {
           <BuyForm />
         </div>
 
-        <h2>My Contract</h2>
         <div style={rowGrid}>
           <div>
-            <h3>Detail</h3>
+            <h3>Contract Detail</h3>
             <p>Balance: {204} ETH</p>
             <p>Outstanding Tokens: 120</p>
             <p>Token Base Price: {0.15} ETH</p>
@@ -180,28 +187,19 @@ class ProfileComponent extends Component {
                 <tr>
                   <th>Address</th>
                   <th>Balance</th>
-                  <th>Request Transfer</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>10238123</td>
-                  <td>90</td>
-                  <td>
-                    <button className="pure-button pure-button-primary">
-                      Request
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>af89sd9fs</td>
-                  <td>30</td>
-                  <td>
-                    <button className="pure-button pure-button-primary">
-                      Request
-                    </button>
-                  </td>
-                </tr>
+                {this.state.tokenHolders.map(item => {
+                  return (
+                    <tr key={item.id}>
+                      <td>
+                        <Link to={'/account/' + item.id}>{item.address}</Link>
+                      </td>
+                      <td>{item.tokenBalance}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

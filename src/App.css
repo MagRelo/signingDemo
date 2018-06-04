@@ -12,15 +12,6 @@ toape? - FAE7C7
 
 */
 
-/* 
-html,
-body,
-#root,
-.App,
-.container {
-  height: 100%;
-} */
-
 @media screen and (min-width: 992px) {
   .container {
     max-width: 992px;
@@ -150,6 +141,18 @@ form>p {
   display: block;
 }
 
+/* Loader */
+
+.loader {
+  padding: 1em;
+  text-align: center;
+  margin-top: 1em;
+}
+
+.loader label {
+  text-transform: uppercase;
+}
+
 /*Copied from http://tobiasahlin.com/spinkit/*/
 
 .spinner {
@@ -266,22 +269,6 @@ ul.pure-menu-list.navbar-right {
   margin-top: 0.2em;
 }
 
-/* ---- */
-
-/* ---- */
-
-/* ---- */
-
-.loader {
-  padding: 1em;
-  text-align: center;
-  margin-top: 1em;
-}
-
-.loader label {
-  text-transform: uppercase;
-}
-
 .chat-form>textarea {
   width: 100%;
   border: solid 1px #bbb;
@@ -289,58 +276,6 @@ ul.pure-menu-list.navbar-right {
   border-radius: 0;
   border-bottom-left-radius: 0.33em;
   border-bottom-right-radius: 0.33em;
-}
-
-.grey-border {
-  border: solid 1px #bbb;
-  border-radius: 0.33em;
-}
-
-.top {
-  border-bottom: none;
-  border-radius: 0;
-  border-top-left-radius: 0.33em;
-  border-top-right-radius: 0.33em;
-}
-
-ul.chat-list {
-  padding-left: 0;
-  padding-right: 0;
-  margin: 0 0;
-}
-
-ul.chat-list>li {
-  list-style: none;
-  margin-top: 1em;
-  padding: 1em;
-  border: solid 1px #bbb;
-}
-
-ul.chat-list>li>time {
-  font-size: smaller;
-  color: #4e4e4e;
-}
-
-ul.chat-list>li>p {
-  font-family: serif;
-  color: #4e4e4e;
-  line-height: 1.3;
-}
-
-.compose-button {
-  position: fixed;
-  bottom: 1em;
-  right: 1.5em;
-  border-radius: 1.5em;
-  padding: 0.8em 1em;
-  box-shadow: 1px 1px 3px #505050;
-}
-
-.account-label {
-  padding: 0.2em 0.45em 0.1em;
-  margin-right: 0.5em;
-  font-family: monospace;
-  border: solid 1px #bbb
 }
 
 .settings-icon {
@@ -357,38 +292,10 @@ ul.chat-list>li>p {
   color: #4e4e4e;
 }
 
-/* Detail pages */
-
-.message-data {
-  margin-top: 0.25em;
-  margin-bottom: 1em;
-  padding: 0 0.5em;
-  border: solid 1px #ccc;
-  border-radius: 0.33em;
-  color: #444;
-  background-color: #ddd;
-  word-break: break-all;
-  white-space: pre-wrap;
-}
-
-.message-data>p {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-}
-
-.title {
-  text-decoration: none;
-  border-bottom: solid 3px #FF5934;
-  color: #103A52;
-}
+/* Home */
 
 .home h3 {
   margin-bottom: 0.25em;
-}
-
-.demo-description {
-  margin-top: 0.25em;
-  margin-left: 0.5em;
 }
 
 .inset {

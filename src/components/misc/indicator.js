@@ -11,6 +11,7 @@ const Indicator = ({ value, label }) => {
     <div>
       <img
         src={arrow}
+        alt={label + ' trend value: ' + value}
         style={{
           maxHeight: '2em',
           transform: 'rotateZ(' + rotateArrow(value) + 'deg)',

@@ -58,26 +58,28 @@ class FormComponent extends Component {
       <form className="pure-form chat-form">
         <legend>Contact</legend>
         <LoadWrapper>
-          <fieldset>
-            <label htmlFor="content">Message</label>
-            <div>
-              <textarea
-                rows="3"
-                className="pure-input-1"
-                value={this.state.content}
-                name="content"
-                onChange={this.handleChange.bind(this)}
-              />
-            </div>
-          </fieldset>
-          <button
-            type="button"
-            className="pure-button pure-button-primary"
-            disabled={!this.state.content}
-            onClick={this.submitMessage.bind(this)}
-          >
-            Send
-          </button>
+          <div>
+            <fieldset>
+              <label htmlFor="content">Message</label>
+              <div>
+                <textarea
+                  rows="3"
+                  className="pure-input-1"
+                  value={this.state.content}
+                  name="content"
+                  onChange={this.handleChange.bind(this)}
+                />
+              </div>
+            </fieldset>
+            <button
+              type="button"
+              className="pure-button pure-button-primary"
+              disabled={!this.state.content}
+              onClick={this.submitMessage.bind(this)}
+            >
+              Send
+            </button>
+          </div>
         </LoadWrapper>
       </form>
     );

@@ -59,12 +59,14 @@ class FormComponent extends Component {
         <legend>Sell Tokens</legend>
 
         <LoadWrapper>
-          <fieldset>
-            <label htmlFor="">Quantity</label>
-            <input className="pure-input-1" type="text" />
-          </fieldset>
+          <div>
+            <fieldset>
+              <label htmlFor="">Quantity</label>
+              <input className="pure-input-1" type="text" />
+            </fieldset>
 
-          <button className="pure-button pure-button-primary">Sell</button>
+            <button className="pure-button pure-button-primary">Sell</button>
+          </div>
         </LoadWrapper>
       </form>
     );
