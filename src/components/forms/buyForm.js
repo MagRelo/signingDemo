@@ -38,10 +38,11 @@ class FormComponent extends Component {
               />
             </fieldset>
             <button className="pure-button pure-button-primary">
-              Buy Tokens
+              Buy tokens
             </button>
+            <span style={{ margin: '0 0.25em' }} />
             <button className="pure-button pure-button-primary">
-              Request Donation
+              Request a donation
             </button>
           </div>
         </LoadWrapper>
