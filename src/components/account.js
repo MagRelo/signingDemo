@@ -14,7 +14,7 @@ const dummyData = {
         'https://pbs.twimg.com/profile_images/934866609352658944/5kUvOvnZ_400x400.jpg',
       intro:
         'Available for consulting. Fullstack (Node, React, MongoDB, Postgres)',
-      url: 'profile/mattlovan',
+      url: '/profile/mattlovan',
       social: [
         { type: 'twitter', url: 'https://twitter.com' },
         { type: 'facebook', url: 'https://facebook.com' }
@@ -40,7 +40,7 @@ const dummyData = {
       name: 'Team Discovery',
       position: 'Full-stack team',
       currentPrice: '350',
-      url: 'team/12309',
+      url: '/team/12309',
       currentSupply: 84,
       totalSupply: 1000,
       tokenDemand: 35,
@@ -52,7 +52,7 @@ const dummyData = {
       name: 'Bob Jones',
       position: 'Designer',
       currentPrice: '60',
-      url: 'team/12309',
+      url: '/team/12309',
       currentSupply: 50,
       totalSupply: 100,
       tokenDemand: 90,
@@ -64,7 +64,7 @@ const dummyData = {
       name: 'Rick Ross',
       position: 'Painter',
       currentPrice: '195.25',
-      url: 'team/12309',
+      url: '/team/12309',
       currentSupply: 22,
       totalSupply: 100,
       tokenDemand: 77,

@@ -43,19 +43,19 @@ class App extends Component {
             <li className="pure-menu-item">
               <NavLink
                 className="pure-menu-link"
-                to="/account"
-                activeStyle={{ color: '#FF5934' }}
+                to="/search"
+                activeStyle={{ color: '#ffffff', borderBottom: 'solid 2px' }}
               >
-                My Account
+                Search
               </NavLink>
             </li>
             <li className="pure-menu-item">
               <NavLink
                 className="pure-menu-link"
-                to="/search"
-                activeStyle={{ color: '#FF5934' }}
+                to="/account"
+                activeStyle={{ color: '#ffffff', borderBottom: 'solid 2px' }}
               >
-                Search
+                My Account
               </NavLink>
             </li>
           </ul>
@@ -69,6 +69,7 @@ class App extends Component {
             <Route path="/contract/:id" component={Contract} />
             <Route path="/search" component={List} />
             <Route path="/create" component={Create} />
+            <Route path="/account/:id" component={Account} />
             <Route path="/account" component={Account} />
             <Route component={Home} />
           </Switch>

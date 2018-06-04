@@ -209,21 +209,13 @@ form>p {
   z-index: 1;
 }
 
-.navbar a {
-  color: #fff;
-}
-
 nav.navbar.pure-menu.pure-menu-horizontal {
   padding: 0
 }
 
 a.pure-menu-link {
-  padding: 1em;
   font-size: 14px;
-}
-
-ul.pure-menu-list.navbar-right {
-  margin-right: 1em;
+  color: #FF5934;
 }
 
 .pure-menu-active>.pure-menu-link,
@@ -235,10 +227,15 @@ ul.pure-menu-list.navbar-right {
 .navbar .pure-menu-heading {
   font-weight: bold;
   text-transform: none;
+  color: #ffffff;
 }
 
 .navbar .navbar-right {
   float: right;
+}
+
+ul.pure-menu-list.navbar-right {
+  margin-right: 1em;
 }
 
 .logo {

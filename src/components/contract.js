@@ -138,8 +138,6 @@ class ProfileComponent extends Component {
           </div>
         </div>
 
-        <h2>Token Status</h2>
-
         <div
           style={{
             display: 'grid',

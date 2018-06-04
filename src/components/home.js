@@ -6,12 +6,12 @@ class HomeComponent extends Component {
     return (
       <div className="home">
         <h1>Servésa</h1>
-        <h2>Service Marketplace</h2>
+        <h2>Liquid Labor Market</h2>
         <hr />
 
         <p>
           Servésa is a marketplace that provides radical transperancy around the
-          availability, pricing and scheduling of services. we can reduce
+          availability, pricing and scheduling of labor. we can reduce
           transaction costs and unlock new opportunities for profitable
           cooperation.
         </p>
@@ -136,10 +136,16 @@ class HomeComponent extends Component {
             </p>
           </li>
           <li>
-            <p>Ultimate flexibility</p>
+            <p>
+              More flexibility: Alice can limit the number of tokens that she is
+              willing to sell in order to maintain freedom{' '}
+            </p>
           </li>
           <li>
-            <p>Verifiable signals of quality and demand for services</p>
+            <p>
+              Less Bullshitting: Verifiable signals of quality and demand for
+              services
+            </p>
           </li>
         </ul>
 
