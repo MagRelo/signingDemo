@@ -192,7 +192,56 @@ export function sendMessage(contractAddress, message) {
 }
 
 const contractReducer = (state = initialState, action) => {
+  if (action.type === 'CREATING_CONTRACT') {
+    return Object.assign({}, state, {
+      loading: false,
+      connected: true,
+      messages: action.payload
+    });
+  }
   if (action.type === 'CONTRACT_CREATED') {
+    return Object.assign({}, state, {
+      loading: false,
+      connected: true,
+      messages: action.payload
+    });
+  }
+  if (action.type === 'BUYING_TOKENS') {
+    return Object.assign({}, state, {
+      loading: false,
+      connected: true,
+      messages: action.payload
+    });
+  }
+  if (action.type === 'TOKENS_BOUGHT') {
+    return Object.assign({}, state, {
+      loading: false,
+      connected: true,
+      messages: action.payload
+    });
+  }
+  if (action.type === 'SELLING_TOKENS') {
+    return Object.assign({}, state, {
+      loading: false,
+      connected: true,
+      messages: action.payload
+    });
+  }
+  if (action.type === 'TOKENS_SOLD') {
+    return Object.assign({}, state, {
+      loading: false,
+      connected: true,
+      messages: action.payload
+    });
+  }
+  if (action.type === 'TRANSFERRRING_TOKENS') {
+    return Object.assign({}, state, {
+      loading: false,
+      connected: true,
+      messages: action.payload
+    });
+  }
+  if (action.type === 'TOKENS_TRANSFERRED') {
     return Object.assign({}, state, {
       loading: false,
       connected: true,

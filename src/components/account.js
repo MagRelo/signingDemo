@@ -6,6 +6,12 @@ import { Link } from 'react-router-dom';
 import Indicator from './misc/indicator';
 
 const dummyData = {
+  messages: [
+    { from: 'a0xf3423', type: 'token holder', message: '' },
+    { from: 'A534FD3', type: 'donation request', message: '' },
+    { from: 'a0xf3423', type: 'donation request', message: '' },
+    { from: '12345678', type: 'token holder', message: '' }
+  ],
   items: [
     {
       name: 'Matt Lovan',

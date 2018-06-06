@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-const Recharts = require('recharts');
-
-const {
+import {
   Area,
   XAxis,
   YAxis,
@@ -9,7 +7,7 @@ const {
   Tooltip,
   ReferenceDot,
   ComposedChart
-} = Recharts;
+} from 'recharts';
 
 class CurveChart extends Component {
   componentDidMount() {}
