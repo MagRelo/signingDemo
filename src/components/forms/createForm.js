@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
 import Chart from '../misc/chart';
 import LoadWrapper from '../misc/loader';
@@ -13,8 +12,7 @@ class CreateContractForm extends Component {
       oracleAddress: '',
       basePrice: 0.15,
       totalSupply: 400,
-      basis: 0.01,
-      exponent: 1.8
+      exponent: 2
     };
   }
   componentDidMount() {
@@ -32,8 +30,6 @@ class CreateContractForm extends Component {
   // Form functions
   handleChange(event) {
     event.preventDefault();
-
-    console.log(this.state.totalSupply / 4);
 
     this.setState({
       [event.target.name]: event.target.value
@@ -68,15 +64,6 @@ class CreateContractForm extends Component {
     );
   }
   render() {
-    //   <button
-    //   type="submit"
-    //   className="pure-button pure-button-xlarge pure-button-primary"
-    //   onClick={this.handleSubmit.bind(this)}
-    // >
-    //   {' '}
-    //   + Create profile
-    // </button>
-
     return (
       <div>
         <h1>Create contract</h1>
@@ -137,45 +124,40 @@ class CreateContractForm extends Component {
               <div>
                 <fieldset>
                   <label>
-                    Base Price: {this.formatEth(this.state.basePrice)}
+                    Minimum Price: {this.formatEth(this.state.basePrice)}
                   </label>
                   <input
                     className="pure-input-1"
-                    type="number"
+                    type="range"
                     name="basePrice"
                     min="0.01"
-                    step="any"
+                    max="1"
+                    step="0.01"
                     value={this.state.basePrice}
                     onChange={this.handleChange.bind(this)}
                   />
-                  <label>Total Supply</label>
+
+                  <label>Steepness: {this.state.exponent}</label>
                   <input
                     className="pure-input-1"
-                    type="number"
-                    name="totalSupply"
-                    min="1"
-                    step="any"
-                    value={this.state.totalSupply}
-                    onChange={this.handleChange.bind(this)}
-                  />
-                  <label>Exponent</label>
-                  <input
-                    className="pure-input-1"
-                    type="number"
+                    type="range"
                     name="exponent"
                     min="1"
-                    step="any"
+                    max="4"
+                    step="0.1"
                     value={this.state.exponent}
                     onChange={this.handleChange.bind(this)}
                   />
-                  <label>Basis</label>
+
+                  <label>Total Supply: {this.state.totalSupply}</label>
                   <input
                     className="pure-input-1"
-                    type="number"
-                    name="basis"
-                    min="1"
-                    step="any"
-                    value={this.state.basis}
+                    type="range"
+                    name="totalSupply"
+                    min="100"
+                    max="1000"
+                    step="10"
+                    value={this.state.totalSupply}
                     onChange={this.handleChange.bind(this)}
                   />
                 </fieldset>
@@ -196,7 +178,13 @@ class CreateContractForm extends Component {
               </div>
             </div>
 
-            <Link to="/profile/mattlovan"> + Create profile</Link>
+            <button
+              type="submit"
+              className="pure-button pure-button-xlarge pure-button-primary"
+              onClick={this.handleSubmit.bind(this)}
+            >
+              + Create contract
+            </button>
           </form>
         </LoadWrapper>
       </div>

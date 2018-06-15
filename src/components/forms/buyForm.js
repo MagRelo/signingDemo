@@ -36,6 +36,13 @@ class FormComponent extends Component {
                 value={this.state.currentPrice}
                 disabled
               />
+              <label htmlFor="">Total Price</label>
+              <input
+                className="pure-input-1"
+                type="text"
+                value={this.state.currentPrice}
+                disabled
+              />
             </fieldset>
             <button className="pure-button pure-button-primary">
               Buy tokens

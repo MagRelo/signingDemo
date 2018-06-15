@@ -1,51 +1,61 @@
-pragma solidity 0.4.23;
+pragma solidity 0.4.24;
 
-import "openzeppelin-solidity/contracts/token/ERC721/ERC721.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC721/ERC721Token.sol";
 
-contract Servesa {
-// using SafeMath for uint256;
+import "./BancorFormula.sol";
+
+// TEST: "0x106F681949E222D57A175cD85685E3bD9975b973","TEST", "TEST", 100000000000000, 300000, 1000
+
+contract Servesa is ERC721Token, BancorFormula {
 
   uint public version = 0;
-
-// struct Funder {
-//   bool exists;
-//   uint tokenCount;
-//   uint totalPurchasePrice;
-// }
-
-  mapping(address => Funder) public funders;
-  mapping(address => uint256) public pendingWithdrawls;
-
-  uint public totalCurrentTokens = 0;
-  uint public totalCurrentFunders = 0;
-
   address public owner;
-  uint public tokenBasePrice = 100000000000000;
+  address public provider;
+  string public tokenName;
+  string public tokenSymbol;
+  
+  uint256 public tokenBasePrice = 100000000000000;
+  uint256 public tokenReserveRatio = 300000;
+  uint256 public maxTokens = 1000;
+  
+  uint256 public totalCurrentTokens = 0;
+  uint256 public contractBalance = 0;
 
-  event NewContract(address ownerAddress, string contractName);
+  event NewContract(address ownerAddress, string tokenSymbol);
   event Buy(address indexed funder, uint tokenCount);
-  event Approve(address indexed funder, uint value);
-  event Withdraw(address indexed funder, uint value);
+  event Sell(address indexed funder, uint value);
+  event Transfer(address indexed _from, address indexed _to, uint value);
   event FallbackEvent(address sender, uint amount);
 
-  function Servesa(
+
+  /*
+  * Constructor
+  */
+  
+  constructor (
     address ownerAddress,
-    address oracleAddress,
-    string contractNameInit,
-    string contractAvatarUrlInit,
-    uint tokenBasePriceInit) public {
+    string tokenNameInit,
+    string tokenSymbolInit,
+    uint256 tokenBasePriceInit,
+    uint256 tokenReserveRatioInit,
+    uint256 maxTokensInit) ERC721Token (tokenNameInit, tokenSymbolInit) public {
 
+    // setup parent contract as provider
+    provider = msg.sender;
+
+    // setup contract parameters
     owner = ownerAddress;
-    oracle = oracleAddress;
-    contractName = contractNameInit;
-    contractAvatarUrl = contractAvatarUrlInit;
+    tokenName = tokenNameInit;
+    tokenSymbol = tokenSymbolInit;
     tokenBasePrice = tokenBasePriceInit;
+    tokenReserveRatio = tokenReserveRatioInit;
+    maxTokens = maxTokensInit;
 
-    emit NewContract(owner, contractName);
+    emit NewContract(owner, tokenSymbol);
   }
 
 
-  // Contract options
+  // modifiers
   modifier belowMaxTokens() {
     require(totalCurrentTokens < maxTokens);
     _;
@@ -63,99 +73,92 @@ contract Servesa {
   */
   function buy() public payable {
 
-    // prevent oracle deposit
-    require(msg.sender != oracle);
+    /*
+    * Calc price
+    */
+    // uint tokenPrice = tokenBasePrice;
+    
+    /*
+    * Calc tokens
+    */
+    uint256 tokensToMint = calculatePurchaseReturn(totalCurrentTokens, contractBalance, 300000, msg.value);
+    
+    /*
+    * add token count to metadata - we'll actually only create one ERC-721 token
+    */
 
-    // check that sender sent enough value to purchase at least one token
-    require(msg.value >= tokenBasePrice);
 
-    // Update funders array
-    if (!isFunder(msg.sender)) {
+    /*
+    * Create new tokens for sender
+    */
+    // super._mint(msg.sender, tokenId);
 
-      // add to funder map
-      funders[msg.sender] = Funder({
-        exists: true,
-        tokenCount: 1,
-        totalPurchasePrice: tokenBasePrice
-      });
-
-      // Increase total funder count
-      totalCurrentFunders = totalCurrentFunders.add(1);
-
-    } else {
-
-      funders[msg.sender].tokenCount = funders[msg.sender].tokenCount.add(1);
-      funders[msg.sender].totalPurchasePrice = funders[msg.sender].totalPurchasePrice.add(tokenBasePrice);
-
-    }
-
-    // increment total token count
-    totalCurrentTokens = totalCurrentTokens.add(1);
-
-    // refund overage
-    if (msg.value.sub(tokenBasePrice) > 0) {
-      msg.sender.transfer(msg.value.sub(tokenBasePrice));
-    }
+    /*
+    * Refund overage
+    */
 
     // event
-    emit Buy(msg.sender, funders[msg.sender].tokenCount);
+    emit Buy(msg.sender, tokensToMint);
   }
 
   /*
   * Sell: exchange tokens for ETH
   */
-  function withdraw(uint amount) public onlyByFunder {
+  function sell(uint amount) public {
 
-    // check approved withdrawl list
+    /*
+    * Calc ETH value
+    */
 
-    // calculate sell price
-    uint cashOutValue = 1;
 
-    // send seller value == tokenSellPrice * tokens
-    msg.sender.transfer(cashOutValue);
+    /*
+    * burn tokens
+    */
+
+
+    /*
+    * Send ETH
+    */
 
     // event
-    emit Withdraw(msg.sender, cashOutValue);
+    emit Sell(msg.sender, 0);
   }
 
   /*
-  * approveWithdrawl: oracle function to allow player withdrawl
+  * Transfer: change owner of tokens
   */
-  function approveWithdrawl(address funder, uint value) public onlyByOracle {
+  function transfer(uint amount) public {
 
-    // prevent oracle self-withdrawl
-    require(funder != oracle);
-
-    // add to pendingWithdrawls
-    pendingWithdrawls[funder] = value;
+    
+    /*
+    * Implement ERC721 safeTransfer
+    */
 
     // event
-    emit Approve(funder, value);
+    // emit Transfer('0x', '1x', 0);
   }
-
-
 
   /*
   * getters
   */
-  function getContractBalance() public view returns(uint256 balance) {
-      balance = this.balance;
-  }
+  // function getContractBalance() public view returns(uint256 balance) {
+  //     balance = this.balance;
+  // }
 
-  function isFunder(address addr) public view returns(bool) {
-      return funders[addr].exists;
-  }
+  // function isFunder(address addr) public view returns(bool) {
+  //     return funders[addr].exists;
+  // }
 
-  function getFunderTokens(address addr) public view returns(uint256) {
-      return funders[addr].tokenCount;
-  }
+  // function getFunderTokens(address addr) public view returns(uint256) {
+  //     return funders[addr].tokenCount;
+  // }
 
-  function getFunderPurchase(address addr) public view returns(uint256) {
-      return funders[addr].totalPurchasePrice;
-  }
+  // function getFunderPurchase(address addr) public view returns(uint256) {
+  //     return funders[addr].totalPurchasePrice;
+  // }
 
-  function getCurrentTotalFunders() public view returns(uint) {
-      return totalCurrentFunders;
-  }
+  // function getCurrentTotalFunders() public view returns(uint) {
+  //     return totalCurrentFunders;
+  // }
 
 }

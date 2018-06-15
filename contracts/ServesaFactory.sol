@@ -1,4 +1,5 @@
-pragma solidity 0.4.19;
+pragma solidity 0.4.24;
+
 import "./Servesa.sol";
 
 contract ServesaFactory {
@@ -6,16 +7,18 @@ contract ServesaFactory {
   mapping(address => address[]) public contracts;
 
   function newContract(
-    address providerAddress,
     address ownerAddress,
+    string tokenName,
+    string tokenSymbol,
     uint tokenBasePrice,
-    uint32 reserveRatio) public returns (address newAddress) {
+    uint maxTokens) public returns (address newAddress) {
 
     Servesa contractId = new Servesa(
       ownerAddress,
-      oracleAddress,
+      tokenName,
+      tokenSymbol,
       tokenBasePrice,
-      reserveRatio
+      maxTokens
     );
 
     contracts[msg.sender].push(contractId);

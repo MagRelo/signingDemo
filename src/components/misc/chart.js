@@ -13,11 +13,10 @@ class CurveChart extends Component {
   componentDidMount() {}
 
   getChartData() {
-    function calcPrice(basis, exponent, tokenNumber, basePrice) {
-      const premium = Math.pow(basis * tokenNumber, exponent);
-      const price = parseInt(basePrice, 10) + premium;
-      const rounded = Math.round(price * 100) / 100;
-      return rounded;
+    function calcPrice(exponent, tokenNumber, basePrice, totalSupply) {
+      const price =
+        basePrice + Math.pow(tokenNumber / (totalSupply * 0.25), exponent);
+      return Math.round(price * 100) / 100;
     }
 
     const totalSupply = this.props.totalSupply || -1;
@@ -30,10 +29,10 @@ class CurveChart extends Component {
       data.push({
         supply: i,
         value: calcPrice(
-          this.props.basis,
           this.props.exponent,
           i,
-          this.props.basePrice
+          this.props.basePrice,
+          totalSupply
         )
       });
     }
@@ -41,10 +40,10 @@ class CurveChart extends Component {
     let currentPrice = {
       supply: currentSupply,
       value: calcPrice(
-        this.props.basis,
         this.props.exponent,
         currentSupply,
-        this.props.basePrice
+        this.props.basePrice,
+        totalSupply
       )
     };
 
@@ -56,7 +55,7 @@ class CurveChart extends Component {
       600,
       (window.innerWidth < 480 ? window.innerWidth : 480) - 30
     );
-    let height = width * 2 / 3;
+    let height = (width * 2) / 3;
 
     let { data, currentPrice } = this.getChartData();
 

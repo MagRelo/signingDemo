@@ -11,7 +11,7 @@ class HomeComponent extends Component {
 
         <p>
           Servésa is a marketplace that provides radical transperancy around the
-          availability, pricing and scheduling of labor. we can reduce
+          availability, pricing and scheduling of labor. By creating a new type of employment contract we can reduce
           transaction costs and unlock new opportunities for profitable
           cooperation.
         </p>
