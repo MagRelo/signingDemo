@@ -69,12 +69,14 @@ server.listen(8080, () => {
 });
 
 // get user preferences
-app.get('/api/user/preferences', servesaAuth, function(req, res) {
+app.get('/api/user/messages', servesaAuth, function(req, res) {
+  // check that user session has not expired
   const expirationDate = new Date(req.userMessage.expires);
   if (expirationDate < Date.now()) {
     return res.status(401).send([]);
   }
 
+  //
   MessageModel.find({ userAddress: req.userAddress })
     .then(messages => {
       return res.send(messages);
@@ -88,8 +90,7 @@ app.get('/api/user/preferences', servesaAuth, function(req, res) {
 app.post('/api/user/preferences', servesaAuth, function(req, res) {
   const userUpdate = {
     userAddress: req.userAddress,
-    text: req.body.text,
-    theme: req.body.theme
+    text: req.body.text
   };
 
   // update user

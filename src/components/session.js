@@ -49,7 +49,7 @@ class LoginComponent extends Component {
       signature: this.props.signature
     });
 
-    return fetch('/api/user/preferences', {
+    return fetch('/api/user/messages', {
       method: 'GET',
       headers: { 'x-servesa': servesaHeader }
     }).then(response => {
@@ -186,4 +186,7 @@ const mapDispatchToProps = dispatch => {
     }
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(LoginComponent);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginComponent);
