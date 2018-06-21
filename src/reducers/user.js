@@ -216,7 +216,6 @@ export function saveSession(duration) {
 const initialState = {
   userAccount: '',
   text: 'medium',
-  theme: 'light',
   clientSaved: false,
   message: '',
   signature: '',
@@ -241,7 +240,6 @@ const userReducer = (state = initialState, action) => {
   if (action.type === 'LOCAL_PREFS_CLEAR') {
     return Object.assign({}, state, action.payload, {
       clientSaved: false,
-      theme: 'light',
       text: 'medium'
     });
   }
