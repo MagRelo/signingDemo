@@ -51,7 +51,7 @@ const UserModel = mongoose.model('User', UserSchema);
 // *
 
 // configure express middleware
-app.use(express.static('build'));
+app.use(express.static('build_client'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: '1mb' }));
 app.use(
