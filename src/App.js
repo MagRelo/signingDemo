@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 
-import Loader from './components/loading.js';
-
 // Fonts
 import './css/open-sans.css';
 import './css/michroma.css';
@@ -41,8 +39,7 @@ class App extends Component {
           </div>
 
           <a href="/" className="pure-menu-heading pure-menu-link">
-            {' '}
-            Servésa{' '}
+            Servesa
           </a>
 
           <ul className="pure-menu-list navbar-right">
@@ -64,23 +61,15 @@ class App extends Component {
         </nav>
 
         <div className="container" style={{ fontSize: this.props.fontSize }}>
-          {!this.props.web3 || !this.props.account ? (
-            <Loader
-              web3={this.props.web3}
-              account={this.props.account}
-              network={this.props.network}
-            />
-          ) : (
-            <Switch>
-              <Route path="/preferences" component={Preferences} />
-              <Route path="/chat" component={Message} />
-              <Route path="/message/:id" component={Detail} />
-              <Route path="/admin" component={Admin} />
-              <Route path="/sessions" component={Session} />
-              <Route path="/possesion" component={Possesion} />
-              <Route component={Home} />
-            </Switch>
-          )}
+          <Switch>
+            <Route path="/preferences" component={Preferences} />
+            <Route path="/chat" component={Message} />
+            <Route path="/message/:id" component={Detail} />
+            <Route path="/admin" component={Admin} />
+            <Route path="/sessions" component={Session} />
+            <Route path="/possesion" component={Possesion} />
+            <Route component={Home} />
+          </Switch>
         </div>
       </div>
     );

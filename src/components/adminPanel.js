@@ -1,98 +1,114 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import {Link} from 'react-router-dom'
-import ethUtil  from 'ethereumjs-util'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import ethUtil from 'ethereumjs-util';
 
-
+import Loader from './loading';
 
 class AdminComponent extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       alert: false,
       error: ''
-    }
+    };
   }
 
   // Sign message and send to server
-  submitAction(event){
-    event.preventDefault()
+  submitAction(event) {
+    event.preventDefault();
 
-    const web3 = this.props.web3
-    const userAddress = this.props.account    
+    const web3 = this.props.web3;
+    const userAddress = this.props.account;
 
     // prepare the message for signing
-    const content = `{"action": "${event.target.name}"}`
-    const contentAsHex = ethUtil.bufferToHex(new Buffer(content, 'utf8'))    
-    
+    const content = `{"action": "${event.target.name}"}`;
+    const contentAsHex = ethUtil.bufferToHex(new Buffer(content, 'utf8'));
+
     // sign message
-    web3.currentProvider.sendAsync({
+    web3.currentProvider.sendAsync(
+      {
         method: 'personal_sign',
         params: [contentAsHex, userAddress],
-        from: userAddress,
-      }, (err, result) => {
-        if (err) return console.error(err)
-        if (result.error) {   
-          return this.setState({alert: true, error: "User denied signature."})
+        from: userAddress
+      },
+      (err, result) => {
+        if (err) return console.error(err);
+        if (result.error) {
+          return this.setState({
+            alert: true,
+            error: 'User denied signature.'
+          });
         }
-        
+
         const servesaHeader = JSON.stringify({
           message: contentAsHex,
           signature: result.result
-        })
-          
+        });
+
         return fetch('/api/messages/delete', {
           method: 'POST',
-          headers: {'x-servesa': servesaHeader}
-        })
-        .then(response => {
-          if(response.status === 401){
-            return this.setState({alert: true, caption: '401 - Unauthorized'})
+          headers: { 'x-servesa': servesaHeader }
+        }).then(response => {
+          if (response.status === 401) {
+            return this.setState({
+              alert: true,
+              caption: '401 - Unauthorized'
+            });
           }
 
-          return this.setState({alert: true, caption: 'sucess!'})
-        })
-        
-      })    
+          return this.setState({ alert: true, caption: 'sucess!' });
+        });
+      }
+    );
   }
 
   render() {
-    return(
+    return (
       <div>
-
         <h1>
-          <Link to="/">Demos</Link> &nbsp;> Admin Panel          
+          <Link to="/">Demos</Link> &nbsp;> Admin Panel
         </h1>
 
-        <hr/>
+        <hr />
         <p>
-          This button will only work for a message and signature that produces the public key "0x863afa452f38966b54cb1149d934e34670d0683a".
+          This button will only work for a message and signature that produces
+          the public key "0x863afa452f38966b54cb1149d934e34670d0683a".
         </p>
 
-        <div>
+        <Loader>
           <button
-              name="delete"
-              type="button"
-              className="pure-button pure-button-primary"
-              onClick={this.submitAction.bind(this)}>Delete all messages
-            </button>
-        </div>
+            name="delete"
+            type="button"
+            className="pure-button pure-button-primary"
+            onClick={this.submitAction.bind(this)}
+          >
+            Delete all messages
+          </button>
+        </Loader>
 
-        {this.state.alert ? 
-
-          <div style={{border: 'solid lightgray 1px', marginTop: '1em', padding: '0.5em'}}>            
+        {this.state.alert ? (
+          <div
+            style={{
+              border: 'solid lightgray 1px',
+              marginTop: '1em',
+              padding: '0.5em'
+            }}
+          >
             <h3>{this.state.caption}</h3>
-            <button 
+            <button
               className="pure-button"
-              onClick={()=>{this.setState({alert: false})}}>Ok
+              onClick={() => {
+                this.setState({ alert: false });
+              }}
+            >
+              Ok
             </button>
-          </div>        
-
-        :null}
-
+          </div>
+        ) : null}
       </div>
-    )
+    );
   }
 }
 
@@ -100,6 +116,6 @@ const mapStateToProps = state => {
   return {
     web3: state.web3.instance,
     account: state.web3.accounts[0] || ''
-  }
-}
-export default connect(mapStateToProps)(AdminComponent)
+  };
+};
+export default connect(mapStateToProps)(AdminComponent);

@@ -13,14 +13,18 @@ toape? - FAE7C7
 */
 
 
-html, body, #root, .App, .container{
+html,
+body,
+#root,
+.App,
+.container {
   height: 100%;
 }
 
 @media screen and (min-width: 992px) {
   .container {
-    max-width: 800px;
-    margin: 0 30% 0 auto;
+    max-width: 992px;
+    margin: 0 auto;
   }
 }
 
@@ -32,14 +36,15 @@ body,
   color: #103A52;
 }
 
-h1, h2 {
+h1,
+h2 {
   margin: .33em 0 0.33em;
 }
 
 .container {
   box-sizing: border-box;
   padding: 48px 1em 1em 1em;
-  height: 100%; 
+  height: 100%;
 }
 
 .container a {
@@ -56,73 +61,88 @@ a.pure-button-primary,
 .pure-button-primary {
   background-color: #FF5934;
 }
+
 a.pure-button-primary:hover,
 .pure-button-primary:hover {
   background-color: #FF5934;
 }
-a.pure-link-primary{
+
+a.pure-link-primary {
   color: #DDDDDD;
 }
-a.pure-link-primary:visited{
+
+a.pure-link-primary:visited {
   color: #FF5934;
 }
+
 .pure-button-success {
   color: white;
   background-color: #FF5934;
 }
+
 .pure-button-success:hover {
   background-color: #FF5934;
 }
-.pure-button-active{
+
+.pure-button-active {
   background-color: #34ff6957;
 }
-.pure-button-xlarge{
-   font-size: 115%;
+
+.pure-button-xlarge {
+  font-size: 115%;
 }
 
 /* Table */
-.pure-table{
+.pure-table {
   border: none;
 }
-.pure-table > thead {
+
+.pure-table>thead {
   background: inherit;
   color: inherit;
   text-transform: uppercase;
   font-size: small;
   text-align: center;
 }
-.pure-table > tbody{
+
+.pure-table>tbody {
   text-align: center;
 }
+
 .pure-table-horizontal td,
 .pure-table-horizontal th {
   border-bottom: 1px solid #103A52;
 }
 
 /* forms */
-.pure-form{
+.pure-form {
   /* padding: 0 1em 1em 1em; */
 }
-form > p {
+
+form>p {
   margin-top: 0.5em;
   margin-bottom: 0.2em;
 }
+
 .pure-form input[type="text"],
 .pure-form input[type="number"] {
   /* border: 1px solid #177B9F;
   box-shadow: inset 0 1px 3px #177B9F; */
 }
+
 .pure-form input[type="radio"] {
-    margin-right: 1em;
+  margin-right: 1em;
 }
-.pure-form input{
+
+.pure-form input {
   /*width: 100%;*/
   /* margin-bottom: 1em;
   border-color: #175872;
   background-color: #175872;
   box-shadow: none; */
 }
-.pure-form label{
+
+.pure-form label {
   font-family: 'Barlow', 'Arial Narrow', sans-serif;
   text-transform: uppercase;
   font-size: smaller;
@@ -141,8 +161,9 @@ form > p {
   -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
   animation: sk-scaleout 1.0s infinite ease-in-out;
 }
+
 .small-spinner {
-  display: inline-block;  
+  display: inline-block;
   width: 1em;
   height: 1em;
   margin-left: auto;
@@ -152,18 +173,25 @@ form > p {
   -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
   animation: sk-scaleout 1.0s infinite ease-in-out;
 }
+
 @-webkit-keyframes sk-scaleout {
-  0% { -webkit-transform: scale(0) }
+  0% {
+    -webkit-transform: scale(0)
+  }
+
   100% {
     -webkit-transform: scale(1.0);
     opacity: 0;
   }
 }
+
 @keyframes sk-scaleout {
   0% {
     -webkit-transform: scale(0);
     transform: scale(0);
-  } 100% {
+  }
+
+  100% {
     -webkit-transform: scale(1.0);
     transform: scale(1.0);
     opacity: 0;
@@ -177,41 +205,53 @@ form > p {
   background: #103A52;
   font-family: 'Michroma', 'Arial Narrow', sans-serif;
 }
+
 .navbar a {
   color: #fff;
 }
-nav.navbar.pure-menu.pure-menu-horizontal{
+
+nav.navbar.pure-menu.pure-menu-horizontal {
   padding: 0
 }
-a.pure-menu-link{
+
+a.pure-menu-link {
   padding: 0.75em 1em;
   font-size: 14px;
 }
+
 ul.pure-menu-list.navbar-right {
-    margin-right: 1em;
+  margin-right: 1em;
 }
-.pure-menu-active>.pure-menu-link, .pure-menu-link:focus, .pure-menu-link:hover{
+
+.pure-menu-active>.pure-menu-link,
+.pure-menu-link:focus,
+.pure-menu-link:hover {
   background: inherit;
 }
+
 .navbar .pure-menu-heading {
   font-weight: bold;
   text-transform: none;
 }
+
 .navbar .navbar-right {
   float: right;
 }
-.logo{
+
+.logo {
   max-width: 100%;
   max-height: 10em;
 }
-.logo-holder{
+
+.logo-holder {
   height: 48px;
   float: left;
   margin-right: -2em;
   margin-left: -2.5em;
   overflow: hidden;
 }
-.logo-holder .logo{
+
+.logo-holder .logo {
   width: 120px;
   height: 24px;
   float: left;
@@ -220,7 +260,8 @@ ul.pure-menu-list.navbar-right {
   -ms-transform: rotate(35deg);
   transform: rotateZ(60deg);
 }
-.header-logo{
+
+.header-logo {
   max-height: 1.4em;
   margin-top: 0.2em;
 }
@@ -235,15 +276,16 @@ ul.pure-menu-list.navbar-right {
   text-align: center;
   margin-top: 1em;
 }
+
 .loader label {
   text-transform: uppercase;
 }
 
 
-.chat-form > textarea {
+.chat-form>textarea {
   width: 100%;
   border: solid 1px #bbb;
-  
+
   background: #ff593417;
 
   border-radius: 0;
@@ -270,23 +312,26 @@ ul.chat-list {
   padding-right: 0;
   margin: 0 0;
 }
-ul.chat-list > li {
+
+ul.chat-list>li {
   list-style: none;
-  margin-top: 1em;  
+  margin-top: 1em;
   padding: 1em;
-  border: solid 1px #bbb;  
+  border: solid 1px #bbb;
 }
-ul.chat-list > li > time {
+
+ul.chat-list>li>time {
   font-size: smaller;
   color: #4e4e4e;
 }
-ul.chat-list > li > p {
+
+ul.chat-list>li>p {
   font-family: serif;
   color: #4e4e4e;
   line-height: 1.3;
 }
 
-.compose-button{
+.compose-button {
   position: fixed;
   bottom: 1em;
   right: 1.5em;
@@ -298,7 +343,7 @@ ul.chat-list > li > p {
 .account-label {
   padding: 0.2em 0.45em 0.1em;
   margin-right: 0.5em;
-  font-family: monospace; 
+  font-family: monospace;
   border: solid 1px #bbb
 }
 
@@ -314,7 +359,7 @@ ul.chat-list > li > p {
   font-size: smaller;
   color: #103a52;
   font-family: 'Barlow', sans-serif;
-  color: #4e4e4e;  
+  color: #4e4e4e;
 }
 
 /* Detail pages */
@@ -322,18 +367,18 @@ ul.chat-list > li > p {
   margin-top: 0.25em;
   margin-bottom: 1em;
   padding: 0 0.5em;
-  
+
   border: solid 1px #ccc;
   border-radius: 0.33em;
 
   color: #444;
   background-color: #ddd;
-  
+
   word-break: break-all;
   white-space: pre-wrap;
 }
 
-.message-data > p {
+.message-data>p {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
 }
@@ -348,7 +393,8 @@ ul.chat-list > li > p {
 .home h3 {
   margin-bottom: 0.25em;
 }
-.demo-description{
+
+.demo-description {
   margin-top: 0.25em;
   margin-left: 0.5em;
 }

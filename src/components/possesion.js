@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 import sigUtil from 'eth-sig-util';
 import ethUtil from 'ethereumjs-util';
-import crypto from 'crypto';
 
 class NestingComponent extends Component {
   constructor(props) {
