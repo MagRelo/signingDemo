@@ -16,3 +16,9 @@ ENV NPM_CONFIG_LOGLEVEL warn
 # RUN npm config set registry $CUSTOM_REGISTRY
 
 RUN npm install
+
+# Bundle app source
+COPY . .
+
+EXPOSE 8080
+CMD [ "npm", "run", "server" ]
