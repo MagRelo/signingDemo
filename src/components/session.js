@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import { loadSession, saveSession, clearSession } from '../reducers/user';
+import { loadSession, saveSession, clearSession } from '../state/reducers/user';
 
 const buttonGrid = {
   display: 'grid',

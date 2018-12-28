@@ -3,21 +3,36 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
-import registerServiceWorker from './registerServiceWorker';
+// import registerServiceWorker from './registerServiceWorker';
+// registerServiceWorker();
 
 // Initialize web3
 // eslint-disable-next-line
-import getWeb3 from './web3.js';
-import { startTipTimer } from './timer.js';
+import { loadWeb3 } from './state/init/web3';
+import { startTipTimer } from './state/init/timer.js';
 
 // Routing Components
 import App from './App';
 
 // redux stote
-import appStore from './store';
+import appStore from './state/store';
 
 // init
-startTipTimer();
+// load data
+async function init() {
+  // connect to server, get contract info
+  // await initSockets();
+
+  // load web3
+  await loadWeb3();
+
+  // connect contracts to web3
+  // await initContracts();
+
+  // wait 4 seconds for everything to load, then show a tip
+  startTipTimer();
+}
+init();
 
 ReactDOM.render(
   <Provider store={appStore}>
@@ -28,5 +43,3 @@ ReactDOM.render(
 
   document.getElementById('root')
 );
-
-registerServiceWorker();

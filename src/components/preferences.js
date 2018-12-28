@@ -8,7 +8,7 @@ import {
   clearPreferences,
   savePreferences_server,
   clearPreferences_server
-} from '../reducers/user';
+} from '../state/reducers/user';
 
 const buttonGrid = {
   display: 'grid',

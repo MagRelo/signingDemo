@@ -22,6 +22,11 @@ class HomeComponent extends Component {
         </p>
 
         <h3>
+          <Link to="/preferences"> User Preferences</Link>
+        </h3>
+        <p className="demo-description">Save custom settings for a user.</p>
+
+        <h3>
           <Link to="/sessions"> Sessions</Link>
         </h3>
         <p className="demo-description">
@@ -30,16 +35,7 @@ class HomeComponent extends Component {
         </p>
 
         <h3>
-          <Link to="/possesion"> Chain of possesion</Link>
-        </h3>
-        <p className="demo-description">
-          Create a list of signatures to prove the chain of possesion of a
-          message.
-        </p>
-
-        <h3>
-          {' '}
-          <Link to="/chat"> Post signed messages</Link>{' '}
+          <Link to="/chat"> Post signed messages</Link>
         </h3>
         <p className="demo-description">Live chat with verifiable messages</p>
       </div>
