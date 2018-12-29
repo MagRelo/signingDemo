@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import Loader from './loading';
+
 import {
   loadPreferences,
   savePreferences,
@@ -126,6 +128,7 @@ class DetailComponent extends Component {
           )}
         </p>
 
+        <Loader>
         <p style={{ lineHeight: '35px' }}>
           Cloud Data:
           {this.props.serverSaved ? (
@@ -158,6 +161,7 @@ class DetailComponent extends Component {
             </button>
           )}
         </p>
+        </Loader>
       </div>
     );
   }

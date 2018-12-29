@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { loadSession, saveSession, clearSession } from '../state/reducers/user';
 
+import Loader from './loading';
+
 const buttonGrid = {
   display: 'grid',
   gridTemplateRows: '1fr',
@@ -133,32 +135,34 @@ class LoginComponent extends Component {
               <label className="label-upper">Session Length</label>
             </div>
 
-            <div style={buttonGrid}>
-              <button
-                name="1"
-                type="button"
-                className="pure-button pure-button-primary"
-                onClick={this.createSession.bind(this, 1)}
-              >
-                1 minute
-              </button>
-              <button
-                name="30"
-                type="button"
-                className="pure-button pure-button-primary"
-                onClick={this.createSession.bind(this, 30)}
-              >
-                30 minutes
-              </button>
-              <button
-                name="90"
-                type="button"
-                className="pure-button pure-button-primary"
-                onClick={this.createSession.bind(this, 90)}
-              >
-                90 minutes
-              </button>
-            </div>
+            <Loader>
+              <div style={buttonGrid}>
+                <button
+                  name="1"
+                  type="button"
+                  className="pure-button pure-button-primary"
+                  onClick={this.createSession.bind(this, 1)}
+                >
+                  1 minute
+                </button>
+                <button
+                  name="30"
+                  type="button"
+                  className="pure-button pure-button-primary"
+                  onClick={this.createSession.bind(this, 30)}
+                >
+                  30 minutes
+                </button>
+                <button
+                  name="90"
+                  type="button"
+                  className="pure-button pure-button-primary"
+                  onClick={this.createSession.bind(this, 90)}
+                >
+                  90 minutes
+                </button>
+              </div>
+            </Loader>
           </div>
         ) : null}
       </div>
